@@ -5,129 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web_BanDienThoai</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/Web_BanDienThoai.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
 </head>
-@*<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web_BanDienThoai</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>*@
 <body>
-    <!-- BEM -->
-    <!-- Block__Element--Modifier-->
-    <div class="app">
-        <!-- header_website -->
-        <!-- <svg>
-                    <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                </svg> -->
-
-        <header class="header">
-            <div class="grid">
-                <nav class="header__navbar">
-                    <ul class="header__nav_list">
-
-                        <li class="header__nav_item">
-                            <a href="" class="header__nav_item-link header__nav_item-link--strong">iPhone</a>
-                        </li>
-                        <li class="header__nav_item">
-                            <a href="" class="header__nav_item-link header__nav_item-link--strong">Samsung</a>
-                        </li>
-                        <li class="header__nav_item">
-                            <a href="" class="header__nav_item-link header__nav_item-link--strong">Tablet</a>
-                        </li>
-                        <li class="header__nav_item">
-                            <a href="" class="header__nav_item-link header__nav_item-link--strong">Phụ kiện</a>
-                        </li>
-                        <li class="header__nav_item">
-                            <a href="" class="header__nav_item-link header__nav_item-link--strong">Dịch vụ</a>
-                        </li>
-                    </ul>
-
-                    <ul class="header__nav_list">
-                        <li class="header__nav_item">Tìm kiếm</li>
-                        <li class="header__nav_item">Giỏ hàng</li>
-                        <li class="header__nav_item">Login</li>
-                    </ul>
-                </nav>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#!">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">All Products</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            <li><a class="dropdown-item" href="#!">New Product</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
+                </form>
             </div>
-        </header>
+        </div>
+    </nav>
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Shop in style</h1>
+                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+            </div>
+        </div>
+    </header>
+
+
         @RenderBody();
-        <!-- container_web -->
-        @*<div class="container">
-
-            <!-- Product-Gallery -->
-            <section class="item-gallery__iphone">
-                <div class="item-container">
-                    <div class="item-container__content">
-                        <div class="gallery-grid">
-                            <div class="item-grid">
-                                <div class="item-box">
-                                    <!-- box-sản phẩm -->
-                                    <div class="product-item">
-                                        <div class="product-img">
-                                            <a href="/products/iphone-13.html" title="Hiển thị chi tiết iPhone 13">
-
-                                                <img class="product-img--click" src="https://shopdunk.com/images/thumbs/0000596_iphone-13.png" alt="Ảnh của iPhone13">
-                                            </a>
-                                        </div>
-                                        <div class="produck-detail">
-                                            <div class="product-title">
-                                                <a href="/products/iphone-13.html"> iPhone 13 </a>
-                                            </div>
-                                            <div class="product-description"></div>
-                                            <div class="product-price">17.990.000</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="product-item">
-                                        <div class="product-img">
-                                            <a href="/products/iphone-14.html" title="Hiển thị chi tiết iPhone 14">
-
-                                                <img class="product-img--click" src="https://shopdunk.com/images/thumbs/0009181_iphone-14-128gb.png" alt="Ảnh của iPhone14">
-                                            </a>
-                                        </div>
-                                        <div class="produck-detail">
-                                            <div class="product-title">
-                                                <a href="/products/iphone-14.html"> iPhone 14 </a>
-                                            </div>
-                                            <div class="product-description"></div>
-                                            <div class="product-price">20.990.000</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-        </div>*@
-
+       
         <!-- footer_web -->
         <footer class="border-top footer text-muted">
             <div class="container">
@@ -136,125 +62,6 @@
         </footer>
     </div>
 
-
-    <!-- Modal layout -->
-    <!-- Modal_Form_login/register -->
-    <!-- <div class="modal">
-    <div class="modal__overlay"></div>
-
-
-
-
-        <div class="modal__body"> -->
-    <!-- Authen-form (Login) -->
-    <!-- <div class="auth-form">
-        <div class="auth-form__container">
-            <div class="auth-form__header">
-                <h3 class="auth-form__heading">Đăng nhập</h3>
-                <span class="auth-form__switch-btn">Đăng ký</span>
-            </div>
-
-            <div class="auth-form__form">
-                <div class="auth-form__group">
-                    <input type="text" class="auth-form__input" placeholder="Nhập tài khoản">
-                </div>
-                <div class="auth-form__group">
-                    <input type="password" class="auth-form__input" placeholder="Nhập mật khẩu">
-                </div>
-
-            </div>
-
-            <div class="auth-form__aside">
-                <a>Quên mật khẩu ?</a>
-            </div>
-
-            <div class="auth-form__control">
-                <button class="btn">TRỞ LẠI</button>
-                <button class="btn btn--primary">ĐĂNG NHẬP</button>
-            </div>
-
-            <div class="auth-form__socials">
-                <a href="" class="btn btn--with-icon">
-                    <i class="fa-brands fa-square-facebook"></i>
-                    Đăng nhập bằng Facebook
-                </a>
-
-                <a href="" class="btn btn--with-icon">
-                    <i class="fa-brands fa-google"></i>
-                    Đăng nhập bằng Google
-                </a>
-            </div>
-
-        </div>
-
-
-    </div> -->
-    <!-- Authen-form (Register) -->
-    <!-- <div class="auth-form">
-        <div class="auth-form__container">
-            <div class="auth-form__header">
-                <h3 class="auth-form__heading">Đăng ký</h3>
-                <span class="auth-form__switch-btn">Đăng nhập</span>
-            </div>
-
-            <div class="auth-form__form">
-                <div class="auth-form__group">
-                    <input type="text" class="auth-form__input" placeholder="Nhập họ tên đầy đủ">
-                </div>
-
-                <div class="auth-form__group">
-                    <input type="text" class="auth-form__input" placeholder="Nhập số điện thoại">
-                </div>
-                <div class="auth-form__group">
-                    <input type="text" class="auth-form__input" placeholder="Nhập số email">
-                </div>
-                <div class="auth-form__group">
-                    <input type="password" class="auth-form__input" placeholder="Nhập mật khẩu">
-                </div>
-                <div class="auth-form__group">
-                    <input type="password" class="auth-form__input" placeholder="Nhập lại mật khẩu">
-                </div>
-            </div>
-
-            <div class="auth-form__aside">
-                <span></span>
-            </div>
-
-            <div class="auth-form__control">
-                <button class="btn">TRỞ LẠI</button>
-                <button class="btn btn--primary">ĐĂNG KÝ</button>
-            </div>
-
-            <div class="auth-form__socials">
-                <a href="" class="btn btn--with-icon">
-                    <i class="fa-brands fa-square-facebook"></i>
-                    Kết nối với Facebook
-                </a>
-
-                <a href="" class="btn btn--with-icon">
-                    <i class="fa-brands fa-google"></i>
-                    Kết nối với Google
-                </a>
-            </div>
-        </div>
-
-
-    </div> -->
-    <!--
-
-
-
-
-            </div>
-        </div>
-    </div> -->
-
-   
-   @* <footer class="border-top footer text-muted">  cũ
-        <div class="container">
-            &copy; 2023 - Web_BanDienThoai - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

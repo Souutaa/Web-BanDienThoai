@@ -6,6 +6,7 @@ namespace Web_BanDienThoai.Models.SanPham
     {
         [Key]
         public int Id { get; set; }
+        public string Id_SanPham { get; set; }
         public string Ten_SanPham { get; set; }
         [Required, MaxLength(50)]
         public string ImageUrl { get; set; }

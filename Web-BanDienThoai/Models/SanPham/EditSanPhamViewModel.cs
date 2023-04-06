@@ -12,7 +12,7 @@ namespace Web_BanDienThoai.Models.SanPham
         public string Ten_SanPham { get; set; }
         [Required(ErrorMessage = "Phải nhập tên sản phẩm"), StringLength(80, MinimumLength = 2)]
         [RegularExpression(@"^[A-Z][a-zA-Z""'\s-]*$"), Display(Name = "Tên Sản Phẩm")]
-        public string ImageUrl { get; set; }
+        public IFormFile ImageUrl { get; set; }
         public double GiaTien { get; set; }
         [Display(Name = "Giá tiền")]
         public int SoLuong { get; set; }

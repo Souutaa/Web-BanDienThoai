@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Web.Entities;
+﻿using Web.Entities;
 using Web.Persistances;
 
 namespace Web.Services.implementation
@@ -16,40 +11,49 @@ namespace Web.Services.implementation
         {
             _context = context;
         }
-        public async Task CreateNhanVienAsSync(SanPham sanPham)
+        public async Task CreateSanPhamAsSync(SanPham sanPham)
         {
             _context.Add(sanPham);
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteById(int id)
+        public async Task DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var sanpham = GetById(id);
+            if (sanpham != null)
+            {
+                _context.SanPham.Remove(sanpham);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task DeleteNhanVien(SanPham sanPham)
+        public async Task DeleteSanPham(SanPham sanPham)
         {
-            throw new NotImplementedException();
+            _context?.SanPham.Remove(sanPham);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<SanPham> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.SanPham.ToList();
         }
 
-        public NhanVien GetById(int id)
+        public SanPham GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.SanPham.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        public Task UpdateById(int id)
+        public async Task UpdateById(int id)
         {
-            throw new NotImplementedException();
+            var sanPham = GetById(id);
+            _context.SanPham.Update(sanPham);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateNhanVienAsSyncs(SanPham sanPham)
+        public async Task UpdateSanPhamAsSyncs(SanPham sanPham)
         {
-            throw new NotImplementedException();
+            _context.SanPham.Update(sanPham);
+            await _context.SaveChangesAsync();
         }
     }
 }
