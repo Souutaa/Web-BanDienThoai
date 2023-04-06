@@ -51,5 +51,10 @@ namespace Web.Services.implementation
         {
             throw new NotImplementedException();
         }
+
+        IEnumerable<DanhMucCon> IDanhMucConServices.GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,7 +8,7 @@ using Web.Persistances;
 
 namespace Web.Services.implementation
 {
-    internal class LoaiSanPhamServices : ILoaiSanPhamServices
+    public class LoaiSanPhamServices : ILoaiSanPhamServices
     {
         private ApplicationDbContext _context;
 

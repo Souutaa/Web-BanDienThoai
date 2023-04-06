@@ -9,7 +9,7 @@ namespace Web.Services
 {
     public interface IDanhMucConServices
     {
-        IEnumerable<NhanVien> GetAll();
+        IEnumerable<DanhMucCon> GetAll();
         NhanVien GetById(int id);
         Task CreateNhanVienAsSync(DanhMucCon danhMucCon);
         Task UpdateNhanVienAsSyncs(DanhMucCon danhMucCon);
