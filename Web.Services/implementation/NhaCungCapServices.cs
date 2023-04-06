@@ -8,7 +8,7 @@ using Web.Persistances;
 
 namespace Web.Services.implementation
 {
-    internal class NhaCungCapServices : INhaCungCapServices
+    public class NhaCungCapServices : INhaCungCapServices
     {
         private ApplicationDbContext _context;
 
