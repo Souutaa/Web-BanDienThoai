@@ -211,9 +211,9 @@ namespace Web.Persistances.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Id_SanPham = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ten_SanPham = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rom = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Rom = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GiaTien = table.Column<double>(type: "float", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
                     Id_LoaiSanPham = table.Column<string>(type: "nvarchar(max)", nullable: false)

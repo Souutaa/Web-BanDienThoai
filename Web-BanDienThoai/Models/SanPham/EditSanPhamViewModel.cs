@@ -2,7 +2,7 @@
 
 namespace Web_BanDienThoai.Models.SanPham
 {
-    public class CreateSanPhamViewModel
+    public class EditSanPhamViewModel
     {
         [Key]
         public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace Web_BanDienThoai.Models.SanPham
         public int SoLuong { get; set; }
         [Display(Name = "Số lượng sản phẩm")]
         public string Id_LoaiSanPham { get; set; } //Loại Sản Phẩm
-        [Display(Name = "Mã loại sản phẩm")]
+        [Required(ErrorMessage = "Phải nhập mã loại sản phẩm"), StringLength(50, MinimumLength = 2)]
         [RegularExpression(@"^[Ll][Ss][Pp][0-9]\S*$"), Display(Name = "Mã loại sản phẩm")]
         public string Rom { get; set; }
     }

@@ -12,7 +12,7 @@ using Web.Persistances;
 namespace Web.Persistances.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230403152109_Initial")]
+    [Migration("20230406002654_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -418,14 +418,14 @@ namespace Web.Persistances.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Rom")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Rom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
