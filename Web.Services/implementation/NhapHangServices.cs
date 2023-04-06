@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Web.Entities;
+﻿using Web.Entities;
 using Web.Persistances;
 
 namespace Web.Services.implementation
@@ -16,18 +11,18 @@ namespace Web.Services.implementation
         {
             _context = context;
         }
-        public async Task CreateNhanVienAsSync(NhapHang nhapHang)
+        public async Task CreateAsSync(NhapHang nhapHang)
         {
             _context.Add(nhapHang);
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteById(int id)
+        public Task DeleteById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteNhanVien(NhapHang nhapHang)
+        public Task DeleteAsSync(NhapHang nhapHang)
         {
             throw new NotImplementedException();
         }
@@ -37,17 +32,17 @@ namespace Web.Services.implementation
             throw new NotImplementedException();
         }
 
-        public NhanVien GetById(int id)
+        public NhapHang GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateById(int id)
+        public Task UpdateById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateNhanVienAsSyncs(NhapHang nhapHang)
+        public Task UpdateAsSyncs(NhapHang nhapHang)
         {
             throw new NotImplementedException();
         }

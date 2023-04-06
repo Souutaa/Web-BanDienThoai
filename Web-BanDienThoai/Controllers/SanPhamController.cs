@@ -19,7 +19,6 @@ namespace Web_BanDienThoai.Controllers
         {
             var model = _sanphamService.GetAll().Select(sanpham => new IndexSanPhamViewModel
             {
-                Id = sanpham.Id,
                 Id_SanPham = sanpham.Id_SanPham,
                 Ten_SanPham = sanpham.Ten_SanPham,
                 ImageUrl = sanpham.ImageUrl,
@@ -44,7 +43,6 @@ namespace Web_BanDienThoai.Controllers
             {
                 var sanpham = new SanPham
                 {
-                    Id = model.Id,
                     Id_SanPham = model.Id_SanPham,
                     Ten_SanPham = model.Ten_SanPham,
                     GiaTien = model.GiaTien,
@@ -64,7 +62,7 @@ namespace Web_BanDienThoai.Controllers
                     var path = Path.Combine(webRootPath, uploadDir, fileName);
                     await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
                     sanpham.ImageUrl = "/" + uploadDir + "/" + fileName;
-                    await _sanphamService.CreateSanPhamAsSync(sanpham);
+                    await _sanphamService.CreateAsSync(sanpham);
                     return RedirectToAction("Index");
                 }
 
@@ -105,14 +103,14 @@ namespace Web_BanDienThoai.Controllers
         //}
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
             if (id.ToString() == null)
             {
                 return NotFound();
             }
             var model = _sanphamService.GetById(id);
-            _sanphamService.DeleteSanPham(model);
+            _sanphamService.DeleteAsSync(model);
             return View(model);
         }
 
@@ -124,11 +122,10 @@ namespace Web_BanDienThoai.Controllers
             {
                 var employee = new SanPham
                 {
-                    Id = model.Id,
                     Id_SanPham = model.Id_SanPham,
                     Ten_SanPham = model.Ten_SanPham,
                 };
-                _sanphamService.DeleteSanPham(employee);
+                _sanphamService.DeleteAsSync(employee);
             }
             return View();
         }
@@ -141,7 +138,6 @@ namespace Web_BanDienThoai.Controllers
             {
                 var sanpham = new SanPham
                 {
-                    Id = model.Id,
                     Id_SanPham = model.Id_SanPham,
                     Ten_SanPham = model.Ten_SanPham,
                     GiaTien = model.GiaTien,
@@ -161,7 +157,7 @@ namespace Web_BanDienThoai.Controllers
                     var path = Path.Combine(webRootPath, uploadDir, fileName);
                     await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
                     sanpham.ImageUrl = "/" + uploadDir + "/" + fileName;
-                    await _sanphamService.CreateSanPhamAsSync(sanpham);
+                    await _sanphamService.CreateAsSync(sanpham);
                     return RedirectToAction("Index");
                 }
 

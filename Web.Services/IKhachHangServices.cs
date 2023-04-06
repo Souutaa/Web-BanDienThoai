@@ -5,11 +5,11 @@ namespace Web.Services
     public interface IKhachHangServices
     {
         IEnumerable<KhachHang> GetAll();
-        KhachHang GetById(int id);
-        Task CreateNhanVienAsSync(KhachHang khachHang);
-        Task UpdateNhanVienAsSyncs(KhachHang khachHang);
-        Task UpdateById(int id);
-        Task DeleteById(int id);
-        Task DeleteNhanVien(KhachHang khachHang);
+        KhachHang GetById(string id);
+        Task CreateAsSync(KhachHang khachHang);
+        Task UpdateAsSyncs(KhachHang khachHang);
+        Task UpdateById(string id);
+        Task DeleteById(string id);
+        Task DeleteAsSync(KhachHang khachHang);
     }
 }

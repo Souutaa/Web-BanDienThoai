@@ -5,7 +5,6 @@ namespace Web_BanDienThoai.Models.SanPham
     public class CreateSanPhamViewModel
     {
         [Key]
-        public int Id { get; set; }
         public string Id_SanPham { get; set; }
         [Required(ErrorMessage = "Phải nhập mã sản phẩm (ID_SanPham)"), StringLength(10, MinimumLength = 2)]
         [RegularExpression(@"^[a-zA-Z]{2}[0-9]\S*$"), Display(Name = "Mã sản phẩm")]

@@ -11,13 +11,13 @@ namespace Web.Services.implementation
         {
             _context = context;
         }
-        public async Task CreateSanPhamAsSync(SanPham sanPham)
+        public async Task CreateAsSync(SanPham sanPham)
         {
             _context.Add(sanPham);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteById(int id)
+        public async Task DeleteById(string id)
         {
             var sanpham = GetById(id);
             if (sanpham != null)
@@ -27,7 +27,7 @@ namespace Web.Services.implementation
             }
         }
 
-        public async Task DeleteSanPham(SanPham sanPham)
+        public async Task DeleteAsSync(SanPham sanPham)
         {
             _context?.SanPham.Remove(sanPham);
             await _context.SaveChangesAsync();
@@ -38,19 +38,19 @@ namespace Web.Services.implementation
             return _context.SanPham.ToList();
         }
 
-        public SanPham GetById(int id)
+        public SanPham GetById(string id)
         {
-            return _context.SanPham.Where(x => x.Id == id).FirstOrDefault();
+            return _context.SanPham.Where(x => x.Id_SanPham == id).FirstOrDefault();
         }
 
-        public async Task UpdateById(int id)
+        public async Task UpdateById(string id)
         {
             var sanPham = GetById(id);
             _context.SanPham.Update(sanPham);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateSanPhamAsSyncs(SanPham sanPham)
+        public async Task UpdateAsSyncs(SanPham sanPham)
         {
             _context.SanPham.Update(sanPham);
             await _context.SaveChangesAsync();

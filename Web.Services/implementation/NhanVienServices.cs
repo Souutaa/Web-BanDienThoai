@@ -22,7 +22,7 @@ namespace Web.Services.implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteById(int id)
+        public async Task DeleteById(string id)
         {
             var nhanVien = GetById(id);
             if (nhanVien != null)
@@ -43,12 +43,12 @@ namespace Web.Services.implementation
             return _context.NhanVien.ToList();
         }
 
-        public NhanVien GetById(int id)
+        public NhanVien GetById(string id)
         {
-            return _context.NhanVien.Where(x => x.Id == id).FirstOrDefault();
+            return _context.NhanVien.Where(x => x.Id_NhanVien == id).FirstOrDefault();
         }
 
-        public async Task UpdateById(int id)
+        public async Task UpdateById(string id)
         {
             var nhanVien = GetById(id);
             _context.NhanVien.Update(nhanVien);

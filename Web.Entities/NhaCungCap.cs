@@ -10,8 +10,7 @@ namespace Web.Entities
     public class NhaCungCap
     {
         [Key]
-        public int Id { get; set; }
-        public int Id_NhaCungCap { get; set; }
+        public string Id_NhaCungCap { get; set; } 
         public string Name { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }

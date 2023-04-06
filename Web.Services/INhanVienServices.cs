@@ -10,11 +10,11 @@ namespace Web.Services
     public interface INhanVienServices
     {
         IEnumerable<NhanVien> GetAll();
-        NhanVien GetById(int id);
+        NhanVien GetById(string id);
         Task CreateNhanVienAsSync(NhanVien nhanVien);
         Task UpdateNhanVienAsSyncs(NhanVien nhanVien);
-        Task UpdateById(int id);
-        Task DeleteById(int id);
+        Task UpdateById(string id);
+        Task DeleteById(string id);
         Task DeleteNhanVien(NhanVien nhanVien);
     }
 }

@@ -11,13 +11,13 @@ namespace Web.Services.implementation
         {
             _context = context;
         }
-        public async Task CreateNhanVienAsSync(KhachHang khachHang)
+        public async Task CreateAsSync(KhachHang khachHang)
         {
             _context.Add(khachHang);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteById(int id)
+        public async Task DeleteById(string id)
         {
             var khachHang = GetById(id);
             if (khachHang != null)
@@ -27,7 +27,7 @@ namespace Web.Services.implementation
             }
         }
 
-        public async Task DeleteNhanVien(KhachHang khachHang)
+        public async Task DeleteAsSync(KhachHang khachHang)
         {
             _context?.KhachHang.Remove(khachHang);
             await _context.SaveChangesAsync();
@@ -38,19 +38,19 @@ namespace Web.Services.implementation
             return _context.KhachHang.ToList();
         }
 
-        public KhachHang GetById(int id)
+        public KhachHang GetById(string id)
         {
-            return _context.KhachHang.Where(x => x.Id == id).FirstOrDefault();
+            return _context.KhachHang.Where(x => x.Id_KhacHang == id).FirstOrDefault();
         }
 
-        public async Task UpdateById(int id)
+        public async Task UpdateById(string id)
         {
             var khachHang = GetById(id);
             _context.KhachHang.Update(khachHang);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateNhanVienAsSyncs(KhachHang khachHang)
+        public async Task UpdateAsSyncs(KhachHang khachHang)
         {
             _context.KhachHang.Update(khachHang);
             await _context.SaveChangesAsync();
