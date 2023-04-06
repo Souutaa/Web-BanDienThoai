@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Web.Entities;
+﻿using Web.Entities;
 using Web.Persistances;
 
 namespace Web.Services.implementation
@@ -32,7 +27,7 @@ namespace Web.Services.implementation
             throw new NotImplementedException();
         }
 
-        public IEnumerable<NhanVien> GetAll()
+        public IEnumerable<DanhMucCon> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -48,11 +43,6 @@ namespace Web.Services.implementation
         }
 
         public Task UpdateNhanVienAsSyncs(DanhMucCon danhMucCon)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<DanhMucCon> IDanhMucConServices.GetAll()
         {
             throw new NotImplementedException();
         }
