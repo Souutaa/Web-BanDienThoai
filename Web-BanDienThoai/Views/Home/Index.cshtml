@@ -1,9 +1,11 @@
 ﻿@using Web_BanDienThoai.Models.SanPham;
+@using Web.Entities;
 
 @model IEnumerable<IndexSanPhamViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
+
 @foreach(var item in Model)
 {
 <h1>@item.Ten_SanPham</h1>    

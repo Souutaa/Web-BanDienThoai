@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web.Entities;
 using Web.Services;
+using Web.Services.implementation;
 using Web_BanDienThoai.Models.SanPham;
 
 namespace Web_BanDienThoai.Controllers
@@ -12,10 +13,10 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         public SanPhamController(ISanPhamServices sanphamService, IWebHostEnvironment webHostEnvironment)
         {
-            _sanphamService = sanphamService;
+            _sanphamService = sanphamService;           
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+        public IActionResult Index() //Sản Phẩm
         {
             var model = _sanphamService.GetAll().Select(sanpham => new IndexSanPhamViewModel
             {
@@ -27,9 +28,9 @@ namespace Web_BanDienThoai.Controllers
             }).ToList();
             return View(model);
         }
-
+       
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create() //Sản Phẩm
         {
             var model = new CreateSanPhamViewModel();
             return View(model);
@@ -37,7 +38,7 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateSanPhamViewModel model)
+        public async Task<IActionResult> Create(CreateSanPhamViewModel model) //Sản Phẩm
         {
             if (ModelState.IsValid)
             {
@@ -69,6 +70,8 @@ namespace Web_BanDienThoai.Controllers
             }
             return View();
         }
+
+        
 
         //[HttpGet]
         //public IActionResult Detail(int id)

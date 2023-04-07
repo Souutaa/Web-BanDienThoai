@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Web.Persistances;
+using Web.Services;
+using Web.Services.implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
@@ -10,7 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-//builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<ISanPhamServices, SanPhamServices>();
+builder.Services.AddScoped<IMauSacServices, MauSacServices>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -35,6 +38,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=SanPham}/{action=Index}/{id?}");
 
 app.Run();

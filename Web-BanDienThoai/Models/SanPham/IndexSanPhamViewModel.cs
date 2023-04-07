@@ -1,4 +1,5 @@
-﻿namespace Web_BanDienThoai.Models.SanPham
+﻿using Web.Entities;
+namespace Web_BanDienThoai.Models.SanPham
 {
     public class IndexSanPhamViewModel
     {

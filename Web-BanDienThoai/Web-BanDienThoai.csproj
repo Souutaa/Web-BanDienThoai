@@ -28,6 +28,7 @@
     <Folder Include="Models\HoaDon\" />
     <Folder Include="Models\NhapHang\" />
     <Folder Include="Models\NhaCungCap\" />
+	<Folder Include="Models\SanPham\" />
   </ItemGroup>
 
 </Project>
