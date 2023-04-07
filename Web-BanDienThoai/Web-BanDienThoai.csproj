@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Models\HoaDon\" />
-    <Folder Include="Models\CauHinh\" />
     <Folder Include="Models\ChiTietHoaDon\" />
     <Folder Include="Models\ChiTietNhapHang\" />
     <Folder Include="Models\DanhMucCon\" />
