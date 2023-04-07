@@ -10,11 +10,11 @@ namespace Web.Services
     public interface IMauSacServices
     {
         IEnumerable<MauSac> GetAll();
-        NhanVien GetById(int id);
-        Task CreateNhanVienAsSync(MauSac mauSac);
-        Task UpdateNhanVienAsSyncs(MauSac mauSac);
-        Task UpdateById(int id);
-        Task DeleteById(int id);
-        Task DeleteNhanVien(MauSac mauSac);
+        MauSac GetById(string id);
+        Task CreateAsSync(MauSac mauSac);
+        Task UpdateAsSyncs(MauSac mauSac);
+        Task UpdateById(string id);
+        Task DeleteById(string id);
+        Task DeleteAsSync(MauSac mauSac);
     }
 }

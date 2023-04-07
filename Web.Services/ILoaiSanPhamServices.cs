@@ -10,11 +10,11 @@ namespace Web.Services
     public interface ILoaiSanPhamServices
     {
         IEnumerable<LoaiSanPham> GetAll();
-        NhanVien GetById(int id);
-        Task CreateNhanVienAsSync(LoaiSanPham loaiSanPham);
-        Task UpdateNhanVienAsSyncs(LoaiSanPham loaiSanPham);
-        Task UpdateById(int id);
-        Task DeleteById(int id);
-        Task DeleteNhanVien(LoaiSanPham loaiSanPham);
+        LoaiSanPham GetById(string id); 
+        Task CreateAsSync(LoaiSanPham loaiSanPham); 
+        Task UpdateAsSyncs(LoaiSanPham loaiSanPham); 
+        Task UpdateById(string id); 
+        Task DeleteById(string id); 
+        Task DeleteAsSync(LoaiSanPham loaiSanPham);
     }
 }

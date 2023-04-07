@@ -16,18 +16,18 @@ namespace Web.Services.implementation
         {
             _context = context;
         }
-        public async Task CreateNhanVienAsSync(MauSac mauSac)
+        public async Task CreateAsSync(MauSac mauSac)
         {
             _context.Add(mauSac);
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteById(int id)
+        public async Task DeleteById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteNhanVien(MauSac mauSac)
+        public async Task DeleteAsSync(MauSac mauSac)
         {
             throw new NotImplementedException();
         }
@@ -37,17 +37,17 @@ namespace Web.Services.implementation
             throw new NotImplementedException();
         }
 
-        public NhanVien GetById(int id)
+        public MauSac GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateById(int id)
+        public async Task UpdateById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateNhanVienAsSyncs(MauSac mauSac)
+        public async Task UpdateAsSyncs(MauSac mauSac)
         {
             throw new NotImplementedException();
         }

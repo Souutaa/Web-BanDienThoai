@@ -10,11 +10,11 @@ namespace Web.Services
     public interface INhaCungCapServices
     {
         IEnumerable<NhaCungCap> GetAll();
-        NhanVien GetById(int id);
-        Task CreateNhanVienAsSync(NhaCungCap nhaCungCap);
-        Task UpdateNhanVienAsSyncs(NhaCungCap nhaCungCap);
-        Task UpdateById(int id);
-        Task DeleteById(int id);
-        Task DeleteNhanVien(NhaCungCap nhaCungCap);
+        NhaCungCap GetById(string id);
+        Task CreateAsSync(NhaCungCap nhaCungCap);
+        Task UpdateAsSyncs(NhaCungCap nhaCungCap);
+        Task UpdateById(string id);
+        Task DeleteById(string id);
+        Task DeleteAsSync(NhaCungCap nhaCungCap);
     }
 }

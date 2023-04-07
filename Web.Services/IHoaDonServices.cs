@@ -10,11 +10,11 @@ namespace Web.Services
     public interface IHoaDonServices
     {
         IEnumerable<HoaDon> GetAll();
-        NhanVien GetById(int id);
-        Task CreateNhanVienAsSync(HoaDon hoaDon);
-        Task UpdateNhanVienAsSyncs(HoaDon hoaDon);
-        Task UpdateById(int id);
-        Task DeleteById(int id);
-        Task DeleteNhanVien(HoaDon hoaDon);
+        HoaDon GetById(string id); 
+        Task CreateAsSync(HoaDon hoaDon); 
+        Task UpdateAsSyncs(HoaDon hoaDon); 
+        Task UpdateById(string id); 
+        Task DeleteById(string id); 
+        Task DeleteAsSync(HoaDon hoaDon);
     }
 }

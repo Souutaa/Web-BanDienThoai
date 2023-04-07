@@ -16,18 +16,18 @@ namespace Web.Services.implementation
         {
             _context = context;
         }
-        public async Task CreateNhanVienAsSync(LoaiSanPham loaiSanPham)
+        public async Task CreateAsSync(LoaiSanPham loaiSanPham)
         {
             _context.Add(loaiSanPham);
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteById(int id)
+        public async Task DeleteById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteNhanVien(LoaiSanPham loaiSanPham)
+        public async Task DeleteAsSync(LoaiSanPham loaiSanPham)
         {
             throw new NotImplementedException();
         }
@@ -37,17 +37,17 @@ namespace Web.Services.implementation
             throw new NotImplementedException();
         }
 
-        public NhanVien GetById(int id)
+        public LoaiSanPham GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateById(int id)
+        public async Task UpdateById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateNhanVienAsSyncs(LoaiSanPham loaiSanPham)
+        public async Task UpdateAsSyncs(LoaiSanPham loaiSanPham)
         {
             throw new NotImplementedException();
         }
