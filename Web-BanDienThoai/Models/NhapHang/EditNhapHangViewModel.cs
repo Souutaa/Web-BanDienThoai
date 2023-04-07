@@ -1,6 +1,6 @@
 ﻿namespace Web_BanDienThoai.Models.NhapHang
 {
-    public class EdittNhapHangViewModel
+    public class EditNhapHangViewModel
     {
     }
 }
