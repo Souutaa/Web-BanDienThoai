@@ -12,8 +12,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<IDanhMucConServices, DanhMucConServices>();
 builder.Services.AddScoped<ISanPhamServices, SanPhamServices>();
 builder.Services.AddScoped<IMauSacServices, MauSacServices>();
+builder.Services.AddScoped<ICauHinhServices, CauHinhServices>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

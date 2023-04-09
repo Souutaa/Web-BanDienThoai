@@ -20,4 +20,4 @@ namespace Web_BanDienThoai.Models.LoaiSanPham
         [ForeignKey("MauSac")] public string Id_MauSac { get; set; }  //màu sắc
     }
 }
-}
+

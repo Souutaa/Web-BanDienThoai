@@ -1,0 +1,40 @@
+﻿@using Web_BanDienThoai.Models.DanhMucCon;
+@model IEnumerable<IndexDanhMucConViewModel>
+
+<div class="row">
+    <div class="col-md-12 table-responsive-md">
+        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Tạo Danh Mục Con</a>
+        <table class="table table-strip table-dark">
+            <thead>
+                <tr>
+                    <th>Mã danh mục con</th>
+                    <th>Tên danh mục con</th>
+                    <th>Mã cấu hình</th>
+                    <th class="text-warning">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id_DanhMucCon</td>
+                        <td>@item.TenDanhMuc</td>
+                        <td>@item.Id_CauHinh</td>
+                        @*<td>
+                    <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id">
+                    <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a class="text-success" asp-action="Detail" asp-route-id="@item.Id">
+                    <i class="fas fa-bars"></i> Detail
+                    </a>
+                    <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">
+                    <i class="far fa-trash-alt"></i> Delete
+                    </a>
+                    </td>*@
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

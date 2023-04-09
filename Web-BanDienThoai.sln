@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web-BanDienThoai", "Web-BanDienThoai\Web-BanDienThoai.csproj", "{F7B82738-CC51-42E6-9B31-435143CA556D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web-BanDienThoai", "Web-BanDienThoai\Web-BanDienThoai.csproj", "{F7B82738-CC51-42E6-9B31-435143CA556D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Entities", "Web.Entities\Web.Entities.csproj", "{03ECCAAB-BAC9-4C1A-99BA-502E64D3DBBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Entities", "Web.Entities\Web.Entities.csproj", "{03ECCAAB-BAC9-4C1A-99BA-502E64D3DBBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Persistances", "Web.Persistances\Web.Persistances.csproj", "{129B922C-CE21-4C98-9843-2A6AF4B30768}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Persistances", "Web.Persistances\Web.Persistances.csproj", "{129B922C-CE21-4C98-9843-2A6AF4B30768}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Services", "Web.Services\Web.Services.csproj", "{84A04691-C988-41C5-9250-BEFAF958D819}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Services", "Web.Services\Web.Services.csproj", "{84A04691-C988-41C5-9250-BEFAF958D819}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
