@@ -12,8 +12,8 @@ using Web.Persistances;
 namespace Web.Persistances.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230406073427_Initial")]
-    partial class Initial
+    [Migration("20230409123224_Intial")]
+    partial class Intial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,11 +121,8 @@ namespace Web.Persistances.Migrations
 
             modelBuilder.Entity("Web.Entities.HoaDon", b =>
                 {
-                    b.Property<int>("Id_HoaDon")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_HoaDon"));
+                    b.Property<string>("Id_HoaDon")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Id_NhanVien")
                         .IsRequired()
@@ -201,6 +198,10 @@ namespace Web.Persistances.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Id_MauSac")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("TenLoai")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -208,6 +209,8 @@ namespace Web.Persistances.Migrations
                     b.HasKey("Id_loai");
 
                     b.HasIndex("Id_DanhMucCon");
+
+                    b.HasIndex("Id_MauSac");
 
                     b.ToTable("LoaiSanPham");
                 });
@@ -408,7 +411,15 @@ namespace Web.Persistances.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Web.Entities.MauSac", "MauSac")
+                        .WithMany()
+                        .HasForeignKey("Id_MauSac")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("DanhMucCon");
+
+                    b.Navigation("MauSac");
                 });
 
             modelBuilder.Entity("Web.Entities.NhapHang", b =>

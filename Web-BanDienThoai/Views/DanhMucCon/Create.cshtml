@@ -1,8 +1,10 @@
-﻿@using Web_BanDienThoai.Models.DanhMucCon;
+﻿@using System.Collections;
+@using Web_BanDienThoai.Models.DanhMucCon;
 @using Web_BanDienThoai.Models.CauHinh;
 @using Web.Services;
 @using Web.Entities;
 @model CreateDanhMucConViewModel;
+
 <div class="row">
     <form method="post" asp-action="Create" enctype="multipart/form-data">
 
@@ -29,11 +31,11 @@
                 </div>
                 <div class="col-3 form-group">
                     <select asp-for="@Model.Id_CauHinh" class="form-control"> 
-                        <option val"" selected>--Select--</option>  
-                       @* @foreach(ICauHinhServices)
+                        <option val="" selected>--Select--</option>
+                        @foreach (var item in Model.Id_CauHinh)
                         {
-                        <option val="@SelectListItem">@item.title</option>}*@
-                        @IndexCauHinhViewModel.
+                        <option val="@item">@item</option>}
+                        
                     </select>
                     <span asp-validation-for="@Model.Id_CauHinh" class="text-danger"></span>
                 </div>

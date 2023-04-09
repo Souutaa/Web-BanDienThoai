@@ -6,7 +6,7 @@ namespace Web.Entities
     public class HoaDon
     {
         [Key]
-        public int Id_HoaDon { get; set; }
+        public string Id_HoaDon { get; set; }
         public DateTime NgayLapHoaDon { get; set; }
         public double TongTien { get; set; }
         [ForeignKey("KhachHang")] public string Id_khachhang { get; set; }  //Khách Hàng

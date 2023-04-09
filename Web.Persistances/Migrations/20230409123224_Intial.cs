@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Web.Persistances.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Intial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -145,8 +145,7 @@ namespace Web.Persistances.Migrations
                 name: "HoaDon",
                 columns: table => new
                 {
-                    Id_HoaDon = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id_HoaDon = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NgayLapHoaDon = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TongTien = table.Column<double>(type: "float", nullable: false),
                     Id_khachhang = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -206,7 +205,8 @@ namespace Web.Persistances.Migrations
                 {
                     Id_loai = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TenLoai = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Id_DanhMucCon = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id_DanhMucCon = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id_MauSac = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,6 +216,12 @@ namespace Web.Persistances.Migrations
                         column: x => x.Id_DanhMucCon,
                         principalTable: "DanhMucCon",
                         principalColumn: "Id_DanhMucCon",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoaiSanPham_MauSac_Id_MauSac",
+                        column: x => x.Id_MauSac,
+                        principalTable: "MauSac",
+                        principalColumn: "Id_MauSac",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -263,6 +269,11 @@ namespace Web.Persistances.Migrations
                 column: "Id_DanhMucCon");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LoaiSanPham_Id_MauSac",
+                table: "LoaiSanPham",
+                column: "Id_MauSac");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NhapHang_Id_NhaCungCap",
                 table: "NhapHang",
                 column: "Id_NhaCungCap");
@@ -291,9 +302,6 @@ namespace Web.Persistances.Migrations
                 name: "HoaDon");
 
             migrationBuilder.DropTable(
-                name: "MauSac");
-
-            migrationBuilder.DropTable(
                 name: "NhapHang");
 
             migrationBuilder.DropTable(
@@ -313,6 +321,9 @@ namespace Web.Persistances.Migrations
 
             migrationBuilder.DropTable(
                 name: "DanhMucCon");
+
+            migrationBuilder.DropTable(
+                name: "MauSac");
 
             migrationBuilder.DropTable(
                 name: "CauHinh");

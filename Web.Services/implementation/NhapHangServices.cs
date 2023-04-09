@@ -17,34 +17,44 @@ namespace Web.Services.implementation
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteById(string id)
+        public async Task DeleteById(string id)
         {
-            throw new NotImplementedException();
+            var nhapHang = GetById(id);
+            if (nhapHang != null)
+            {
+                _context.NhapHang.Remove(nhapHang);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public Task DeleteAsSync(NhapHang nhapHang)
+        public async Task DeleteAsSync(NhapHang nhapHang)
         {
-            throw new NotImplementedException();
+            _context?.NhapHang.Remove(nhapHang);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<NhapHang> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.NhapHang.ToList();
         }
 
         public NhapHang GetById(string id)
         {
-            throw new NotImplementedException();
+            return _context.NhapHang.Where(x => x.Id_NhapHang == id).FirstOrDefault();
         }
 
-        public Task UpdateById(string id)
+        public async Task UpdateById(string id)
         {
-            throw new NotImplementedException();
+            var nhapHang = GetById(id);
+            _context.NhapHang.Update(nhapHang);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsSyncs(NhapHang nhapHang)
+        public async Task UpdateAsSyncs(NhapHang nhapHang)
         {
-            throw new NotImplementedException();
+            _context.NhapHang.Update(nhapHang);
+            await _context.SaveChangesAsync();
         }
     }
 }
+

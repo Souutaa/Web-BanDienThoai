@@ -24,32 +24,42 @@ namespace Web.Services.implementation
 
         public async Task DeleteById(string id)
         {
-            throw new NotImplementedException();
+            var loaiSanPham = GetById(id);
+            if (loaiSanPham != null)
+            {
+                _context.LoaiSanPham.Remove(loaiSanPham);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteAsSync(LoaiSanPham loaiSanPham)
         {
-            throw new NotImplementedException();
+            _context?.LoaiSanPham.Remove(loaiSanPham);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<LoaiSanPham> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.LoaiSanPham.ToList();
         }
 
         public LoaiSanPham GetById(string id)
         {
-            throw new NotImplementedException();
+            return _context.LoaiSanPham.Where(x => x.Id_loai == id).FirstOrDefault();
         }
 
         public async Task UpdateById(string id)
         {
-            throw new NotImplementedException();
+            var loaiSanPham = GetById(id);
+            _context.LoaiSanPham.Update(loaiSanPham);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsSyncs(LoaiSanPham loaiSanPham)
         {
-            throw new NotImplementedException();
+            _context.LoaiSanPham.Update(loaiSanPham);
+            await _context.SaveChangesAsync();
         }
     }
 }
+

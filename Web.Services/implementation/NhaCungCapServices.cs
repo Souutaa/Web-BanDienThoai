@@ -22,35 +22,44 @@ namespace Web.Services.implementation
             _context.Add(nhaCungCap);
             await _context.SaveChangesAsync();
         }
-       
-        public async Task DeleteAsSync(NhaCungCap nhaCungCap)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task DeleteById(string id)
         {
-            throw new NotImplementedException();
+            var nhacungcap = GetById(id);
+            if (nhacungcap != null)
+            {
+                _context.NhaCungCap.Remove(nhacungcap);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteAsSync(NhaCungCap nhaCungCap)
+        {
+            _context?.NhaCungCap.Remove(nhaCungCap);
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<NhaCungCap> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.NhaCungCap.ToList();
         }
 
         public NhaCungCap GetById(string id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task UpdateAsSyncs(NhaCungCap nhaCungCap)
-        {
-            throw new NotImplementedException();
+            return _context.NhaCungCap.Where(x => x.Id_NhaCungCap == id).FirstOrDefault();
         }
 
         public async Task UpdateById(string id)
         {
-            throw new NotImplementedException();
+            var nhaCungCap = GetById(id);
+            _context.NhaCungCap.Update(nhaCungCap);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsSyncs(NhaCungCap nhaCungCap)
+        {
+            _context.NhaCungCap.Update(nhaCungCap);
+            await _context.SaveChangesAsync();
         }
     }
 }
