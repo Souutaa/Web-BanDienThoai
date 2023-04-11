@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Azure.Messaging;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web_BanDienThoai.Models.SanPham
 {
@@ -16,13 +19,18 @@ namespace Web_BanDienThoai.Models.SanPham
         [Display(Name = "Giá tiền")]
         public double GiaTien { get; set; }
 
+        [Required(ErrorMessage = "Phải nhập số lượng sản phẩm")]
         [Display(Name = "Số lượng sản phẩm")]
+        [RegularExpression(@"^[1-9]\d*$", ErrorMessage ="Phải nhập số lớn hơn 0")]
         public int SoLuong { get; set; }
+        public string Rom { get; set; }
 
         [Required(ErrorMessage = "Phải nhập mã loại sản phẩm"), StringLength(50, MinimumLength = 2)]
-        [RegularExpression(@"^[Ll][Ss][Pp][0-9]\S*$"), Display(Name = "Mã loại sản phẩm")]
+        [RegularExpression(@"^[Ll][Ss][Pp][0-9]\S*$", ErrorMessage ="Phải nhập theo cú pháp LSP__"), Display(Name = "Mã loại sản phẩm")]
         public string Id_LoaiSanPham { get; set; } //Loại Sản Phẩm
+
+        [ValidateNever]
+        public IEnumerable<SelectListItem>? LoaiSanPham { get; set; }
         
-        public string Rom { get; set; }
     }
 }

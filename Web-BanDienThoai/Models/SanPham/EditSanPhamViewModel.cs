@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web_BanDienThoai.Models.SanPham
 {
@@ -18,11 +20,13 @@ namespace Web_BanDienThoai.Models.SanPham
 
         [Display(Name = "Số lượng sản phẩm")]
         public int SoLuong { get; set; }
+        public string Rom { get; set; }
 
         [Required(ErrorMessage = "Phải nhập mã loại sản phẩm"), StringLength(50, MinimumLength = 2)]
         [RegularExpression(@"^[Ll][Ss][Pp][0-9]\S*$"), Display(Name = "Mã loại sản phẩm")]
         public string Id_LoaiSanPham { get; set; } //Loại Sản Phẩm
 
-        public string Rom { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem>? LoaiSanPham { get; set; }
     }
 }

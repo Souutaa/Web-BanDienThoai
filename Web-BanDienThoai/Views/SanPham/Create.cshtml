@@ -1,2 +1,97 @@
 ﻿@using Web_BanDienThoai.Models.SanPham;
 @model CreateSanPhamViewModel
+@using System.Collections;
+@using Web.Persistances;
+@using Web_BanDienThoai.Controllers;
+@using Web_BanDienThoai.Models.LoaiSanPham;
+@using Web.Services.implementation;
+@using Web.Services;
+@using Web.Entities;
+
+<div class="row">
+    <form method="post" asp-action="Create" enctype="multipart/form-data">
+
+        <div class="col-md-12 table-responsive-md">
+            <div class="form-row">
+                <div class="col-2 form-group">
+                    <label asp-for="Id_SanPham" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="Id_SanPham" class="form-control" />
+                    <span asp-validation-for="Id_SanPham" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="Ten_SanPham" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="Ten_SanPham" class="form-control" />
+                    <span asp-validation-for="Ten_SanPham" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group">
+                    <label asp-for="Rom" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="Rom" class="form-control" />
+                    <span asp-validation-for="Rom" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-2 form-group">
+                    <label asp-for="SoLuong" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="SoLuong" class="form-control" />
+                    <span asp-validation-for="SoLuong" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="GiaTien" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="GiaTien" class="form-control" />
+                    <span asp-validation-for="GiaTien" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="Id_LoaiSanPham" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <select asp-for="Id_LoaiSanPham" class="form-control" asp-items="@Model.LoaiSanPham">
+                        <option value=""> ---Chọn Loại Sản Phẩm--- </option>
+                    </select>
+                    <span asp-validation-for="Id_LoaiSanPham" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-2"></div>
+                <div class="form-group col-md-1">
+                    <label asp-for="@Model.ImageUrl"></label>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="btn btn-primary btn-icon-text">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <input asp-for="ImageUrl" type="file" value="Upload" />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="padding-bottom:0.7cm"></div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Save</button>
+                <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+                <br />
+                <br />
+                <br />
+            </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

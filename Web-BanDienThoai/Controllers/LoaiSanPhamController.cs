@@ -43,15 +43,21 @@ namespace Web_BanDienThoai.Controllers
         public IActionResult Create()
         {
             var model = new CreateLoaiSanPhamViewModel();
-            List<SelectListItem> listDanhMucCon = _context.DanhMucCon.
+            List<SelectListItem> listDanhMucCon = _danhmucconService.GetAll().
                 Select(c => new SelectListItem
                 {
-                    Value = c.Id_DanhMucCon,
+                    Value = c.Id_DanhMucCon.ToString(),
                     Text = c.TenDanhMuc
                 }).ToList();
-
             model.DanhMucCon = listDanhMucCon;
-            model.MauSac = new List<SelectListItem>();
+
+            List<SelectListItem> listMauSac = _mausacService.GetAll().
+                Select(c => new SelectListItem
+            {
+                Value = c.Id_MauSac.ToString(),
+                Text = c.TenMauSac
+            }).ToList();
+            model.MauSac = listMauSac;
             return View(model);
         }
 

@@ -18,6 +18,7 @@ namespace Web_BanDienThoai.Models.DanhMucCon
 
         [Display(Name = "Mã Cấu Hình")]
         [Required]
+        [ForeignKey("CauHinh")]
         public /*List<String>*/ string  Id_CauHinh { get; set; }  //Cấu Hình
                                                                   ////public CauHinh cauHinh { get; set; };
         [ValidateNever]
