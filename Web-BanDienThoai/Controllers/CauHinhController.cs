@@ -11,11 +11,7 @@ namespace Web_BanDienThoai.Controllers
     public class CauHinhController : Controller
     {
         private ICauHinhServices _cauhinhService;
-        private IWebHostEnvironment _webHostEnvironment;
-
-        public CauHinhController()
-        {           
-        }
+        private IWebHostEnvironment _webHostEnvironment;       
 
         public CauHinhController(ICauHinhServices cauhinhService, IWebHostEnvironment webHostEnvironment)
         {

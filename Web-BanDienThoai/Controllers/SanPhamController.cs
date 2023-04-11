@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Entities;
 using Web.Services;
 using Web.Services.implementation;
@@ -10,10 +11,12 @@ namespace Web_BanDienThoai.Controllers
     public class SanPhamController : Controller
     {
         private ISanPhamServices _sanphamService;
+        private ILoaiSanPhamServices _loaisanphamService;
         private IWebHostEnvironment _webHostEnvironment;
-        public SanPhamController(ISanPhamServices sanphamService, IWebHostEnvironment webHostEnvironment)
+        public SanPhamController(ISanPhamServices sanphamService, IWebHostEnvironment webHostEnvironment, ILoaiSanPhamServices loaisanphamService)
         {
-            _sanphamService = sanphamService;           
+            _sanphamService = sanphamService;      
+            _loaisanphamService = loaisanphamService;
             _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index() //Sản Phẩm
@@ -33,6 +36,14 @@ namespace Web_BanDienThoai.Controllers
         public IActionResult Create() //Sản Phẩm
         {
             var model = new CreateSanPhamViewModel();
+            List<SelectListItem> listLoaiSanPham = /*_context.CauHinh*/_loaisanphamService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_loai.ToString(),
+                    Text = c.TenLoai,
+                }).ToList();
+
+            model.LoaiSanPham = listLoaiSanPham;
             return View(model);
         }
 
