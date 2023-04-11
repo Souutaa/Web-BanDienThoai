@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Entities;
+using Web.Persistances;
 using Web.Services;
 using Web.Services.implementation;
 using Web_BanDienThoai.Models.DanhMucCon;
@@ -10,9 +12,11 @@ namespace Web_BanDienThoai.Controllers
         private IDanhMucConServices _danhmucconService;
         private ICauHinhServices _cauhinhService;
         private IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationDbContext _context;
 
-        public DanhMucConController(IDanhMucConServices danhmucconService, ICauHinhServices cauhinhService, IWebHostEnvironment webHostEnvironment)
+        public DanhMucConController(ApplicationDbContext context, IDanhMucConServices danhmucconService, ICauHinhServices cauhinhService, IWebHostEnvironment webHostEnvironment)
         {
+            _context = context;
             _danhmucconService = danhmucconService;
             _cauhinhService = cauhinhService;
             _webHostEnvironment = webHostEnvironment;
@@ -31,11 +35,20 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()  //Cấu Hình
+        public IActionResult Create()
         {
             var model = new CreateDanhMucConViewModel();
+            List<SelectListItem> listCauHinh = /*_context.CauHinh*/_cauhinhService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_CauHinh.ToString(),
+                    Text = c.Ram,
+                }).ToList();
+
+            model.CauHinh = listCauHinh;
             return View(model);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -48,7 +61,7 @@ namespace Web_BanDienThoai.Controllers
                 {
                     Id_DanhMucCon = model.Id_DanhMucCon,
                     TenDanhMuc = model.TenDanhMuc,
-                    Id_CauHinh = model.Id_CauHinh, /*cauHinhIds,*/
+                    Id_CauHinh = model.Id_CauHinh, /*cauHinhIds*/
                 };
                 await _danhmucconService.CreateAsSync(danhMucCon);
                 return RedirectToAction("Index");
@@ -95,7 +108,8 @@ namespace Web_BanDienThoai.Controllers
                 {
                     Id_DanhMucCon = model.Id_DanhMucCon,
                     TenDanhMuc = model.TenDanhMuc,
-                    Id_CauHinh = model.Id_CauHinh, /*cauHinhIds,*/
+                    Id_CauHinh = model.Id_CauHinh,
+                    //cauHinhIds,
                 };
                 await _danhmucconService.CreateAsSync(danhMucCon);
                 return RedirectToAction("Index");

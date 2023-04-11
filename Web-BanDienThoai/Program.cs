@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<ILoaiSanPhamServices, LoaiSanPhamServices>();
 builder.Services.AddScoped<IDanhMucConServices, DanhMucConServices>();
 builder.Services.AddScoped<ISanPhamServices, SanPhamServices>();
 builder.Services.AddScoped<IMauSacServices, MauSacServices>();

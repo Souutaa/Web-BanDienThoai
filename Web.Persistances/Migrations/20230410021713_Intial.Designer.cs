@@ -12,7 +12,7 @@ using Web.Persistances;
 namespace Web.Persistances.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230409123224_Intial")]
+    [Migration("20230410021713_Intial")]
     partial class Intial
     {
         /// <inheritdoc />

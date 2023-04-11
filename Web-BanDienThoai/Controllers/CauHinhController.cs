@@ -13,12 +13,15 @@ namespace Web_BanDienThoai.Controllers
         private ICauHinhServices _cauhinhService;
         private IWebHostEnvironment _webHostEnvironment;
 
+        public CauHinhController()
+        {           
+        }
+
         public CauHinhController(ICauHinhServices cauhinhService, IWebHostEnvironment webHostEnvironment)
         {
             _cauhinhService = cauhinhService;
             _webHostEnvironment = webHostEnvironment;
-        }
-
+        }        
         public IActionResult Index()
         {
             var model = _cauhinhService.GetAll().Select(cauhinh => new IndexCauHinhViewModel

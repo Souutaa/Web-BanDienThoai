@@ -6,7 +6,8 @@
 @using Web.Services.implementation;
 @using Web.Services;
 @using Web.Entities;
-@model CreateDanhMucConViewModel;
+@using Web_BanDienThoai.Models.LoaiSanPham;
+@model CreateLoaiSanPhamViewModel;
 
 <div class="row">
     <form method="post" asp-action="Create" enctype="multipart/form-data">
@@ -14,32 +15,44 @@
         <div class="col-md-12 table-responsive-md">
             <div class="form-row">
                 <div class="col-2 form-group">
-                    <label asp-for="Id_DanhMucCon" class="form-label"></label>
+                    <label asp-for="@Model.Id_loai" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="Id_DanhMucCon" class="form-control" />
-                    <span asp-validation-for="Id_DanhMucCon" class="text-danger"></span>
+                    <input asp-for="@Model.Id_loai" class="form-control" />
+                    <span asp-validation-for="@Model.Id_loai" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
-                    <label asp-for="TenDanhMuc" class="form-label"></label>
+                    <label asp-for="@Model.TenLoai" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="TenDanhMuc" class="form-control" />
-                    <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
+                    <input asp-for="@Model.TenLoai" class="form-control" />
+                    <span asp-validation-for="@Model.TenLoai" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
-                    <label asp-for="CauHinh" class="form-label"></label>
+                    <label asp-for="@Model.Id_DanhMucCon" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_CauHinh" class="form-control" asp-items="@Model.CauHinh">
-                        <option value=""> Chọn Cấu Hình </option>
+                    <select asp-for="@Model.Id_DanhMucCon" asp-items="@Model.DanhMucCon" class="form-control">
+                        <option val="" selected>--Select--</option>
+
                     </select>
-                    <span asp-validation-for="Id_CauHinh" class="text-danger"></span>
+                    <span asp-validation-for="@Model.Id_DanhMucCon" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.Id_MauSac" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <select asp-for="@Model.Id_MauSac" asp-items="@Model.MauSac" class="form-control">
+                        <option val="" selected>--Select--</option>
+
+                    </select>
+                    <span asp-validation-for="@Model.Id_MauSac" class="text-danger"></span>
                 </div>
             </div>
-           
+
             <div class="form-group">
 
                 <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Save</button>
@@ -56,17 +69,5 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-@*        <script type ="text/javascript">
-        $(document).ready(function(){
-            $('#1stCauHinh').change(function(){
-            var selectedCauHinh = $("#1stCauHinh").val();
 
-            if(selectedCauHinh != null && selectedCauHinh != ''){
-                $.getJSON('@Url.Action()')
-            }
-            })
-        })
-    }
-}*@
-    
 
