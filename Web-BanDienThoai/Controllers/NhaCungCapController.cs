@@ -40,7 +40,7 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateNhaCungCapViewModel model) //Màu Sắc
+        public async Task<IActionResult> Create(CreateNhaCungCapViewModel model) 
         {
             if (ModelState.IsValid)
             {
