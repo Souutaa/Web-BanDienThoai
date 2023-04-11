@@ -10,10 +10,6 @@ namespace Web_BanDienThoai.Controllers
         private INhaCungCapServices _nhacungcapService;
         private IWebHostEnvironment _webHostEnvironment;
 
-        public NhaCungCapController()
-        {
-        }
-
         public NhaCungCapController(INhaCungCapServices nhacungcapService, IWebHostEnvironment webHostEnvironment)
         {
             _nhacungcapService = nhacungcapService;
@@ -23,6 +19,7 @@ namespace Web_BanDienThoai.Controllers
         {
             var model = _nhacungcapService.GetAll().Select(nhacungcap => new IndexNhaCungCapViewModel
             {
+                Id_NhaCungCap= nhacungcap.Id_NhaCungCap,
                 Name = nhacungcap.Name,
                 Email = nhacungcap.Email,
                 Address = nhacungcap.Address,
@@ -46,6 +43,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 var nhacungcap = new NhaCungCap
                 {
+                    Id_NhaCungCap = model.Id_NhaCungCap,
                     Name = model.Name,
                     Email = model.Email,
                     Address = model.Address,
@@ -93,6 +91,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 var nhacungcap = new NhaCungCap
                 {
+                    Id_NhaCungCap = model.Id_NhaCungCap,
                     Name = model.Name,
                     Email = model.Email,
                     Address = model.Address,
