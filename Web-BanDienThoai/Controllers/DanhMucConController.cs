@@ -4,6 +4,7 @@ using Web.Entities;
 using Web.Persistances;
 using Web.Services;
 using Web.Services.implementation;
+using Web_BanDienThoai.Models.CauHinh;
 using Web_BanDienThoai.Models.DanhMucCon;
 namespace Web_BanDienThoai.Controllers
 {
@@ -72,48 +73,64 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            if (id.ToString() == null)
+            var danhMucCon = _danhmucconService.GetById(id);
+            if (danhMucCon == null)
             {
                 return NotFound();
             }
-            var model = _danhmucconService.GetById(id);
-            _danhmucconService.DeleteAsSync(model);
+            var model = new DeleteDanhMucConViewModel
+            {
+                Id_DanhMucCon = danhMucCon.Id_DanhMucCon,
+                TenDanhMuc = danhMucCon.TenDanhMuc,
+            };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(DeleteDanhMucConViewModel model)
+        public async Task<IActionResult> Delete(DeleteDanhMucConViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var danhMucCon = new DanhMucCon
-                {
-                    Id_DanhMucCon = model.Id_DanhMucCon,
-                    TenDanhMuc = model.TenDanhMuc,
-                };
-                _danhmucconService.DeleteAsSync(danhMucCon);
+                await _danhmucconService.DeleteById(model.Id_DanhMucCon);
+                return RedirectToAction("Index");
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var danhMucCon = _danhmucconService.GetById(id);
+            if (danhMucCon == null)
+            {
+                return NotFound();
+            }
+            var model = new EditDanhMucConViewModel
+            {
+                Id_DanhMucCon = danhMucCon.Id_DanhMucCon,
+                TenDanhMuc = danhMucCon.TenDanhMuc,
+                Id_CauHinh = danhMucCon.Id_CauHinh,
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditDanhMucConViewModel model)
         {
-            if (ModelState.IsValid)
+            var danhMucCon = _danhmucconService.GetById(model.Id_DanhMucCon);
+            if (danhMucCon == null)
             {
-                var cauHinhIds = _cauhinhService.GetAll().Select(ch => ch.Id_CauHinh).ToList();
-                var danhMucCon = new DanhMucCon
-                {
-                    Id_DanhMucCon = model.Id_DanhMucCon,
-                    TenDanhMuc = model.TenDanhMuc,
-                    Id_CauHinh = model.Id_CauHinh,
-                    //cauHinhIds,
-                };
-                await _danhmucconService.CreateAsSync(danhMucCon);
-                return RedirectToAction("Index");
+                return NotFound();
             }
+            danhMucCon.Id_DanhMucCon = model.Id_DanhMucCon;
+            danhMucCon.TenDanhMuc = model.TenDanhMuc;            
+            danhMucCon.Id_CauHinh = model.Id_CauHinh;
+
+            await _danhmucconService.UpdateAsSyncs(danhMucCon);
+            //return RedirectToAction("Index");
+
             return View();
         }
     }

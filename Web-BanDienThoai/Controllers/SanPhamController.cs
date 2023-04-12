@@ -119,48 +119,70 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            if (id.ToString() == null)
+            var sanpham = _sanphamService.GetById(id);
+            if (sanpham == null)
             {
                 return NotFound();
             }
-            var model = _sanphamService.GetById(id);
-            _sanphamService.DeleteAsSync(model);
+            var model = new DeleteSanPhamViewModel
+            {
+                Id_SanPham = sanpham.Id_SanPham,
+                Ten_SanPham = sanpham.Ten_SanPham,
+            };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(DeleteSanPhamViewModel model)
+        public async Task<IActionResult> Delete(DeleteSanPhamViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var employee = new SanPham
-                {
-                    Id_SanPham = model.Id_SanPham,
-                    Ten_SanPham = model.Ten_SanPham,
-                };
-                _sanphamService.DeleteAsSync(employee);
+                await _sanphamService.DeleteById(model.Id_SanPham);
+                return RedirectToAction("Index");
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var sanpham = _sanphamService.GetById(id);
+            if (sanpham == null)
+            {
+                return NotFound();
+            }
+            var model = new EditSanPhamViewModel
+            {
+                Id_SanPham = sanpham.Id_SanPham,
+                Ten_SanPham = sanpham.Ten_SanPham,
+                GiaTien = sanpham.GiaTien,
+                SoLuong = sanpham.SoLuong,
+                Id_LoaiSanPham = sanpham.Id_SanPham,
+                Rom = sanpham.Rom,
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditSanPhamViewModel model)
         {
-            if (ModelState.IsValid)
+            var sanpham = _sanphamService.GetById(model.Id_SanPham);
+            if (sanpham == null)
             {
-                var sanpham = new SanPham
-                {
-                    Id_SanPham = model.Id_SanPham,
-                    Ten_SanPham = model.Ten_SanPham,
-                    GiaTien = model.GiaTien,
-                    SoLuong = model.SoLuong,
-                    Id_LoaiSanPham = model.Id_SanPham,
-                    Rom = model.Rom,
-                };
+                return NotFound();
+            }
+            sanpham.Id_SanPham = model.Id_SanPham;
+            sanpham.Ten_SanPham = model.Ten_SanPham;
+            sanpham.GiaTien = model.GiaTien;
+            sanpham.SoLuong = model.SoLuong;
+            sanpham.Id_LoaiSanPham = model.Id_LoaiSanPham;
+            sanpham.Rom = model.Rom;
+           
 
-                if (model.ImageUrl != null && model.ImageUrl.Length > 0)
+            if (model.ImageUrl != null && model.ImageUrl.Length > 0)
                 {
 
                     var uploadDir = @"images/employees";
@@ -174,8 +196,7 @@ namespace Web_BanDienThoai.Controllers
                     await _sanphamService.CreateAsSync(sanpham);
                     return RedirectToAction("Index");
                 }
-
-            }
+            
             return View();
         }
     }

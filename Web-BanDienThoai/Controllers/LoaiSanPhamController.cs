@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Entities;
 using Web.Persistances;
 using Web.Services;
+using Web_BanDienThoai.Models.DanhMucCon;
 using Web_BanDienThoai.Models.LoaiSanPham;
 
 namespace Web_BanDienThoai.Controllers
@@ -87,50 +88,65 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            if (id.ToString() == null)
+            var loaisanpham = _loaisanphamService.GetById(id);
+            if (loaisanpham == null)
             {
                 return NotFound();
             }
-            var model = _danhmucconService.GetById(id);
-            _danhmucconService.DeleteAsSync(model);
+            var model = new DeleteLoaiSanPhamViewModel
+            {
+                Id_loai = loaisanpham.Id_loai,
+                TenLoai = loaisanpham.TenLoai,
+            };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(DeleteLoaiSanPhamViewModel model)
+        public async Task<IActionResult> Delete(DeleteLoaiSanPhamViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var loaisanpham = new LoaiSanPham
-                {
-                    Id_loai = model.Id_loai,
-                    TenLoai = model.TenLoai,
-                };
-                _loaisanphamService.DeleteAsSync(loaisanpham);
+                await _loaisanphamService.DeleteById(model.Id_loai);
+                return RedirectToAction("Index");
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var loaisanpham = _loaisanphamService.GetById(id);
+            if (loaisanpham == null)
+            {
+                return NotFound();
+            }
+            var model = new EditLoaiSanPhamViewModel
+            {
+                Id_loai = loaisanpham.Id_loai,
+                TenLoai = loaisanpham.TenLoai,
+                Id_DanhMucCon = loaisanpham.Id_DanhMucCon,
+                Id_MauSac = loaisanpham.Id_MauSac,
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditLoaiSanPhamViewModel model)
         {
-            if (ModelState.IsValid)
+            var loaisanpham = _loaisanphamService.GetById(model.Id_DanhMucCon);
+            if (loaisanpham == null)
             {
-                var DanhMucIds = _danhmucconService.GetAll().Select(dm => dm.Id_DanhMucCon).ToList();
-                var MauSacIds = _mausacService.GetAll().Select(ms => ms.Id_MauSac).ToList();
-                var loaisanpham = new LoaiSanPham
-                {
-                    Id_loai = model.Id_loai,
-                    TenLoai = model.TenLoai,
-                    Id_DanhMucCon = model.Id_DanhMucCon,
-                    Id_MauSac = model.Id_MauSac,
-                    /*cauHinhIds*/
-                };
-                await _loaisanphamService.CreateAsSync(loaisanpham);
-                return RedirectToAction("Index");
+                return NotFound();
             }
+            loaisanpham.Id_loai = model.Id_loai;
+            loaisanpham.TenLoai = model.TenLoai;
+            loaisanpham.Id_DanhMucCon = model.Id_DanhMucCon;
+            loaisanpham.Id_MauSac = model.Id_MauSac;
+            await _loaisanphamService.UpdateAsSyncs(loaisanpham);
+            //return RedirectToAction("Index");
+
             return View();
         }
     }

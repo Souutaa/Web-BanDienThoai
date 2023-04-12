@@ -3,7 +3,19 @@
 
 <div class="row">
     <div class="col-md-12 table-responsive-md">
-        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create"> Cấu Hình</a>
+        <a class="btn btn-xs btn-outline-success float-md-right" style="margin-bottom:0.5cm" asp-action="Create">Tạo Cấu Hình</a>
+
+        <div class="col-xs-12">
+            <form moethod="get" asp-action="Index" enctype="multipart/form-data">
+                <div class="col-md-2">
+                    <input type="text" name="valueOfSearch" class="form-control" style="margin-bottom:0.1cm" placeholder="Nhập dung lượng ram cần tìm" />
+                </div>
+                <div class="col-xs-2">
+                    <button type="submit" class="btn btn-success" style="margin-bottom:0.5cm">Tìm Kiếm</button>
+                </div>
+            </form>
+        </div>
+
         <table class="table table-strip table-dark">
             <thead>
                 <tr>
@@ -27,16 +39,16 @@
                         <td>@item.Ram</td>
                         <td>@item.Chipset</td>
                         <td>
-                    <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_CauHinh">
-                    <i class="fas fa-edit"></i> Edit
-                    </a>
-                    <a class="text-success" asp-action="Detail" asp-route-id="@item.Id_CauHinh">
-                    <i class="fas fa-bars"></i> Detail
-                    </a>
-                    <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_CauHinh">
-                    <i class="far fa-trash-alt"></i> Delete
-                    </a>
-                    </td>
+                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_CauHinh">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a class="text-success" asp-action="Detail" asp-route-id="@item.Id_CauHinh">
+                                <i class="fas fa-bars"></i> Detail
+                            </a>
+                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_CauHinh">
+                                <i class="far fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
 
                     </tr>
                 }

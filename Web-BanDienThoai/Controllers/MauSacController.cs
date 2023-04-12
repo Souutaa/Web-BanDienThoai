@@ -3,6 +3,7 @@ using Web.Entities;
 using Web.Services;
 using Web.Services.implementation;
 using Web_BanDienThoai.Models.CauHinh;
+using Web_BanDienThoai.Models.LoaiSanPham;
 using Web_BanDienThoai.Models.MauSac;
 
 namespace Web_BanDienThoai.Controllers
@@ -51,48 +52,64 @@ namespace Web_BanDienThoai.Controllers
             }
             return View();
         }
+
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            if (id.ToString() == null)
+            var mausac = _mausacService.GetById(id);
+            if (mausac == null)
             {
                 return NotFound();
             }
-            var model = _mausacService.GetById(id);
-            _mausacService.DeleteAsSync(model);
+            var model = new DeleteMauSacViewModel
+            {
+                Id_MauSac = mausac.Id_MauSac,
+                TenMauSac = mausac.TenMauSac,
+            };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(DeleteMauSacViewModel model)
+        public async Task<IActionResult> Delete(DeleteMauSacViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var mauSac = new MauSac
-                {
-                    Id_MauSac = model.Id_MauSac,
-                    TenMauSac = model.TenMauSac,
-                };
-                _mausacService.DeleteAsSync(mauSac);
+                await _mausacService.DeleteById(model.Id_MauSac);
+                return RedirectToAction("Index");
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var mausac = _mausacService.GetById(id);
+            if (mausac == null)
+            {
+                return NotFound();
+            }
+            var model = new EditMauSacViewModel
+            {
+                Id_MauSac = mausac.Id_MauSac,
+                TenMauSac = mausac.TenMauSac,                
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditMauSacViewModel model)
         {
-            if (ModelState.IsValid)
+            var mausac = _mausacService.GetById(model.Id_MauSac);
+            if (mausac == null)
             {
-                var mausac = new MauSac
-                {
-                    Id_MauSac = model.Id_MauSac,
-                    TenMauSac = model.TenMauSac,
-                };
-                await _mausacService.CreateAsSync(mausac);
-                return RedirectToAction("Index");
+                return NotFound();
             }
+            mausac.Id_MauSac = model.Id_MauSac;
+            mausac.TenMauSac = model.TenMauSac;
+            //return RedirectToAction("Index");
+
             return View();
         }
     }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web.Entities;
 using Web.Services;
+using Web.Services.implementation;
+using Web_BanDienThoai.Models.MauSac;
 using Web_BanDienThoai.Models.NhaCungCap;
 
 namespace Web_BanDienThoai.Controllers
@@ -58,50 +60,61 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            if (id.ToString() == null)
+            var nhacungcap = _nhacungcapService.GetById(id);
+            if (nhacungcap == null)
             {
                 return NotFound();
             }
-            var model = _nhacungcapService.GetById(id);
-            _nhacungcapService.DeleteAsSync(model);
+            var model = new DeleteNhaCungCapViewModel
+            {
+                Id_NhaCungCap = nhacungcap.Id_NhaCungCap,
+                Name = nhacungcap.Name,
+            };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(DeleteNhaCungCapViewModel model)
+        public async Task<IActionResult> Delete(DeleteNhaCungCapViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var nhacungcap = new NhaCungCap
-                {
-                    Id_NhaCungCap = model.Id_NhaCungCap,
-                    Name = model.Name,
-                };
-                _nhacungcapService.DeleteAsSync(nhacungcap);
+                await _nhacungcapService.DeleteById(model.Id_NhaCungCap);
+                return RedirectToAction("Index");
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var nhacungcap = _nhacungcapService.GetById(id);
+            if (nhacungcap == null)
+            {
+                return NotFound();
+            }
+            var model = new EditNhaCungCapViewModel
+            {
+                Id_NhaCungCap = nhacungcap.Id_NhaCungCap,
+                Name = nhacungcap.Name,
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditNhaCungCapViewModel model)
         {
-            if (ModelState.IsValid)
+            var nhacungcap = _nhacungcapService.GetById(model.Id_NhaCungCap);
+            if (nhacungcap == null)
             {
-                var nhacungcap = new NhaCungCap
-                {
-                    Id_NhaCungCap = model.Id_NhaCungCap,
-                    Name = model.Name,
-                    Email = model.Email,
-                    Address = model.Address,
-                    Phone = model.Phone,
-                };
-                await _nhacungcapService.CreateAsSync(nhacungcap);
-                return RedirectToAction("Index");
+                return NotFound();
             }
+            nhacungcap.Id_NhaCungCap = model.Id_NhaCungCap;
+            nhacungcap.Name = model.Name;
+            //return RedirectToAction("Index");
+
             return View();
         }
     }
 }
-
