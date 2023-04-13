@@ -1,4 +1,5 @@
-﻿using Web.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Web.Entities;
 using Web.Persistances;
 
 namespace Web.Services.implementation
@@ -35,7 +36,7 @@ namespace Web.Services.implementation
 
         public IEnumerable<DanhMucCon> GetAll()
         {
-            return _context.DanhMucCon.ToList();
+            return _context.DanhMucCon.AsNoTracking().ToList();
         }
 
         public DanhMucCon GetById(string id)

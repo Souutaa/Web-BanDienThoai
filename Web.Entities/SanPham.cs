@@ -12,7 +12,7 @@ namespace Web.Entities
         public string Rom { get; set; }
         public double GiaTien { get; set; }
         public int SoLuong { get; set; }
-        [ForeignKey("LoaiSanPham")] public string Id_LoaiSanPham { get; set; } //Loại Sản Phẩm
+        [ForeignKey("LoaiSanPham")] public string Id_loai { get; set; } //Loại Sản Phẩm
         public LoaiSanPham? LoaiSanPham { get; set; }
     }
 }

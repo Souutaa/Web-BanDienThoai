@@ -54,13 +54,13 @@
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
-                    <label asp-for="Id_LoaiSanPham" class="form-label"></label>
+                    <label asp-for="Id_loai" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_LoaiSanPham" class="form-control" asp-items="@Model.LoaiSanPham">
+                    <select asp-for="Id_loai" class="form-control" asp-items="@Model.LoaiSanPham">
                         <option value=""> ---Chọn Loại Sản Phẩm--- </option>
                     </select>
-                    <span asp-validation-for="Id_LoaiSanPham" class="text-danger"></span>
+                    <span asp-validation-for="Id_loai" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-row">

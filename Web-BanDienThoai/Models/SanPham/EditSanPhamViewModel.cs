@@ -24,7 +24,7 @@ namespace Web_BanDienThoai.Models.SanPham
 
         [Required(ErrorMessage = "Phải nhập mã loại sản phẩm"), StringLength(50, MinimumLength = 2)]
         [RegularExpression(@"^[Ll][Ss][Pp][0-9]\S*$"), Display(Name = "Mã loại sản phẩm")]
-        public string Id_LoaiSanPham { get; set; } //Loại Sản Phẩm
+        public string Id_loai { get; set; } //Loại Sản Phẩm
 
         [ValidateNever]
         public IEnumerable<SelectListItem>? LoaiSanPham { get; set; }

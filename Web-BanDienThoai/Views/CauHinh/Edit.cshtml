@@ -1,0 +1,78 @@
+﻿@using Web_BanDienThoai.Models.CauHinh;
+@model EditCauHinhViewModel
+
+<div class="row">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
+
+        <div class="col-md-12 table-responsive-md">
+            <div class="form-row">
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.Id_CauHinh" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@Model.Id_CauHinh" class="form-control" />
+                    <span asp-validation-for="@Model.Id_CauHinh" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.DoPhanGiai" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@Model.DoPhanGiai" class="form-control" />
+                    <span asp-validation-for="@Model.DoPhanGiai" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.CameraTruoc" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@Model.CameraTruoc" class="form-control" />
+                    <span asp-validation-for="@Model.CameraTruoc" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.CameraSau" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@Model.CameraSau" class="form-control" />
+                    <span asp-validation-for="@Model.CameraSau" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.Ram" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@Model.Ram" class="form-control" />
+                    <span asp-validation-for="@Model.Ram" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.Chipset" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@Model.Chipset" class="form-control" />
+                    <span asp-validation-for="@Model.Chipset" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Save</button>
+                <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+                <br />
+                <br />
+                <br />
+            </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

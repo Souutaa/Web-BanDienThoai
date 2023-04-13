@@ -22,11 +22,9 @@ namespace Web_BanDienThoai.Controllers
         public IActionResult Index() //Sản Phẩm
         {
             var model = _sanphamService.GetAll().Select(sanpham => new IndexSanPhamViewModel
-            {
-                Id_SanPham = sanpham.Id_SanPham,
+            {                
                 Ten_SanPham = sanpham.Ten_SanPham,
-                ImageUrl = sanpham.ImageUrl,
-                Rom = sanpham.Rom,
+                ImageUrl = sanpham.ImageUrl,              
                 GiaTien = sanpham.GiaTien,
             }).ToList();
             return View(model);
@@ -39,7 +37,7 @@ namespace Web_BanDienThoai.Controllers
             List<SelectListItem> listLoaiSanPham = /*_context.CauHinh*/_loaisanphamService.GetAll().
                 Select(c => new SelectListItem
                 {
-                    Value = c.Id_loai.ToString(),
+                    Value = c.Id_loai,
                     Text = c.TenLoai,
                 }).ToList();
 
@@ -59,14 +57,14 @@ namespace Web_BanDienThoai.Controllers
                     Ten_SanPham = model.Ten_SanPham,
                     GiaTien = model.GiaTien,
                     SoLuong = model.SoLuong,
-                    Id_LoaiSanPham = model.Id_SanPham,
+                    Id_loai = model.Id_loai,
                     Rom = model.Rom,
                 };
 
                 if (model.ImageUrl != null && model.ImageUrl.Length > 0)
                 {
 
-                    var uploadDir = @"images/employees";
+                    var uploadDir = @"images/SanPham";
                     var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
                     var extension = Path.GetExtension(model.ImageUrl.FileName);
                     var webRootPath = _webHostEnvironment.WebRootPath;
@@ -82,20 +80,20 @@ namespace Web_BanDienThoai.Controllers
             return View();
         }
 
-        
+
 
         //[HttpGet]
-        //public IActionResult Detail(int id)
+        //public IActionResult Detail(string id)
         //{
-        //    var employee = _sanphamService.GetById(id);
-        //    if (employee == null)
+        //    var sp = _sanphamService.GetById(id);
+        //    if (sp == null)
         //    {
         //        return NotFound();
         //    }
-        //    var model = new DetailEmployeeViewModel
+        //    var model = new DetailSanPhamViewModel
         //    {
 
-        //        Id = employee.Id,
+        //         = ,
         //        EmployeeNo = employee.EmployeeNo,
         //        FullName = employee.FullName,
         //        Gender = employee.Gender,
@@ -158,7 +156,7 @@ namespace Web_BanDienThoai.Controllers
                 Ten_SanPham = sanpham.Ten_SanPham,
                 GiaTien = sanpham.GiaTien,
                 SoLuong = sanpham.SoLuong,
-                Id_LoaiSanPham = sanpham.Id_SanPham,
+                Id_loai = sanpham.Id_loai,
                 Rom = sanpham.Rom,
             };
 
@@ -178,14 +176,14 @@ namespace Web_BanDienThoai.Controllers
             sanpham.Ten_SanPham = model.Ten_SanPham;
             sanpham.GiaTien = model.GiaTien;
             sanpham.SoLuong = model.SoLuong;
-            sanpham.Id_LoaiSanPham = model.Id_LoaiSanPham;
+            sanpham.Id_loai = model.Id_loai;
             sanpham.Rom = model.Rom;
            
 
             if (model.ImageUrl != null && model.ImageUrl.Length > 0)
                 {
 
-                    var uploadDir = @"images/employees";
+                    var uploadDir = @"images/SanPham";
                     var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
                     var extension = Path.GetExtension(model.ImageUrl.FileName);
                     var webRootPath = _webHostEnvironment.WebRootPath;

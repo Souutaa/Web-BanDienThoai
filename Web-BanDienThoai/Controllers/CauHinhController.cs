@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using Web.Entities;
 using Web.Services;
+using Web.Services.implementation;
 using Web_BanDienThoai.Models.CauHinh;
 
 namespace Web_BanDienThoai.Controllers
@@ -29,7 +32,7 @@ namespace Web_BanDienThoai.Controllers
             });
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
-                model = model.Where(cauhinh => cauhinh.Ram.ToLower().Contains(valueOfSearch) || cauhinh.Chipset.ToLower().Contains(valueOfSearch));
+                model = model.Where(cauhinh => cauhinh.Ram.ToLower().Contains(valueOfSearch.ToLower()) || cauhinh.Chipset.ToLower().Contains(valueOfSearch.ToLower()));
             }
             return View(model.ToList());
         }
@@ -43,23 +46,52 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateCauHinhViewModel model) //Màu Sắc
+        public async Task<IActionResult> Create(CreateCauHinhViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var cauhinh = new CauHinh
+                var test = _cauhinhService.GetAll();
+                if (test.Equals(model))
                 {
-                    Id_CauHinh = model.Id_CauHinh,
-                    DoPhanGiai = model.DoPhanGiai,
-                    CameraTruoc = model.CameraTruoc,
-                    CameraSau = model.CameraSau,
-                    Ram = model.Ram,
-                    Chipset = model.Chipset,
-                };
-                await _cauhinhService.CreateAsSync(cauhinh);
-                return RedirectToAction("Index");
+                    NotFound();
+                }
+                else
+                {
+                    var cauhinh = new CauHinh
+                    {
+                        Id_CauHinh = model.Id_CauHinh,
+                        DoPhanGiai = model.DoPhanGiai,
+                        CameraTruoc = model.CameraTruoc,
+                        CameraSau = model.CameraSau,
+                        Ram = model.Ram,
+                        Chipset = model.Chipset,
+                    };
+                    await _cauhinhService.CreateAsSync(cauhinh);
+                    return RedirectToAction("Index");
+                }
             }
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Detail(string id)
+        {
+            var cauhinh = _cauhinhService.GetById(id);
+            if (cauhinh == null)
+            {
+                return NotFound();
+            }
+            var model = new DetailCauHinhViewModel
+            {
+
+                Id_CauHinh = cauhinh.Id_CauHinh,
+                CameraSau = cauhinh.CameraSau,
+                CameraTruoc = cauhinh.CameraTruoc,
+                DoPhanGiai = cauhinh.DoPhanGiai,
+                Ram = cauhinh.Ram,
+                Chipset = cauhinh.Chipset,                
+            };
+            return View(model);
         }
 
         [HttpGet]

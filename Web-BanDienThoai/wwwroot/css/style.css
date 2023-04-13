@@ -1,19 +1,17 @@
-.header{
+.header {
     height: 100px;
-    background-image: linear-gradient(0,white,aquamarine) ;
-   
+    background-image: linear-gradient(0,white,aquamarine);
 }
-.header__navbar{
-    display:flex;
+.header__navbar {
+    display: flex;
     justify-content: space-between;
-
 }
 /* ul */
-.header__nav_list{
+.header__nav_list {
     list-style: none;
     padding-left: 0;
-
 }
+
 /* li */
 .header__nav_item{
     margin: 8px;

@@ -1,11 +1,11 @@
 ﻿@using Web_BanDienThoai.Models.SanPham;
 
 @model IEnumerable<IndexSanPhamViewModel>
-@using Web_BanDienThoai.Models.SanPham;
 
 
-<section class="py-5">
+<section class="py-5">   
     <div class="container px-4 px-lg-5 mt-5">
+        <a class="btn btn-xs btn-outline-success float-md-rigth" style="margin-top:-3cm" asp-action="Create">Tạo Sản Phẩm</a>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var item in Model)
             {
@@ -20,8 +20,7 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">@item.Ten_SanPham</h5>
-                                <div class="id-sanpham">@item.Id_SanPham</div>
+                                <h5 class="fw-bolder">@item.Ten_SanPham</h5>                                
                                 <!-- Product reviews-->
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
@@ -31,9 +30,7 @@
                                     <div class="bi-star-fill"></div>
                                 </div>
                                 <!-- Product price-->
-                                <span class="text-muted text-decoration-line-through">$20.00</span>
-                                @item.GiaTien
-                                <div class="Rom">@item.Rom</div>
+                                <span class="text-muted text-decoration-line-through">$20.00</span> @item.GiaTien                                                               
                             </div>
                         </div>
                         <!-- Product actions-->

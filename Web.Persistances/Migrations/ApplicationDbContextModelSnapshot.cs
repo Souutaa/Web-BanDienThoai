@@ -17,7 +17,7 @@ namespace Web.Persistances.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -125,6 +125,10 @@ namespace Web.Persistances.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Id_SanPham")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Id_khachhang")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -138,6 +142,8 @@ namespace Web.Persistances.Migrations
                     b.HasKey("Id_HoaDon");
 
                     b.HasIndex("Id_NhanVien");
+
+                    b.HasIndex("Id_SanPham");
 
                     b.HasIndex("Id_khachhang");
 
@@ -312,6 +318,10 @@ namespace Web.Persistances.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Id_SanPham")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("NgayGiao")
                         .HasColumnType("datetime2");
 
@@ -333,6 +343,8 @@ namespace Web.Persistances.Migrations
 
                     b.HasIndex("Id_NhanVien");
 
+                    b.HasIndex("Id_SanPham");
+
                     b.ToTable("NhapHang");
                 });
 
@@ -344,7 +356,7 @@ namespace Web.Persistances.Migrations
                     b.Property<double>("GiaTien")
                         .HasColumnType("float");
 
-                    b.Property<string>("Id_LoaiSanPham")
+                    b.Property<string>("Id_loai")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -365,7 +377,7 @@ namespace Web.Persistances.Migrations
 
                     b.HasKey("Id_SanPham");
 
-                    b.HasIndex("Id_LoaiSanPham");
+                    b.HasIndex("Id_loai");
 
                     b.ToTable("SanPham");
                 });
@@ -389,6 +401,12 @@ namespace Web.Persistances.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Web.Entities.SanPham", "SanPham")
+                        .WithMany()
+                        .HasForeignKey("Id_SanPham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Web.Entities.KhachHang", "KhachHang")
                         .WithMany()
                         .HasForeignKey("Id_khachhang")
@@ -398,6 +416,8 @@ namespace Web.Persistances.Migrations
                     b.Navigation("KhachHang");
 
                     b.Navigation("NhanVien");
+
+                    b.Navigation("SanPham");
                 });
 
             modelBuilder.Entity("Web.Entities.LoaiSanPham", b =>
@@ -433,16 +453,24 @@ namespace Web.Persistances.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Web.Entities.SanPham", "SanPham")
+                        .WithMany()
+                        .HasForeignKey("Id_SanPham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("NhaCungCap");
 
                     b.Navigation("NhanVien");
+
+                    b.Navigation("SanPham");
                 });
 
             modelBuilder.Entity("Web.Entities.SanPham", b =>
                 {
                     b.HasOne("Web.Entities.LoaiSanPham", "LoaiSanPham")
                         .WithMany()
-                        .HasForeignKey("Id_LoaiSanPham")
+                        .HasForeignKey("Id_loai")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
