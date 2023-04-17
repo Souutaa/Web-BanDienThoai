@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<IChiTietHoaDonServices, ChiTietHoaDonServices>();
 builder.Services.AddScoped<IHoaDonServices, HoaDonServices>();
 builder.Services.AddScoped<IKhachHangServices, KhachHangServices>();
 builder.Services.AddScoped<INhanVienServices, NhanVienServices>();

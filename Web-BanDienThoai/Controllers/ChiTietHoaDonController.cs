@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Identity.Client;
+using System.Linq;
+using System.Net.WebSockets;
 using Web.Entities;
 using Web.Services;
 using Web_BanDienThoai.Models.ChiTietHoaDon;
@@ -7,60 +11,70 @@ using Web_BanDienThoai.Models.HoaDon;
 
 namespace Web_BanDienThoai.Controllers
 {
-    public class HoaDonController : Controller
+    public class ChiTietHoaDonController : Controller
     {
         private IKhachHangServices _khachhangService;
         private INhanVienServices _nhanvienService;
         private ISanPhamServices _sanphamService;
-        private IChiTietHoaDonServices _cthdServices;
+        private IChiTietHoaDonServices _cthdService;
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
-
-        public HoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
-            IKhachHangServices khachhangService, INhanVienServices nhanvienService, IChiTietHoaDonServices cthdServices,
+        public static string idtimkiem;
+        public ChiTietHoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
+            IKhachHangServices khachhangService, INhanVienServices nhanvienService, IChiTietHoaDonServices cthdService,
             IWebHostEnvironment webHostEnvironment)
-        {            
+        {
             _khachhangService = khachhangService;
             _nhanvienService = nhanvienService;
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
-            _cthdServices = cthdServices;
+            _cthdService = cthdService;
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+       
+        //public IActionResult Index(string id)
+            public IActionResult Index(string id)
         {
-            
-            var model = _hoadonService.GetAll().Select(hoadon => new IndexHoaDonViewModel
+            //var hoadon = _hoadonService.GetById(id);
+            //if (hoadon == null)
+            //{
+            //    return NotFound();
+            //}
+            //var sanphamchitiet = _cthdService.GetById(hoadon.Id_HoaDon);
+
+            var model = _cthdService.GetAll().Select(cthd => new IndexChiTietHoaDonViewModel
             {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                Id_khachhang = hoadon.Id_khachhang,
-                Id_NhanVien = hoadon.Id_NhanVien,
-                TongTien   = hoadon.TongTien,
-            }).ToList();
-            return View(model);
+                Id_HoaDon = cthd.Id_HoaDon,
+                Id_SanPham = cthd.Id_SanPham,
+                SoLuong = cthd.SoLuong,
+                DonGia = cthd.DonGia,
+                ThanhTien = cthd.ThanhTien
+            }).Where(x => x.Id_HoaDon == id);
+
+            idtimkiem = id;
+            return View(model.ToList());
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new CreateHoaDonViewModel();
-            List<SelectListItem> listKhachHang = /*_context.CauHinh*/_khachhangService.GetAll().
+            var model = new CreateChiTietHoaDonViewModel();
+            List<SelectListItem> listHoaDon = _hoadonService.GetAll().
                 Select(c => new SelectListItem
                 {
-                    Value = c.Id_KhacHang.ToString(),
-                    Text = c.FullName,
+                    Value = c.Id_HoaDon.ToString(),
+                    Text = c.Id_HoaDon,
                 }).ToList();
-            model.KhachHang = listKhachHang;
+            model.HoaDon = listHoaDon;
 
-            List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
+            List<SelectListItem> listSanPham = _sanphamService.GetAll().
                 Select(c => new SelectListItem
                 {
-                    Value = c.Id_NhanVien.ToString(),
-                    Text = c.FullName
+                    Value = c.Id_SanPham.ToString(),
+                    Text = c.Ten_SanPham
                 }).ToList();
-            model.NhanVien = listNhanVien;
+            model.SanPham = listSanPham;
 
             return View(model);
         }
@@ -68,21 +82,22 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateHoaDonViewModel model) //Màu Sắc
-        {
+        public async Task<IActionResult> Create(CreateChiTietHoaDonViewModel model) //Màu Sắc
+        {           
             if (ModelState.IsValid)
-            {                
-                var hoadon = new HoaDon
+            {
+                var cthd = new ChiTietHoaDon
                 {
                     Id_HoaDon = model.Id_HoaDon,
-                    NgayLapHoaDon = model.NgayLapHoaDon,
-                    Id_khachhang = model.Id_khachhang, 
-                    Id_NhanVien = model.Id_NhanVien,
-                    TongTien = model.TongTien,
+                    Id_SanPham = model.Id_SanPham,
+                    SoLuong = model.SoLuong,
+                    DonGia = model.DonGia,
+                    ThanhTien = model.ThanhTien,
                 };
-                await _hoadonService.CreateAsSync(hoadon);
+                await _cthdService.CreateAsSync(cthd);
+                
                 return RedirectToAction("Index");
-            }
+            }         
             return View();
         }
 
@@ -94,7 +109,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 return NotFound();
             }
-            
+
             //var sanphamchitiet = _cthdServices.GetID(hoadon.Id_HoaDon);
             //List<string> list = new List<string>();
             //foreach(var item in sanphamchitiet)
@@ -102,7 +117,7 @@ namespace Web_BanDienThoai.Controllers
             //    string id_sp = item.Text;
             //    SanPham SanPham = _sanphamService.GetById(id_sp);
             //    list.Add(SanPham.Ten_SanPham);              
-            
+
 
             var model = new DetailHoaDonViewModel
             {
@@ -111,12 +126,12 @@ namespace Web_BanDienThoai.Controllers
                 Id_khachhang = hoadon.Id_khachhang,
                 Id_NhanVien = hoadon.Id_NhanVien,
                 TongTien = hoadon.TongTien,
-                            
-            };         
-           
+
+            };
+
             return View(model);
         }
-    
+
         [HttpGet]
         public IActionResult Delete(string id)
         {
@@ -131,7 +146,7 @@ namespace Web_BanDienThoai.Controllers
                 Id_khachhang = hoadon.Id_khachhang,
                 Id_NhanVien = hoadon.Id_NhanVien,
             };
-           
+
             return View(model);
         }
 
@@ -188,3 +203,6 @@ namespace Web_BanDienThoai.Controllers
         }
     }
 }
+
+
+

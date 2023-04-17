@@ -1,0 +1,43 @@
+﻿@using Web_BanDienThoai.Models.HoaDon;
+@model IEnumerable<IndexHoaDonViewModel>
+
+<div class="row">
+    <div class="col-md-12 table-responsive-md">
+        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Tạo Hóa Đơn</a>
+        <table class="table table-strip table-dark">
+            <thead>
+                <tr>
+                    <th>Mã hóa đơn</th>
+                    <th>Ngày lập hóa đơn</th>
+                    <th>Mã khách hàng</th>
+                    <th>Mã nhân viên</th>
+                    <th>Tổng tiền</th>
+                    <th class="text-warning">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id_HoaDon</td>
+                        <td>@item.NgayLapHoaDon</td>
+                        <td>@item.Id_khachhang</td>
+                        <td>@item.Id_NhanVien</td>
+                        <td>@item.TongTien</td>
+                        <td>
+                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_HoaDon">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a class="text-success" asp-controller="ChiTietHoaDon" asp-action="Index" asp-route-id="@item.Id_HoaDon">
+                                <i class="fas fa-bars"></i> Detail
+                            </a>
+                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_HoaDon">
+                                <i class="far fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

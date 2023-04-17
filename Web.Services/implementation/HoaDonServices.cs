@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,6 +60,16 @@ namespace Web.Services.implementation
         {
             _context.HoaDon.Update(hoaDon);
             await _context.SaveChangesAsync();
+        }
+
+        public IEnumerable<SelectListItem> GetAllSanPham()
+        {
+            var ListSanPhamforDetail = _context.SanPham.Select(e => new SelectListItem
+            {
+                Text = e.Id_SanPham.ToString(),
+                Value = e.Ten_SanPham
+            });
+            return ListSanPhamforDetail;
         }
     }
 }

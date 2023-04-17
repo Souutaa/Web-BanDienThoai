@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Web_BanDienThoai.Models.HoaDon
 {
@@ -12,18 +13,20 @@ namespace Web_BanDienThoai.Models.HoaDon
         public string Id_HoaDon { get; set; }
 
         [DataType(DataType.Date), Display(Name = "Ngày lập hóa đơn")]
-        public DateTime NgayLapHoaDon { get; set; }
+        public DateTime NgayLapHoaDon { get; set; } = DateTime.Now;
         
         public double TongTien { get; set; }
 
         [Required(ErrorMessage = "Phải nhập mã khách hàng (KH__)")]
         [RegularExpression(@"^[kK][hH][0-9]\S*$"), Display(Name = "Mã Khách Hàng")]
         [ForeignKey("KhachHang")] public string Id_khachhang { get; set; }  //Khách Hàng
+        [ValidateNever]
         public IEnumerable<SelectListItem> KhachHang { set; get; }
 
         [Required(ErrorMessage = "Phải nhập mã Nhân Viên (NV__)")]
         [RegularExpression(@"^[nN][vV][0-9]\S*$"), Display(Name = "Mã Nhân Viên")]
         [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }   //Nhân Viên
+        [ValidateNever]
         public IEnumerable<SelectListItem> NhanVien { set; get; }
     }
 }

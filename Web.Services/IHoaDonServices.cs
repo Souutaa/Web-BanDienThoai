@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,6 @@ namespace Web.Services
         Task UpdateById(string id); 
         Task DeleteById(string id); 
         Task DeleteAsSync(HoaDon hoaDon);
+        IEnumerable<SelectListItem> GetAllSanPham();
     }
 }

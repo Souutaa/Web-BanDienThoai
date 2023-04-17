@@ -23,5 +23,6 @@ namespace Web_BanDienThoai.Models.DanhMucCon
                                                                   ////public CauHinh cauHinh { get; set; };
         [ValidateNever]
         public IEnumerable<SelectListItem> CauHinh { set; get; }
+
     }
 }
