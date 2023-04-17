@@ -30,7 +30,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_DanhMucCon = danhmucon.Id_DanhMucCon,
                 TenDanhMuc = danhmucon.TenDanhMuc,
-                Id_CauHinh = cauHinhIds, /*danhmucon.Id_CauHinh,*/
+                Id_CauHinh = danhmucon.Id_CauHinh
             }).ToList();
             return View(model);
         }
@@ -68,6 +68,24 @@ namespace Web_BanDienThoai.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Detail(string id)
+        {
+            var dmc = _danhmucconService.GetById(id);
+            if (dmc == null)
+            {
+                return NotFound();
+            }
+            var model = new DetailDanhMucConViewModel
+            {
+
+                Id_DanhMucCon = dmc.Id_CauHinh,
+                TenDanhMuc = dmc.TenDanhMuc,
+                Id_CauHinh = dmc.Id_CauHinh,               
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -112,6 +130,15 @@ namespace Web_BanDienThoai.Controllers
                 TenDanhMuc = danhMucCon.TenDanhMuc,
                 Id_CauHinh = danhMucCon.Id_CauHinh,
             };
+            List<SelectListItem> listCauHinh = /*_context.CauHinh*/_cauhinhService.GetAll().
+               Select(c => new SelectListItem
+               {
+                   Value = c.Id_CauHinh.ToString(),
+                   Text = c.Ram,
+               }).ToList();
+
+            model.CauHinh = listCauHinh;
+
             return View(model);
         }
 

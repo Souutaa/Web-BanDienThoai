@@ -7,6 +7,6 @@ namespace Web_BanDienThoai.Models.DanhMucCon
     {
         public string Id_DanhMucCon { get; set; }
         public string TenDanhMuc { get; set; }
-        [ForeignKey("CauHinh")] public List<String> Id_CauHinh { get; set; }  //Cấu Hình
+        [ForeignKey("CauHinh")] public String Id_CauHinh { get; set; }  //Cấu Hình
     }
 }

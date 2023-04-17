@@ -60,6 +60,7 @@ namespace Web_BanDienThoai.Controllers
         public IActionResult Create()
         {
             var model = new CreateChiTietHoaDonViewModel();
+
             List<SelectListItem> listHoaDon = _hoadonService.GetAll().
                 Select(c => new SelectListItem
                 {
@@ -86,6 +87,8 @@ namespace Web_BanDienThoai.Controllers
         {           
             if (ModelState.IsValid)
             {
+                var check = _cthdService.GetAll().FirstOrDefault(s => s.Id_HoaDon == model.Id_HoaDon);
+                if(check == null) { 
                 var cthd = new ChiTietHoaDon
                 {
                     Id_HoaDon = model.Id_HoaDon,
@@ -97,7 +100,13 @@ namespace Web_BanDienThoai.Controllers
                 await _cthdService.CreateAsSync(cthd);
                 
                 return RedirectToAction("Index");
-            }         
+                }
+                else
+                {
+                    ViewBag.error = "Sản phẩm này đã được tồn tại trong giỏ hàng";
+                    return View();
+                }
+            }           
             return View();
         }
 

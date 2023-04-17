@@ -50,12 +50,8 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var test = _cauhinhService.GetAll();
-                if (test.Equals(model))
-                {
-                    NotFound();
-                }
-                else
+                var check = _cauhinhService.GetAll().FirstOrDefault(s => s.Id_CauHinh == model.Id_CauHinh);
+                if(check == null) 
                 {
                     var cauhinh = new CauHinh
                     {
@@ -68,6 +64,11 @@ namespace Web_BanDienThoai.Controllers
                     };
                     await _cauhinhService.CreateAsSync(cauhinh);
                     return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.error = "Mã Cấu hình này đã được tồn tại! Vui lòng tạo Mã Cấu Hình khác";
+                    return View();
                 }
             }
             return View();

@@ -81,7 +81,7 @@ namespace Web_BanDienThoai.Controllers
                     TongTien = model.TongTien,
                 };
                 await _hoadonService.CreateAsSync(hoadon);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index" );
             }
             return View();
         }

@@ -25,7 +25,7 @@
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhà Cung Cấp</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @*<li><hr class="dropdown-divider" /></li>*@
-                            <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Create">Tạo Nhà Cung Cấp</a></li>
+                            <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Create">Thêm Nhà Cung Cấp</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Index">Danh Sách Nhà Cung Cấp</a></li>
                         </ul>
@@ -34,9 +34,39 @@
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sản Phẩm</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @*<li><hr class="dropdown-divider" /></li>*@
-                            <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Create">Tạo Sản Phẩm</a></li>
+                            <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Create">Thêm Sản Phẩm</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a></li>                    
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hóa Đơn</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Create">Tạo Hóa Đơn</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Index">Danh Sách Hóa Đơn</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Khách Hàng</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Create">Thêm Khách Hàng</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Index">Danh Sách Khách Hàng</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhân Viên</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Create">Thêm Nhân Viên</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Index">Danh Sách Nhân Viên</a></li>
                         </ul>
                     </li>
                 </ul>
