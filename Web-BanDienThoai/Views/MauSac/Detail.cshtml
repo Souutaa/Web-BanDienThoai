@@ -1,0 +1,18 @@
+﻿@using Web_BanDienThoai.Models.MauSac;
+@model DetailMauSacViewModel
+
+<div class="card">
+    <div class="card-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="MauSac" asp-action="Index">Danh Sách Màu Sắc</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi Tiết Loại Sản Phẩm</li>
+            </ol>
+        </nav>
+        <div class="wrap d-flex justify-content-start justify-content-sm-start flex-wrap">
+            <div class="wrap align-items-center ml-5">
+                <p class="font-weight-bold text-success" style="font-size:20px"><b>Tên Màu Sắc:</b> @Model.TenMauSac</p>
+                <p class="font-weight-normal"> <b>Mã Màu Sắc:</b> @Model.Id_MauSac</p>                
+        </div>
+    </div>
+</div>

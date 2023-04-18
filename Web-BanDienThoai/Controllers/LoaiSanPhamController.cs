@@ -85,6 +85,23 @@ namespace Web_BanDienThoai.Controllers
             return View();
         }
 
+        public IActionResult Detail(string id)
+        {
+            var lsp = _loaisanphamService.GetById(id);
+            if (lsp == null)
+            {
+                return NotFound();
+            }
+            var model = new DetailLoaiSanPhamViewModel
+            {
+                Id_loai = lsp.Id_loai,
+                TenLoai = lsp.TenLoai,
+                Id_DanhMucCon = lsp.Id_DanhMucCon,
+                Id_MauSac = lsp.Id_MauSac,
+            };
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult Delete(string id)
         {

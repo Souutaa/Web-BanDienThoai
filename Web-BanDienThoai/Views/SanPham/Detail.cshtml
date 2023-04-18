@@ -1,0 +1,32 @@
+﻿@using Web_BanDienThoai.Models.SanPham;
+@model DetailSanPhamViewModel
+
+<div class="card">
+    <div class="card-body">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi Tiết Sản Phẩm</li>
+            </ol>
+        </nav>
+        <div class="wrap d-flex justify-content-start justify-content-sm-start flex-wrap">
+            <img src="@Url.Content(Model.ImageUrl)" class="rounded-circle shadow-lg" style="width:300px; height:350px" />
+            <div class="wrap align-items-center ml-5">
+                <p class="font-weight-bold text-success" style="font-size:20px">@Model.Ten_SanPham</p>
+                <p class="font-weight-normal"> <b>Mã Nhân Viên:</b> @Model.Id_SanPham</p>
+                <p class="font-weight-normal"> <b>Giới Tính:</b> @Model.GiaTien</p>
+                <p class="font-weight-normal"> <b>Ngày Sinh:</b> @Model.SoLuong </p>
+                <p class="font-weight-normal"> <b>Giới Tính:</b> @Model.Rom</p>
+                <p class="font-weight-normal"> <b>Ngày Sinh:</b> @Model.Id_loai </p>
+                <br /><br />
+        
+                <div class="form-group">
+                    <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

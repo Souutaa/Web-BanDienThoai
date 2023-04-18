@@ -44,17 +44,14 @@
                         </tr>
                     </thead>
                     <tbody>                       
-                        @foreach (var item in Model.SanPham)
+                        @foreach (var item in Model.sanpham)
                         {
                             <tr>
-                                <td>@item.Value</td>
-                                <td>@item.Text</td>
-                                    @foreach (var item1 in Model.namesp)
-                                    {
-                                    <tr>
-                                        @item1
-                                        </tr>
-                                    }
+                                <td>@item.Id_SanPham</td>
+                                    <td>@item.Ten_SanPham</td>
+                                    <td>@item.SoLuong</td>
+                                    <td>@item.GiaTien</td>
+                                    <td>@item.LoaiSanPham</td>
                                     @*<td>@item.TenDanhMuc</td>
                                 <td>@item.Id_CauHinh</td>
                                 <td>

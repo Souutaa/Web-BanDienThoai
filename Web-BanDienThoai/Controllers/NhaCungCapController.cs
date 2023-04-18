@@ -4,6 +4,7 @@ using Web.Services;
 using Web.Services.implementation;
 using Web_BanDienThoai.Models.MauSac;
 using Web_BanDienThoai.Models.NhaCungCap;
+using Web_BanDienThoai.Models.NhanVien;
 
 namespace Web_BanDienThoai.Controllers
 {
@@ -55,6 +56,24 @@ namespace Web_BanDienThoai.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public IActionResult Detail(string id)
+        {
+            var ncc = _nhacungcapService.GetById(id);
+            if (ncc == null)
+            {
+                return NotFound();
+            }
+            var model = new DetailNhaCungCapViewModel
+            {
+                Id_NhaCungCap = ncc.Id_NhaCungCap,
+                Name = ncc.Name,
+                Email = ncc.Email,
+                Address = ncc.Address,
+                Phone = ncc.Phone,               
+            };
+            return View(model);
         }
 
         [HttpGet]

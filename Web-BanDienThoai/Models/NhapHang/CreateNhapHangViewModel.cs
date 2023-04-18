@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Web.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Web_BanDienThoai.Models.NhapHang
 {
@@ -24,9 +25,11 @@ namespace Web_BanDienThoai.Models.NhapHang
         [Required(ErrorMessage = "Phải nhập mã nhà cung cấp (NCC__)")]
         [RegularExpression(@"^[nN][cC][cC][0-9]\S*$"), Display(Name = "Mã nhà cung cấp")]
         [ForeignKey("NhaCungCap")] public string Id_NhaCungCap { get; set; }
+        public IEnumerable<SelectListItem> NhaCungCap { set; get; }
 
         [Required(ErrorMessage = "Phải nhập mã nhân viên (NV__)")]
         [RegularExpression(@"^[nN][vV][0-9]\S*$"), Display(Name = "Mã nhân viên")]
         [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }
+        public IEnumerable<SelectListItem> NhanVien { set; get; }
     }
 }

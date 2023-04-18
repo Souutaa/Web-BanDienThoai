@@ -13,8 +13,8 @@ namespace Web.Entities
         public double TongTien { get; set; }
         public int TongSoLuong { get; set; }
         public string GhiChu { get; set; }
-        [ForeignKey("SanPham")] public string Id_SanPham { get; set; }
-        public SanPham? SanPham { get; set; }
+        //[ForeignKey("SanPham")] public string Id_SanPham { get; set; }
+        //public SanPham? SanPham { get; set; }
         [ForeignKey("NhaCungCap")] public string Id_NhaCungCap { get; set; }
         public NhaCungCap? NhaCungCap { get; set; }
         [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }

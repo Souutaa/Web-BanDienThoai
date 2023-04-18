@@ -17,5 +17,7 @@ namespace Web_BanDienThoai.Models.HoaDon
         [ForeignKey("ChiTietHoaDon")] public string Id_SanPham { get; set; }  
         public IEnumerable<SelectListItem> SanPham { get; set; }
         public List<string> namesp { get; set; }
+
+        public List<Web.Entities.SanPham> sanpham { get; set; }
     }
 }

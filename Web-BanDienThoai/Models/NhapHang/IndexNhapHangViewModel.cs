@@ -6,14 +6,11 @@ namespace Web_BanDienThoai.Models.NhapHang
 {
     public class IndexNhapHangViewModel
     {
-        [Key]
         public string Id_NhapHang { get; set; }
         public DateTime NgayLap { get; set; }
         public DateTime NgayGiao { get; set; }
         public TrangThaiNhapHang TrangThaiNhapHang { get; set; }
         public double TongTien { get; set; }
-        public int TongSoLuong { get; set; }
-        public string GhiChu { get; set; }
         [ForeignKey("NhaCungCap")] public string Id_NhaCungCap { get; set; }     
         [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }
     }

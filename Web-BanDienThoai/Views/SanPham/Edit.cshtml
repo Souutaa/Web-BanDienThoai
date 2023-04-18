@@ -1,5 +1,5 @@
 ﻿@using Web_BanDienThoai.Models.SanPham;
-@model CreateSanPhamViewModel
+@model EditSanPhamViewModel
 @using System.Collections;
 @using Web.Persistances;
 @using Web_BanDienThoai.Controllers;
@@ -9,7 +9,7 @@
 @using Web.Entities;
 
 <div class="row">
-    <form method="post" asp-action="Create" enctype="multipart/form-data">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">
             <div class="form-row">
@@ -85,7 +85,7 @@
             <div class="form-row" style="padding-bottom:0.7cm"></div>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Save</button>
+            <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Edit</button>
             <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
             <br />
             <br />

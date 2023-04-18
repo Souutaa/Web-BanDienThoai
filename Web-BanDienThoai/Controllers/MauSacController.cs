@@ -53,6 +53,21 @@ namespace Web_BanDienThoai.Controllers
             return View();
         }
 
+        public IActionResult Detail(string id)
+        {
+            var ms = _mausacService.GetById(id);
+            if (ms == null)
+            {
+                return NotFound();
+            }
+            var model = new DetailMauSacViewModel
+            {
+                Id_MauSac = ms.Id_MauSac,
+                TenMauSac = ms.TenMauSac
+            };
+            return View(model);
+        }
+
         [HttpGet]
         public IActionResult Delete(string id)
         {

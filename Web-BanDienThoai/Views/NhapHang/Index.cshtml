@@ -1,0 +1,48 @@
+﻿@using Web_BanDienThoai.Models.NhapHang;
+@model IEnumerable<IndexNhapHangViewModel>
+
+<div class="row">
+    <div class="col-md-12 table-responsive-md">
+        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create"> Thêm Nhân Viên Mới</a>
+        <table class="table table-strip table-dark">
+            <thead>
+                <tr>
+                    <th>Mã nhập hàng</th>
+                    <th>Ngày lập đơn nhập hàng</th>
+                    <th>Ngày giao đơn nhập hàng</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạn thái nhập hàng</th>
+                    <th>Mã nhà cung cấp</th>
+                    <th>Mã nhân viên</th>                    
+                    <th class="text-warning">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id_NhapHang</td>
+                        <td>@item.NgayLap.ToLongDateString()</td>
+                        <td>@item.NgayGiao.ToShortTimeString()</td>
+                        <td>@item.TongTien</td>
+                        <td>@item.TrangThaiNhapHang</td>
+                        <td>@item.Id_NhaCungCap</td>
+                        <td>@item.Id_NhanVien</td>                       
+                        <td>
+                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_NhapHang">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a class="text-success" asp-action="Detail" asp-route-id="@item.Id_NhapHang">
+                                <i class="fas fa-bars"></i> Detail
+                            </a>
+                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_NhapHang">
+                                <i class="far fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
