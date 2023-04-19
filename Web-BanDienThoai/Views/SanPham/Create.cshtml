@@ -9,6 +9,13 @@
 @using Web.Entities;
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm Sản Phẩm</li>
+        </ol>
+    </nav>
+
     <form method="post" asp-action="Create" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">

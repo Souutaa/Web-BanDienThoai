@@ -20,7 +20,7 @@ namespace Web_BanDienThoai.Controllers
             _loaisanphamService = loaisanphamService;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index() //Sản Phẩm
+        public IActionResult Index(string valueOfSearch) //Sản Phẩm
         {
             var model = _sanphamService.GetAll().Select(sanpham => new IndexSanPhamViewModel
             {
@@ -28,8 +28,16 @@ namespace Web_BanDienThoai.Controllers
                 Ten_SanPham = sanpham.Ten_SanPham,
                 ImageUrl = sanpham.ImageUrl,
                 GiaTien = sanpham.GiaTien,
-            }).ToList();
-            return View(model);
+            });
+
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(people => people.Id_SanPham.ToLower().Contains(valueOfSearch.ToLower())
+                || people.Ten_SanPham.ToLower().Contains(valueOfSearch.ToLower())
+                || people.GiaTien.Equals(valueOfSearch));
+            }
+
+            return View(model.ToList());
         }
 
         [HttpGet]
@@ -148,6 +156,15 @@ namespace Web_BanDienThoai.Controllers
                 Id_loai = sanpham.Id_loai,
                 Rom = sanpham.Rom,
             };
+
+            List<SelectListItem> listLoaiSanPham = /*_context.CauHinh*/_loaisanphamService.GetAll().
+               Select(c => new SelectListItem
+               {
+                   Value = c.Id_loai,
+                   Text = c.TenLoai,
+               }).ToList();
+
+            model.LoaiSanPham = listLoaiSanPham;
 
             return View(model);
         }

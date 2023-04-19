@@ -36,7 +36,11 @@ namespace Web_BanDienThoai.Controllers
             });
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
-                model = model.Where(people => people.FullName.ToLower().Contains(valueOfSearch.ToLower()) || people.Phone.ToLower().Contains(valueOfSearch.ToLower()));
+                model = model.Where(people => people.FullName.ToLower().Contains(valueOfSearch.ToLower()) 
+                || people.Phone.ToLower().Contains(valueOfSearch.ToLower())
+                || people.FirstName.ToLower().Contains(valueOfSearch.ToLower())
+                || people.LastName.ToLower().Contains(valueOfSearch.ToLower())
+                || people.Gender.ToLower().Contains(valueOfSearch.ToLower()));
             }
             return View(model.ToList());
         }

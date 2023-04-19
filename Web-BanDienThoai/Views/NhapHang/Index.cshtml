@@ -3,7 +3,19 @@
 
 <div class="row">
     <div class="col-md-12 table-responsive-md">
-        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create"> Thêm Nhân Viên Mới</a>
+        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create"> Thêm Đơn Nhập Hàng Mới</a>
+
+        <div class="col-xs-12">
+            <form moethod="get" asp-action="Index" enctype="multipart/form-data">
+                <div class="col-md-2">
+                    <input type="text" name="valueOfSearch" class="form-control" style="margin-bottom:0.1cm" placeholder="Nhập nội dung cần tìm" />
+                </div>
+                <div class="col-xs-2">
+                    <button type="submit" class="btn btn-success" style="margin-bottom:0.5cm">Tìm Kiếm</button>
+                </div>
+            </form>
+        </div>
+
         <table class="table table-strip table-dark">
             <thead>
                 <tr>
@@ -12,8 +24,8 @@
                     <th>Ngày giao đơn nhập hàng</th>
                     <th>Tổng tiền</th>
                     <th>Trạn thái nhập hàng</th>
-                    <th>Mã nhà cung cấp</th>
-                    <th>Mã nhân viên</th>                    
+                    @*<th>Mã nhà cung cấp</th>
+                    <th>Mã nhân viên</th>        *@            
                     <th class="text-warning">Action</th>
                 </tr>
             </thead>
@@ -26,8 +38,8 @@
                         <td>@item.NgayGiao.ToShortTimeString()</td>
                         <td>@item.TongTien</td>
                         <td>@item.TrangThaiNhapHang</td>
-                        <td>@item.Id_NhaCungCap</td>
-                        <td>@item.Id_NhanVien</td>                       
+                        @*<td>@item.Id_NhaCungCap</td>
+                        <td>@item.Id_NhanVien</td>       *@                
                         <td>
                             <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_NhapHang">
                                 <i class="fas fa-edit"></i> Edit

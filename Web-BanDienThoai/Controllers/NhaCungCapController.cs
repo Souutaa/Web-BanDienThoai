@@ -18,7 +18,7 @@ namespace Web_BanDienThoai.Controllers
             _nhacungcapService = nhacungcapService;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+        public IActionResult Index(string valueOfSearch)
         {
             var model = _nhacungcapService.GetAll().Select(nhacungcap => new IndexNhaCungCapViewModel
             {
@@ -28,6 +28,14 @@ namespace Web_BanDienThoai.Controllers
                 Address = nhacungcap.Address,
                 Phone = nhacungcap.Phone,
             }).ToList();
+
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(cauhinh => cauhinh.Id_NhaCungCap.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.Name.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.Phone.ToLower().Contains(valueOfSearch.ToLower()));
+            }
+
             return View(model);
         }
 

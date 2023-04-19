@@ -2,6 +2,13 @@
 @model EditMauSacViewModel
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="MauSac" asp-action="Index">Danh Sách Màu Sắc</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Màu Sắc</li>
+        </ol>
+    </nav>
+
     <form method="post" asp-action="Edit" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">

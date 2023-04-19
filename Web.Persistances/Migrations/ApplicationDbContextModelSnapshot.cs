@@ -312,10 +312,6 @@ namespace Web.Persistances.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Id_SanPham")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("NgayGiao")
                         .HasColumnType("datetime2");
 
@@ -336,8 +332,6 @@ namespace Web.Persistances.Migrations
                     b.HasIndex("Id_NhaCungCap");
 
                     b.HasIndex("Id_NhanVien");
-
-                    b.HasIndex("Id_SanPham");
 
                     b.ToTable("NhapHang");
                 });
@@ -439,17 +433,9 @@ namespace Web.Persistances.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Web.Entities.SanPham", "SanPham")
-                        .WithMany()
-                        .HasForeignKey("Id_SanPham")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("NhaCungCap");
 
                     b.Navigation("NhanVien");
-
-                    b.Navigation("SanPham");
                 });
 
             modelBuilder.Entity("Web.Entities.SanPham", b =>

@@ -2,6 +2,13 @@
 @model EditNhaCungCapViewModel
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="NhaCungCap" asp-action="Index">Danh Sách Nhà Cung Cấp</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Nhà Cung Cấp</li>
+        </ol>
+    </nav>
+
     <form method="post" asp-action="Edit" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">

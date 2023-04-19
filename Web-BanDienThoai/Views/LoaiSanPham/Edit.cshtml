@@ -10,6 +10,13 @@
 @model EditLoaiSanPhamViewModel;
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="LoaiSanPham" asp-action="Index">Danh Sách Loại Sản Phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Loại Sản Phẩm</li>
+        </ol>
+    </nav>
+
     <form method="post" asp-action="Create" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">

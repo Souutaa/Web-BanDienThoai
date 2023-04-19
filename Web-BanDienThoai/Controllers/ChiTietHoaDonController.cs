@@ -50,8 +50,7 @@ namespace Web_BanDienThoai.Controllers
                 SoLuong = cthd.SoLuong,
                 DonGia = cthd.DonGia,
                 ThanhTien = cthd.ThanhTien
-            }).Where(x => x.Id_HoaDon == id);
-
+            }).Where(x => x.Id_HoaDon == id);            
             idtimkiem = id;
             return View(model.ToList());
         }

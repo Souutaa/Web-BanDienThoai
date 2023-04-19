@@ -19,13 +19,20 @@ namespace Web_BanDienThoai.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string valueOfSearch)
         {
             var model = _mausacService.GetAll().Select(mausac => new IndexMauSacViewModel
             {
                 Id_MauSac = mausac.Id_MauSac,
                 TenMauSac = mausac.TenMauSac,
             }).ToList();
+
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(cauhinh => cauhinh.Id_MauSac.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.TenMauSac.ToLower().Contains(valueOfSearch.ToLower()));
+            }
+
             return View(model);
         }
 

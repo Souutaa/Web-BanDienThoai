@@ -25,7 +25,7 @@ namespace Web_BanDienThoai.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string valueOfSearch)
         {
 
             var model = _nhaphangService.GetAll().Select(nhaphang => new IndexNhapHangViewModel
@@ -35,21 +35,30 @@ namespace Web_BanDienThoai.Controllers
                 NgayGiao=nhaphang.NgayGiao,
                 TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,                
                 TongTien = nhaphang.TongTien,
-                Id_NhaCungCap = nhaphang.Id_NhaCungCap,
-                Id_NhanVien = nhaphang.Id_NhanVien
-            }).ToList();
-            return View(model);
+                //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
+                //Id_NhanVien = nhaphang.Id_NhanVien
+            });
+
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(people => people.Id_NhapHang.ToLower().Contains(valueOfSearch.ToLower())
+                || people.NgayGiao.Equals(valueOfSearch)
+                || people.NgayLap.Equals(valueOfSearch)
+                || people.TrangThaiNhapHang.Equals(valueOfSearch));
+            }
+
+            return View(model.ToList());
         }
 
         [HttpGet]
         public IActionResult Create()
         {
             var model = new CreateNhapHangViewModel();
-            List<SelectListItem> listNhanVien = /*_context.CauHinh*/_nhanvienService.GetAll().
+            List<SelectListItem> listNhanVien =_nhanvienService.GetAll().
                 Select(c => new SelectListItem
                 {
                     Value = c.Id_NhanVien.ToString(),
-                    Text = c.FullName,
+                    Text = c.FullName
                 }).ToList();
             model.NhanVien = listNhanVien;
 
@@ -173,6 +182,21 @@ namespace Web_BanDienThoai.Controllers
                 Id_NhaCungCap = nhaphang.Id_NhaCungCap,
                 Id_NhanVien = nhaphang.Id_NhanVien
             };
+            List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_NhanVien.ToString(),
+                    Text = c.FullName
+                }).ToList();
+            model.NhanVien = listNhanVien;
+
+            List<SelectListItem> listNhaCungCap = _nhacungcapService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_NhaCungCap.ToString(),
+                    Text = c.Name
+                }).ToList();
+            model.NhaCungCap = listNhaCungCap;
             return View(model);
         }
 

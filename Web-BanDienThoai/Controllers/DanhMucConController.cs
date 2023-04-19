@@ -23,7 +23,7 @@ namespace Web_BanDienThoai.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string valueOfSearch)
         {
             var cauHinhIds = _cauhinhService.GetAll().Select(ch => ch.Id_CauHinh).ToList();
             var model = _danhmucconService.GetAll().Select(danhmucon => new IndexDanhMucConViewModel
@@ -31,8 +31,15 @@ namespace Web_BanDienThoai.Controllers
                 Id_DanhMucCon = danhmucon.Id_DanhMucCon,
                 TenDanhMuc = danhmucon.TenDanhMuc,
                 Id_CauHinh = danhmucon.Id_CauHinh
-            }).ToList();
-            return View(model);
+            });
+            
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(cauhinh => cauhinh.Id_DanhMucCon.ToLower().Contains(valueOfSearch.ToLower()) 
+                || cauhinh.Id_CauHinh.ToLower().Contains(valueOfSearch.ToLower()) 
+                || cauhinh.TenDanhMuc.ToLower().Contains(valueOfSearch.ToLower()));
+            }
+            return View(model.ToList());
         }
 
         [HttpGet]

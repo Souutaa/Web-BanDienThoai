@@ -28,7 +28,7 @@ namespace Web_BanDienThoai.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string valueOfSearch)
         {
             
             var model = _hoadonService.GetAll().Select(hoadon => new IndexHoaDonViewModel
@@ -38,8 +38,16 @@ namespace Web_BanDienThoai.Controllers
                 Id_khachhang = hoadon.Id_khachhang,
                 Id_NhanVien = hoadon.Id_NhanVien,
                 TongTien   = hoadon.TongTien,
-            }).ToList();
-            return View(model);
+            });
+
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(cauhinh => cauhinh.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.Id_khachhang.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.Id_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
+            }
+            return View(model.ToList());
+           
         }
 
         [HttpGet]
@@ -163,6 +171,23 @@ namespace Web_BanDienThoai.Controllers
                 Id_NhanVien = hoadon.Id_NhanVien,
                 TongTien = hoadon.TongTien,
             };
+
+            List<SelectListItem> listKhachHang = /*_context.CauHinh*/_khachhangService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_KhacHang.ToString(),
+                    Text = c.FullName,
+                }).ToList();
+            model.KhachHang = listKhachHang;
+
+            List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_NhanVien.ToString(),
+                    Text = c.FullName
+                }).ToList();
+            model.NhanVien = listNhanVien;
+
             return View(model);
         }
 

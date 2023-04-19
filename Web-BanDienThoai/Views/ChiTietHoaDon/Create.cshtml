@@ -8,6 +8,12 @@
 @model CreateChiTietHoaDonViewModel;
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="HoaDon" asp-action="Index">Danh Sách Hóa Đơn</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm Chi Tiết Hóa Đơn</li>
+        </ol>
+    </nav>
     <form method="post" asp-action="Create" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         <div class="col-md-12 table-responsive-md">

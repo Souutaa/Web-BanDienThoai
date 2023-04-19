@@ -31,5 +31,7 @@ namespace Web_BanDienThoai.Models.NhapHang
         [RegularExpression(@"^[nN][vV][0-9]\S*$"), Display(Name = "Mã nhân viên")]
         [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }
         public IEnumerable<SelectListItem> NhanVien { set; get; }
+
+        public List<Web.Entities.SanPham> sanphamnhaphang { get; set; } = new List<Web.Entities.SanPham> ();
     }
 }

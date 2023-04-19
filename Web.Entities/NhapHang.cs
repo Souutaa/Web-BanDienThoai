@@ -16,9 +16,8 @@ namespace Web.Entities
         //[ForeignKey("SanPham")] public string Id_SanPham { get; set; }
         //public SanPham? SanPham { get; set; }
         [ForeignKey("NhaCungCap")] public string Id_NhaCungCap { get; set; }
-        public NhaCungCap? NhaCungCap { get; set; }
+        public virtual NhaCungCap? NhaCungCap { get; set; }
         [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }
-        public NhanVien? NhanVien { get; set; }
-        
+        public virtual NhanVien? NhanVien { get; set; }
     }
 }

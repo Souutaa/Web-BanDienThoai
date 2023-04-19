@@ -51,6 +51,16 @@
                     </li>
 
                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhập Hàng</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Create">Tạo Đơn Nhập Hàng</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Index">Danh Sách Đơn Nhập Hàng</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Khách Hàng</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @*<li><hr class="dropdown-divider" /></li>*@
@@ -64,11 +74,13 @@
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhân Viên</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @*<li><hr class="dropdown-divider" /></li>*@
-                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Create">Thêm Nhân Viên</a></li>
+                            <li><a class="dropdown-item" asp-controller="NhanVien" asp-action="Create">Thêm Nhân Viên</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Index">Danh Sách Nhân Viên</a></li>
+                            <li><a class="dropdown-item" asp-controller="NhanVien" asp-action="Index">Danh Sách Nhân Viên</a></li>
                         </ul>
                     </li>
+
+                    
                 </ul>
                 <form class="d-flex">
                     <button class="btn btn-outline-dark" type="submit">

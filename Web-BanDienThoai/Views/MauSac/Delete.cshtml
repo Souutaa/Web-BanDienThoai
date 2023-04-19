@@ -2,6 +2,14 @@
 @model DeleteMauSacViewModel
 
 <div class="row">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="MauSac" asp-action="Index">Danh Sách Màu Sắc</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Xóa Màu Sắc</li>
+        </ol>
+    </nav>
+
     <form method="post" asp-action="Delete" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">
@@ -22,7 +30,7 @@
                     <span asp-validation-for="@Model.TenMauSac" class="text-danger"></span>
                 </div>
             </div>
-
+        </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Delete</button>
                 <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>

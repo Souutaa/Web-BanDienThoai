@@ -8,6 +8,13 @@
 @model CreateNhapHangViewModel;
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="NhapHang" asp-action="Index">Danh Sách Nhập Hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm Đơn Nhập Hàng</li>
+        </ol>
+    </nav>
+
     <form method="post" asp-action="Create" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">
@@ -53,33 +60,46 @@
                     <span asp-validation-for="TongSoLuong" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
+                
                 <div class="col-2 form-group">
-                    <label asp-for="GhiChu" class="form-label"></label>
+                    <label asp-for="TrangThaiNhapHang" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="GhiChu" class="form-control" />
-                    <span asp-validation-for="GhiChu" class="text-danger"></span>
+                    <select asp-for="TrangThaiNhapHang" class="form-control" asp-items="Html.GetEnumSelectList<TrangThaiNhapHang>()">
+                        @*<option value=""> --Chọn nhân viên-- </option>*@
+                    </select>
+                    <span asp-validation-for="TrangThaiNhapHang" class="text-danger"></span>
                 </div>
-            
                 <div class="col-2 form-group">
                     <label asp-for="Id_NhanVien" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_NhanVien" class="form-control" asp-items="@Model.NhanVien">
+                    <select asp-for="Id_NhanVien" asp-items="@Model.NhanVien" class="form-control">
                         <option value=""> --Chọn nhân viên-- </option>
                     </select>
                     <span asp-validation-for="Id_NhanVien" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
+
                 <div class="col-2 form-group">
                     <label asp-for="Id_NhaCungCap" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_NhaCungCap" class="form-control" asp-items="@Model.NhanVien">
+                    <select asp-for="Id_NhaCungCap" asp-items="@Model.NhaCungCap" class="form-control">
                         <option value=""> --Chọn nhà cung cấp-- </option>
                     </select>
                     <span asp-validation-for="Id_NhaCungCap" class="text-danger"></span>
-                </div>               
+                </div>   
+                <div class="col-2 form-group"></div>
+
+                <div class="col-2 form-group">
+                    <label asp-for="GhiChu" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group" style=" margin-bottom:0.5cm">
+                    <textarea asp-for="GhiChu" class="form-control"></textarea>
+                    <span asp-validation-for="GhiChu" class="text-danger"></span>
+                </div>
+
             </div>
         </div>
             <div class="form-group">

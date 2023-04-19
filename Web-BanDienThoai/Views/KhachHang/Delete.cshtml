@@ -2,6 +2,13 @@
 @model DeleteKhachHangViewModel
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="KhachHang" asp-action="Index">Danh Sách Khách Hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Xóa Khách Hàng</li>
+        </ol>
+    </nav>
+
     <form method="post" asp-action="Delete" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">

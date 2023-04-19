@@ -2,6 +2,13 @@
 @model CreateNhanVienViewModel
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="NhanVien" asp-action="Index">Danh Sách Nhân Viên</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm Nhân Viên</li>
+        </ol>
+    </nav> 
+
     <form method="post" asp-action="Create" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">

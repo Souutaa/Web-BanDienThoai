@@ -26,7 +26,7 @@ namespace Web_BanDienThoai.Controllers
             _danhmucconService = danhmucconService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string valueOfSearch)
         {
             var DanhMucIds = _danhmucconService.GetAll().Select(dm => dm.Id_DanhMucCon).ToList();
             var MauSacIds = _mausacService.GetAll().Select(ms => ms.Id_MauSac).ToList();
@@ -36,8 +36,17 @@ namespace Web_BanDienThoai.Controllers
                 TenLoai = loaisanpham.TenLoai,
                 Id_DanhMucCon = loaisanpham.Id_DanhMucCon,
                 Id_MauSac = loaisanpham.Id_MauSac,               
-            }).ToList();
-            return View(model);
+            });
+
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(cauhinh => cauhinh.Id_loai.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.TenLoai.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.Id_DanhMucCon.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.Id_MauSac.ToLower().Contains(valueOfSearch.ToLower()));
+            }
+            return View(model.ToList());
+
         }
 
         [HttpGet]
@@ -102,6 +111,7 @@ namespace Web_BanDienThoai.Controllers
             return View(model);
         }
 
+
         [HttpGet]
         public IActionResult Delete(string id)
         {
@@ -145,6 +155,22 @@ namespace Web_BanDienThoai.Controllers
                 Id_DanhMucCon = loaisanpham.Id_DanhMucCon,
                 Id_MauSac = loaisanpham.Id_MauSac,
             };
+            List<SelectListItem> listDanhMucCon = _danhmucconService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_DanhMucCon.ToString(),
+                    Text = c.TenDanhMuc
+                }).ToList();
+            model.DanhMucCon = listDanhMucCon;
+
+            List<SelectListItem> listMauSac = _mausacService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_MauSac.ToString(),
+                    Text = c.TenMauSac
+                }).ToList();
+            model.MauSac = listMauSac;
+
             return View(model);
         }
 
