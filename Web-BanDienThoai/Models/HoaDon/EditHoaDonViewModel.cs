@@ -13,8 +13,9 @@ namespace Web_BanDienThoai.Models.HoaDon
        
         [DataType(DataType.Date), Display(Name = "Ngày lập hóa đơn")]
         public DateTime NgayLapHoaDon { get; set; }
-       
+        [Display(Name =" Tổng tiền")]
         public double TongTien { get; set; }
+
         [Required(ErrorMessage = "Phải nhập mã khách hàng (KH__)")]
         [RegularExpression(@"^[kK][hH][0-9]\S*$"), Display(Name = "Mã Khách Hàng")]
         [ForeignKey("KhachHang")] public string Id_khachhang { get; set; }  //Khách Hàng

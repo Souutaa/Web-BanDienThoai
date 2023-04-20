@@ -14,6 +14,7 @@ namespace Web_BanDienThoai.Models.HoaDon
 
         [DataType(DataType.Date), Display(Name = "Ngày lập hóa đơn")]
         public DateTime NgayLapHoaDon { get; set; } = DateTime.Now;
+        [Display(Name ="Tổng tiền")]        
         
         public double TongTien { get; set; }
 

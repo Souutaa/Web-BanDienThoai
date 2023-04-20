@@ -19,7 +19,10 @@ namespace Web_BanDienThoai.Models.ChiTietHoaDon
         public string Id_SanPham { get; set; }  //Sản Phẩm
         [ValidateNever]
         public IEnumerable<SelectListItem> SanPham { set; get; }
+        [Required(ErrorMessage = "Phải nhập số lượng"), Display(Name = "Số Lượng:")]
         public int SoLuong { get; set; }
+
+        [Required(ErrorMessage = "Phải nhập đơn giá"), Display(Name = "Đơn giá:")]
         public double DonGia { get; set; }
         public double ThanhTien { get; set; }
     }

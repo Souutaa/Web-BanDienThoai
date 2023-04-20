@@ -27,7 +27,7 @@ namespace Web_BanDienThoai.Controllers
                 Email = nhacungcap.Email,
                 Address = nhacungcap.Address,
                 Phone = nhacungcap.Phone,
-            }).ToList();
+            });
 
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
@@ -36,7 +36,7 @@ namespace Web_BanDienThoai.Controllers
                 || cauhinh.Phone.ToLower().Contains(valueOfSearch.ToLower()));
             }
 
-            return View(model);
+            return View(model.ToList());
         }
 
         [HttpGet]

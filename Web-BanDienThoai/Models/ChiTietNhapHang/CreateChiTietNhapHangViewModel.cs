@@ -14,9 +14,11 @@ namespace Web_BanDienThoai.Models.ChiTietNhapHang
         [RegularExpression(@"^[nN][hH][0-9]\S*$"), Display(Name = "Mã nhập hàng")]
         public string Id_NhapHang { get; set; } //Nhập Hàng
 
+        [Required(ErrorMessage = "Phải nhập số lượng"), Display(Name = "Số Lượng:")]
         public int SoLuong { get; set; }
+
+        [Required(ErrorMessage = "Phải nhập đơn giá"), Display(Name = "Đơn giá:")]
         public double DonGia { get; set; }
-        //public double ThanhTien { get; set; }
         public double ThanhTien { 
             get
             {

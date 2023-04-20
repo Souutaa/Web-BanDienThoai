@@ -25,15 +25,15 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_MauSac = mausac.Id_MauSac,
                 TenMauSac = mausac.TenMauSac,
-            }).ToList();
+            });
 
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
-                model = model.Where(cauhinh => cauhinh.Id_MauSac.ToLower().Contains(valueOfSearch.ToLower())
-                || cauhinh.TenMauSac.ToLower().Contains(valueOfSearch.ToLower()));
+                model = model.Where(mausac => mausac.Id_MauSac.Contains(valueOfSearch)
+                || mausac.TenMauSac.ToLower().Contains(valueOfSearch.ToLower()));
             }
 
-            return View(model);
+            return View(model.ToList());
         }
 
         [HttpGet]

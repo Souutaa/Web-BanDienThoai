@@ -129,8 +129,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_KhacHang = people.Id_KhacHang,
                 FirstName = people.FirstName,
-                LastName = people.LastName,
-                FullName = people.FullName,
+                LastName = people.LastName,                
                 Gender = people.Gender,
                 DOB = people.DOB,
                 Email = people.Email,
