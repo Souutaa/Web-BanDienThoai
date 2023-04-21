@@ -14,5 +14,7 @@ namespace Web.Entities
         public int SoLuong { get; set; }
         [ForeignKey("LoaiSanPham")] public string Id_loai { get; set; } //Loại Sản Phẩm
         public virtual LoaiSanPham? LoaiSanPham { get; set; }
+        public virtual ICollection<ChiTietNhapHang> ChiTietNhapHangs { get; set; }
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
     }
 }

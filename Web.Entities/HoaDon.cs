@@ -15,5 +15,6 @@ namespace Web.Entities
         public virtual NhanVien? NhanVien { get; set; }
 
         //public virtual SanPham? SanPham { get; set; }
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
     }
 }
