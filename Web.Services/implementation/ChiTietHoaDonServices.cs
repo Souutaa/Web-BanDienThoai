@@ -106,11 +106,6 @@ namespace Web.Services.implementation
                 Value = e.Ten_SanPham
             });
             return ListSanPhamforDetail;
-        }
-
-        public List<ChiTietHoaDon> GetChiTietsID(string id)
-        {
-            throw new NotImplementedException();
-        }
+        }       
     }
 }

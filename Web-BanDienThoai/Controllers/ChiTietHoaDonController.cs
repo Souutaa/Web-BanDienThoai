@@ -156,11 +156,11 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(DeleteHoaDonViewModel model)
+        public async Task<IActionResult> Delete(DeleteChiTietHoaDonViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await _hoadonService.DeleteById(model.Id_HoaDon);
+                await _cthdService.DeleteById(model.Id_HoaDon);
                 return RedirectToAction("Index");
             }
             return View();
@@ -187,7 +187,7 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditHoaDonViewModel model)
+        public async Task<IActionResult> Edit(EditChiTietHoaDonViewModel model)
         {
             //var hoadon = _hoadonService.GetById(model.Id_HoaDon);
             //if (hoadon == null)
