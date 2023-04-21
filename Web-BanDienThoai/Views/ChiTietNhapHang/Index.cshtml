@@ -1,9 +1,9 @@
-﻿@using Web_BanDienThoai.Models.ChiTietHoaDon;
-@model IEnumerable<IndexChiTietHoaDonViewModel>
+﻿@using Web_BanDienThoai.Models.ChiTietNhapHang;
+@model IEnumerable<IndexChiTietNhapHangViewModel>
 
 <div class="row">
     <div class="col-md-12 table-responsive-md">
-        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Thêm sản phẩm vào hóa đơn</a>
+        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Thêm sản phẩm vào đơn nhập hàng</a>
 
         <div class="col-xs-12">
             <form moethod="get" asp-action="Index" enctype="multipart/form-data">
@@ -19,7 +19,7 @@
         <table class="table table-strip table-dark">
             <thead>
                 <tr>
-                    <th>Mã Hóa Đơn</th>
+                    <th>Mã Nhập Hàng</th>
                     <th>Mã Sản Phẩm</th>
                     <th>Số Lượng</th>
                     <th>Đơn Giá</th>
@@ -31,19 +31,19 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Id_HoaDon</td>
+                        <td>@item.Id_NhapHang</td>
                         <td>@item.Id_SanPham</td>
                         <td>@item.SoLuong</td>
                         <td>@item.DonGia</td>
                         <td>@item.ThanhTien</td>
                         <td>
-                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_HoaDon">
+                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_NhapHang">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            @*<a class="text-success" asp-action="Detail" asp-route-id="@item.Id_HoaDon">
+                            @*<a class="text-success" asp-action="Detail" asp-route-id="@item.Id_NhapHang">
                                 <i class="fas fa-bars"></i> Detail
                             </a>*@
-                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_HoaDon">
+                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_NhapHang">
                                 <i class="far fa-trash-alt"></i> Delete
                             </a>
                         </td>

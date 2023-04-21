@@ -12,7 +12,7 @@ using Web.Persistances;
 namespace Web.Persistances.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230419082533_QuangLong")]
+    [Migration("20230420185649_QuangLong")]
     partial class QuangLong
     {
         /// <inheritdoc />

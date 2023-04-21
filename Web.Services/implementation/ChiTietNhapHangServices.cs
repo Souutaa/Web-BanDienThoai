@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,55 +9,45 @@ using Web.Persistances;
 
 namespace Web.Services.implementation
 {
-    public class ChiTietHoaDonServices : IChiTietHoaDonServices
+    internal class ChiTietNhapHangServices : IChiTietNhapHangServices
     {
         private ApplicationDbContext _context;
-        public ChiTietHoaDonServices(ApplicationDbContext context)
+        public ChiTietNhapHangServices(ApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task CreateAsSync(ChiTietHoaDon cthoaDon)
+        public async Task CreateAsSync(ChiTietNhapHang ctnh)
         {
-            _context.Add(cthoaDon);
+            _context.Add(ctnh);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteById(string id)
         {
-            var cthoaDon = GetById(id);
-            if (cthoaDon != null)
+            var ctnh = GetById(id);
+            if (ctnh != null)
             {
-                _context.ChiTietHoaDon.Remove(cthoaDon);
+                _context.ChiTietNhapHang.Remove(ctnh);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task DeleteAsSync(ChiTietHoaDon cthoaDon)
+        public async Task DeleteAsSync(ChiTietNhapHang ctnh)
         {
-            _context?.ChiTietHoaDon.Remove(cthoaDon);
+            _context?.ChiTietNhapHang.Remove(ctnh);
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<ChiTietHoaDon> GetAll()
+        public IEnumerable<ChiTietNhapHang> GetAll()
         {
-            return _context.ChiTietHoaDon.ToList();
+            return _context.ChiTietNhapHang.ToList();
         }
 
-        public ChiTietHoaDon GetById(string id)
+        public ChiTietNhapHang GetById(string id)
         {
-            return _context.ChiTietHoaDon.Where(x => x.Id_HoaDon == id).FirstOrDefault();
-        }
+            return _context.ChiTietNhapHang.Where(x => x.Id_NhapHang == id).FirstOrDefault();
+        }     
 
-        public IEnumerable<SelectListItem> GetID(string id)
-        {
-            var ListSanPhamforDetail = _context.ChiTietHoaDon.Select(t => new SelectListItem
-            {
-                Value = t.Id_HoaDon,
-                Text = t.Id_SanPham,                
-            }).Where(x => x.Value == id);
-            return ListSanPhamforDetail;
-        }
-       
         public SanPham GetbyIDListSanPham(string id)
         {
             var ListSanPhamforDetail = _context.SanPham.Select(t => new SelectListItem
@@ -66,20 +55,20 @@ namespace Web.Services.implementation
                 Value = t.Id_SanPham,
                 Text = t.Ten_SanPham
             }).Where(x => x.Value == id);
-           
+
             return (SanPham)ListSanPhamforDetail;
         }
 
         public async Task UpdateById(string id)
         {
-            var cthoaDon = GetById(id);
-            _context.ChiTietHoaDon.Update(cthoaDon);
+            var ctnh = GetById(id);
+            _context.ChiTietNhapHang.Update(ctnh);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsSyncs(ChiTietHoaDon cthoaDon)
+        public async Task UpdateAsSyncs(ChiTietNhapHang ctnh)
         {
-            _context.ChiTietHoaDon.Update(cthoaDon);
+            _context.ChiTietNhapHang.Update(ctnh);
             await _context.SaveChangesAsync();
         }
 
@@ -91,6 +80,11 @@ namespace Web.Services.implementation
                 Value = e.Ten_SanPham
             });
             return ListSanPhamforDetail;
-        }       
+        }
+
+        public IEnumerable<SelectListItem> GetID(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

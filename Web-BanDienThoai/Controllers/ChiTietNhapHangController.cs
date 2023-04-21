@@ -1,40 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.Identity.Client;
-using System.Linq;
-using System.Net.WebSockets;
 using Web.Entities;
 using Web.Services;
 using Web_BanDienThoai.Models.ChiTietHoaDon;
+using Web_BanDienThoai.Models.ChiTietNhapHang;
 using Web_BanDienThoai.Models.HoaDon;
+using Web_BanDienThoai.Models.NhapHang;
 
 namespace Web_BanDienThoai.Controllers
 {
-    public class ChiTietHoaDonController : Controller
-    {
-        private IKhachHangServices _khachhangService;
+    public class ChiTietNhapHangController : Controller
+    {       
         private INhanVienServices _nhanvienService;
         private ISanPhamServices _sanphamService;
-        private IChiTietHoaDonServices _cthdService;
+        private IChiTietNhapHangServices _ctnhService;
+        private INhapHangServices _nhaphangService;
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
-        public ChiTietHoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
-            IKhachHangServices khachhangService, INhanVienServices nhanvienService, IChiTietHoaDonServices cthdService,
-            IWebHostEnvironment webHostEnvironment)
+        public ChiTietNhapHangController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
+            INhanVienServices nhanvienService, IChiTietNhapHangServices ctnhService,
+            IWebHostEnvironment webHostEnvironment, INhapHangServices _nhaphangService)
         {
-            _khachhangService = khachhangService;
+            _ctnhService = ctnhService;
             _nhanvienService = nhanvienService;
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
-            _cthdService = cthdService;
+            _ctnhService = ctnhService;
             _webHostEnvironment = webHostEnvironment;
         }
 
-       
+
         //public IActionResult Index(string id)
-            public IActionResult Index(string id)
+        public IActionResult Index(string id)
         {
             //var hoadon = _hoadonService.GetById(id);
             //if (hoadon == null)
@@ -43,14 +41,14 @@ namespace Web_BanDienThoai.Controllers
             //}
             //var sanphamchitiet = _cthdService.GetById(hoadon.Id_HoaDon);
 
-            var model = _cthdService.GetAll().Select(cthd => new IndexChiTietHoaDonViewModel
+            var model = _ctnhService.GetAll().Select(cthd => new IndexChiTietNhapHangViewModel
             {
-                Id_HoaDon = cthd.Id_HoaDon,
+                Id_NhapHang = cthd.Id_NhapHang,
                 Id_SanPham = cthd.Id_SanPham,
                 SoLuong = cthd.SoLuong,
                 DonGia = cthd.DonGia,
                 ThanhTien = cthd.ThanhTien
-            }).Where(x => x.Id_HoaDon == id);            
+            }).Where(x => x.Id_NhapHang == id);
             idtimkiem = id;
             return View(model.ToList());
         }
@@ -58,15 +56,15 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new CreateChiTietHoaDonViewModel();
+            var model = new CreateChiTietNhapHangViewModel();
 
-            List<SelectListItem> listHoaDon = _hoadonService.GetAll().
+            List<SelectListItem> listNhapHang = _nhaphangService.GetAll().
                 Select(c => new SelectListItem
                 {
-                    Value = c.Id_HoaDon.ToString(),
-                    Text = c.Id_HoaDon,
+                    Value = c.Id_NhapHang.ToString(),
+                    Text = c.Id_NhapHang,
                 }).ToList();
-            model.HoaDon = listHoaDon;
+            model.NhapHang = listNhapHang;
 
             List<SelectListItem> listSanPham = _sanphamService.GetAll().
                 Select(c => new SelectListItem
@@ -82,38 +80,38 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateChiTietHoaDonViewModel model) //Màu Sắc
-        {           
+        public async Task<IActionResult> Create(CreateChiTietNhapHangViewModel model) //Màu Sắc
+        {
             if (ModelState.IsValid)
             {
                 //var check = _cthdService.GetAll().FirstOrDefault(s => s.Id_HoaDon == model.Id_HoaDon);
                 //if(check == null) { 
-                var cthd = new ChiTietHoaDon
+                var ctnh = new ChiTietNhapHang
                 {
-                    Id_HoaDon = model.Id_HoaDon,
-                    Id_SanPham = model.Id_SanPham,
+                    Id_NhapHang = model.Id_NhapHang,
+                    Id_SanPham = model.Id_SanPham,                   
                     SoLuong = model.SoLuong,
                     DonGia = model.DonGia,
                     ThanhTien = model.ThanhTien,
                 };
-                await _cthdService.CreateAsSync(cthd);
-                
-                return RedirectToAction("Index", new { id = idtimkiem});
+                await _ctnhService.CreateAsSync(ctnh);
+
+                return RedirectToAction("Index", new { id = idtimkiem });
                 //}
                 //else
                 //{
                 //    ViewBag.error = "Sản phẩm này đã được tồn tại trong giỏ hàng";
                 //    return View();
                 //}
-            }           
+            }
             return View();
         }
 
         [HttpGet]
         public IActionResult Detail(string id)
         {
-            var hoadon = _hoadonService.GetById(id);
-            if (hoadon == null)
+            var nh = _nhaphangService.GetById(id);
+            if (nh == null)
             {
                 return NotFound();
             }
@@ -127,14 +125,17 @@ namespace Web_BanDienThoai.Controllers
             //    list.Add(SanPham.Ten_SanPham);              
 
 
-            var model = new DetailHoaDonViewModel
+            var model = new DetailNhapHangViewModel
             {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                Id_khachhang = hoadon.Id_khachhang,
-                Id_NhanVien = hoadon.Id_NhanVien,
-                TongTien = hoadon.TongTien,
-
+                Id_NhapHang = nh.Id_NhapHang,
+                NgayGiao = nh.NgayGiao,
+                NgayLap = nh.NgayLap,
+                TongSoLuong = nh.TongSoLuong,
+                TongTien = nh.TongTien,
+                TrangThaiNhapHang = nh.TrangThaiNhapHang,
+                Id_NhaCungCap = nh.Id_NhaCungCap,
+                Id_NhanVien = nh.Id_NhanVien,
+                GhiChu = nh.GhiChu,                            
             };
 
             return View(model);
@@ -143,14 +144,14 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            var cthd = _cthdService.GetById(id);
+            var cthd = _ctnhService.GetById(id);
             if (cthd == null)
             {
                 return NotFound();
             }
-            var model = new DeleteChiTietHoaDonViewModel
+            var model = new DeleteChiTietNhapHangViewModel
             {
-                Id_HoaDon = cthd.Id_HoaDon,
+                Id_NhapHang = cthd.Id_NhapHang,
                 Id_SanPham = cthd.Id_SanPham,               
             };
 
@@ -159,11 +160,11 @@ namespace Web_BanDienThoai.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(DeleteChiTietHoaDonViewModel model)
+        public async Task<IActionResult> Delete(DeleteChiTietNhapHangViewModel model)
         {
             if (ModelState.IsValid)
             {
-                await _cthdService.DeleteById(model.Id_HoaDon);
+                await _ctnhService.DeleteById(model.Id_NhapHang);
                 return RedirectToAction("Index");
             }
             return View();
@@ -172,44 +173,41 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            var cthd = _cthdService.GetById(id);
-            if (cthd == null)
+            var ctnh = _ctnhService.GetById(id);
+            if (ctnh == null)
             {
                 return NotFound();
             }
             var model = new EditChiTietHoaDonViewModel
             {
-                Id_HoaDon = cthd.Id_HoaDon,
-                Id_SanPham = cthd.Id_SanPham,
-                SoLuong = cthd.SoLuong,
-                DonGia = cthd.DonGia,
-                ThanhTien = cthd.ThanhTien
+                Id_HoaDon = ctnh.Id_NhapHang,
+                Id_SanPham = ctnh.Id_SanPham,
+                SoLuong = ctnh.SoLuong,
+                DonGia = ctnh.DonGia,
+                ThanhTien = ctnh.ThanhTien
             };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditChiTietHoaDonViewModel model)
+        public async Task<IActionResult> Edit(EditChiTietNhapHangViewModel model)
         {
-            var cthd = _cthdService.GetById(model.Id_HoaDon);
+            var cthd = _ctnhService.GetById(model.Id_NhapHang);
             if (cthd == null)
             {
                 return NotFound();
             }
-            cthd.Id_HoaDon = model.Id_HoaDon;
+            cthd.Id_NhapHang = model.Id_NhapHang;
             cthd.Id_SanPham = model.Id_SanPham;
             cthd.SoLuong = model.SoLuong;
             cthd.DonGia = model.DonGia;
             cthd.ThanhTien = model.ThanhTien;
 
-            await _cthdService.UpdateAsSyncs(cthd);
+            await _ctnhService.UpdateAsSyncs(cthd);
             //return RedirectToAction("Index");
 
             return View();
         }
     }
 }
-
-
-

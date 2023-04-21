@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Entities
 {
     [PrimaryKey(nameof(Id_SanPham), nameof(Id_NhapHang))]
+    
     public class ChiTietNhapHang
     {
         [Key] public string Id_SanPham { get; set; } //Sản Phẩm
