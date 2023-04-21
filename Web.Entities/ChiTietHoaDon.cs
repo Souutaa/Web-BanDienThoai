@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Web.Entities
 {
     [PrimaryKey(nameof(Id_HoaDon), nameof(Id_SanPham))]
+
     public class ChiTietHoaDon
     {
         [Key, Column(Order = 0)] public string Id_HoaDon { get; set; }  //Hóa Đơn
