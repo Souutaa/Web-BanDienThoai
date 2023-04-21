@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Permissions;
 
 namespace Web_BanDienThoai.Models.ChiTietHoaDon
 {
     public class CreateChiTietHoaDonViewModel
     {
+        //[ForeignKey("HoaDon")]
         [Key]
         [Required(ErrorMessage = "Phải nhập mã Hóa Đơn (HD__)")]
         [RegularExpression(@"^[hH][dD][0-9]\S*$"), Display(Name = "Mã Hóa Đơn")]
@@ -13,8 +16,9 @@ namespace Web_BanDienThoai.Models.ChiTietHoaDon
         [ValidateNever]
         public IEnumerable<SelectListItem> HoaDon { set; get; }
 
+        //[ForeignKey("SanPham")]
         [Key]
-        [Required(ErrorMessage = "Phải nhập mã sản phẩm (ID_SanPham)")]
+        [Required(ErrorMessage = "Phải nhập mã sản phẩm (SP__)")]
         [RegularExpression(@"^[a-zA-Z]{2}[0-9]\S*$"), Display(Name = "Mã sản phẩm")]
         public string Id_SanPham { get; set; }  //Sản Phẩm
         [ValidateNever]

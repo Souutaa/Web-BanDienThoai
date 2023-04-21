@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Web.Entities
 {
     [PrimaryKey(nameof(Id_SanPham), nameof(Id_NhapHang))]
+    
     public class ChiTietNhapHang
     {
         // Change to FK

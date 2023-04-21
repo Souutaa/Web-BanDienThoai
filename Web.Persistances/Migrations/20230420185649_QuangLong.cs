@@ -31,8 +31,8 @@ namespace Web.Persistances.Migrations
                 name: "ChiTietHoaDon",
                 columns: table => new
                 {
-                    Id_HoaDon = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Id_SanPham = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id_HoaDon = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
                     DonGia = table.Column<double>(type: "float", nullable: false),
                     ThanhTien = table.Column<double>(type: "float", nullable: false)

@@ -61,6 +61,7 @@ namespace Web.Services.implementation
             //return ListSanPhamforDetail;
             throw new NotImplementedException();
         }
+        
         public IEnumerable<SelectListItem> GetbyIDList(string id)
         {
             //var ListSanPhamforDetail = _context.ChiTietHoaDon.Select(t => new SelectListItem
@@ -74,6 +75,8 @@ namespace Web.Services.implementation
             throw new NotImplementedException();
         }
 
+
+       
         public SanPham GetbyIDListSanPham(string id)
         {
             var ListSanPhamforDetail = _context.SanPham.Select(t => new SelectListItem
@@ -106,11 +109,6 @@ namespace Web.Services.implementation
                 Value = e.Ten_SanPham
             });
             return ListSanPhamforDetail;
-        }
-
-        public List<ChiTietHoaDon> GetChiTietsID(string id)
-        {
-            throw new NotImplementedException();
-        }
+        }       
     }
 }

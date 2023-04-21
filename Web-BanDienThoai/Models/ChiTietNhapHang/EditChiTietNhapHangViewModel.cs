@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web_BanDienThoai.Models.ChiTietNhapHang
 {
     public class EditChiTietNhapHangViewModel
     {
         [Key]
-        [Required(ErrorMessage = "Phải nhập mã sản phẩm (ID_SanPham)"), StringLength(10, MinimumLength = 2)]
+        [Required(ErrorMessage = "Phải nhập mã sản phẩm (ID_SanPham)")]
         [RegularExpression(@"^[a-zA-Z]{2}[0-9]\S*$"), Display(Name = "Mã sản phẩm")]
         public string Id_SanPham { get; set; } //Sản Phẩm
 
