@@ -8,10 +8,15 @@ namespace Web.Entities
     
     public class ChiTietNhapHang
     {
-        [Key] public string Id_SanPham { get; set; } //Sản Phẩm
-        [Key] public string Id_NhapHang { get; set; } //Nhập Hàng
+        // Change to FK
+        [Key, Column(Order = 0)] public string Id_SanPham { get; set; } //Sản Phẩm
+        [Key, Column(Order = 1)] public string Id_NhapHang { get; set; } //Nhập Hàng
         public int SoLuong { get; set; }
         public double DonGia { get; set; }
         public double ThanhTien { get; set; }
+
+        public virtual SanPham SanPham { get; set; }
+        public virtual NhapHang NhapHang { get; set; }
+
     }
 }

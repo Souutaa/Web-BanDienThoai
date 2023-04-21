@@ -46,18 +46,36 @@ namespace Web.Services.implementation
 
         public ChiTietHoaDon GetById(string id)
         {
-            return _context.ChiTietHoaDon.Where(x => x.Id_HoaDon == id).FirstOrDefault();
+            //return _context.ChiTietHoaDon.Where(x => x.Id_HoaDon == id).FirstOrDefault();
+            throw new NotImplementedException();
+
         }
 
         public IEnumerable<SelectListItem> GetID(string id)
         {
-            var ListSanPhamforDetail = _context.ChiTietHoaDon.Select(t => new SelectListItem
-            {
-                Value = t.Id_HoaDon,
-                Text = t.Id_SanPham,                
-            }).Where(x => x.Value == id);
-            return ListSanPhamforDetail;
+            //var ListSanPhamforDetail = _context.ChiTietHoaDon.Select(t => new SelectListItem
+            //{
+            //    Value = t.Id_HoaDon,
+            //    Text = t.Id_SanPham,                
+            //}).Where(x => x.Value == id);
+            //return ListSanPhamforDetail;
+            throw new NotImplementedException();
         }
+        
+        public IEnumerable<SelectListItem> GetbyIDList(string id)
+        {
+            //var ListSanPhamforDetail = _context.ChiTietHoaDon.Select(t => new SelectListItem
+            //{
+            //    Value = t.Id_HoaDon,
+            //    Text = t.Id_SanPham
+            //}).Where(x => x.Value == id).ToList();
+
+            //Console.WriteLine(ListSanPhamforDetail);
+            //return ListSanPhamforDetail;         
+            throw new NotImplementedException();
+        }
+
+
        
         public SanPham GetbyIDListSanPham(string id)
         {

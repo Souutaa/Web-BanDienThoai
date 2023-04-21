@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web.Persistances;
 
@@ -11,9 +12,11 @@ using Web.Persistances;
 namespace Web.Persistances.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230421073056_updateUser")]
+    partial class updateUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,12 +260,10 @@ namespace Web.Persistances.Migrations
             modelBuilder.Entity("Web.Entities.ChiTietHoaDon", b =>
                 {
                     b.Property<string>("Id_HoaDon")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(0);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Id_SanPham")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(1);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("DonGia")
                         .HasColumnType("float");
@@ -275,20 +276,16 @@ namespace Web.Persistances.Migrations
 
                     b.HasKey("Id_HoaDon", "Id_SanPham");
 
-                    b.HasIndex("Id_SanPham");
-
                     b.ToTable("ChiTietHoaDon");
                 });
 
             modelBuilder.Entity("Web.Entities.ChiTietNhapHang", b =>
                 {
                     b.Property<string>("Id_SanPham")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(0);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Id_NhapHang")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(1);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("DonGia")
                         .HasColumnType("float");
@@ -300,8 +297,6 @@ namespace Web.Persistances.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id_SanPham", "Id_NhapHang");
-
-                    b.HasIndex("Id_NhapHang");
 
                     b.ToTable("ChiTietNhapHang");
                 });
@@ -631,44 +626,6 @@ namespace Web.Persistances.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Web.Entities.ChiTietHoaDon", b =>
-                {
-                    b.HasOne("Web.Entities.HoaDon", "HoaDon")
-                        .WithMany("ChiTietHoaDons")
-                        .HasForeignKey("Id_HoaDon")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Web.Entities.SanPham", "SanPham")
-                        .WithMany("ChiTietHoaDons")
-                        .HasForeignKey("Id_SanPham")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HoaDon");
-
-                    b.Navigation("SanPham");
-                });
-
-            modelBuilder.Entity("Web.Entities.ChiTietNhapHang", b =>
-                {
-                    b.HasOne("Web.Entities.NhapHang", "NhapHang")
-                        .WithMany("ChiTietNhapHangs")
-                        .HasForeignKey("Id_NhapHang")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Web.Entities.SanPham", "SanPham")
-                        .WithMany("ChiTietNhapHangs")
-                        .HasForeignKey("Id_SanPham")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("NhapHang");
-
-                    b.Navigation("SanPham");
-                });
-
             modelBuilder.Entity("Web.Entities.DanhMucCon", b =>
                 {
                     b.HasOne("Web.Entities.CauHinh", "CauHinh")
@@ -746,23 +703,6 @@ namespace Web.Persistances.Migrations
                         .IsRequired();
 
                     b.Navigation("LoaiSanPham");
-                });
-
-            modelBuilder.Entity("Web.Entities.HoaDon", b =>
-                {
-                    b.Navigation("ChiTietHoaDons");
-                });
-
-            modelBuilder.Entity("Web.Entities.NhapHang", b =>
-                {
-                    b.Navigation("ChiTietNhapHangs");
-                });
-
-            modelBuilder.Entity("Web.Entities.SanPham", b =>
-                {
-                    b.Navigation("ChiTietHoaDons");
-
-                    b.Navigation("ChiTietNhapHangs");
                 });
 #pragma warning restore 612, 618
         }
