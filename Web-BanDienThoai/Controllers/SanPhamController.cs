@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Entities;
 using Web.Services;
 using Web.Services.implementation;
-using Web_BanDienThoai.Models.NhanVien;
 using Web_BanDienThoai.Models.SanPham;
 
 namespace Web_BanDienThoai.Controllers

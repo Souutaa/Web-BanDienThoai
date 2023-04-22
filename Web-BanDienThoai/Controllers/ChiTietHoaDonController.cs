@@ -13,19 +13,15 @@ namespace Web_BanDienThoai.Controllers
 {
     public class ChiTietHoaDonController : Controller
     {
-        private IKhachHangServices _khachhangService;
-        private INhanVienServices _nhanvienService;
         private ISanPhamServices _sanphamService;
         private IChiTietHoaDonServices _cthdService;
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
         public ChiTietHoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
-            IKhachHangServices khachhangService, INhanVienServices nhanvienService, IChiTietHoaDonServices cthdService,
+            IChiTietHoaDonServices cthdService,
             IWebHostEnvironment webHostEnvironment)
         {
-            _khachhangService = khachhangService;
-            _nhanvienService = nhanvienService;
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
             _cthdService = cthdService;
@@ -127,35 +123,35 @@ namespace Web_BanDienThoai.Controllers
             //    list.Add(SanPham.Ten_SanPham);              
 
 
-            var model = new DetailHoaDonViewModel
-            {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                Id_khachhang = hoadon.Id_khachhang,
-                Id_NhanVien = hoadon.Id_NhanVien,
-                TongTien = hoadon.TongTien,
+            //var model = new DetailHoaDonViewModel
+            //{
+            //    Id_HoaDon = hoadon.Id_HoaDon,
+            //    NgayLapHoaDon = hoadon.NgayLapHoaDon,
+            //    Id_khachhang = hoadon.Id_khachhang,
+            //    Id_NhanVien = hoadon.Id_NhanVien,
+            //    TongTien = hoadon.TongTien,
 
-            };
+            //};
 
-            return View(model);
+            return View();
         }
 
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            var hoadon = _hoadonService.GetById(id);
-            if (hoadon == null)
-            {
-                return NotFound();
-            }
-            var model = new DeleteHoaDonViewModel
-            {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                Id_khachhang = hoadon.Id_khachhang,
-                Id_NhanVien = hoadon.Id_NhanVien,
-            };
+            //var hoadon = _hoadonService.GetById(id);
+            //if (hoadon == null)
+            //{
+            //    return NotFound();
+            //}
+            //var model = new DeleteHoaDonViewModel
+            //{
+            //    Id_HoaDon = hoadon.Id_HoaDon,
+            //    Id_khachhang = hoadon.Id_khachhang,
+            //    Id_NhanVien = hoadon.Id_NhanVien,
+            //};
 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -173,38 +169,38 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            var hoadon = _hoadonService.GetById(id);
-            if (hoadon == null)
-            {
-                return NotFound();
-            }
-            var model = new EditHoaDonViewModel
-            {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                Id_khachhang = hoadon.Id_khachhang, /*cauHinhIds*/
-                Id_NhanVien = hoadon.Id_NhanVien,
-                TongTien = hoadon.TongTien,
-            };
-            return View(model);
+            //var hoadon = _hoadonService.GetById(id);
+            //if (hoadon == null)
+            //{
+            //    return NotFound();
+            //}
+            //var model = new EditHoaDonViewModel
+            //{
+            //    Id_HoaDon = hoadon.Id_HoaDon,
+            //    NgayLapHoaDon = hoadon.NgayLapHoaDon,
+            //    Id_khachhang = hoadon.Id_khachhang, /*cauHinhIds*/
+            //    Id_NhanVien = hoadon.Id_NhanVien,
+            //    TongTien = hoadon.TongTien,
+            //};
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditHoaDonViewModel model)
         {
-            var hoadon = _hoadonService.GetById(model.Id_HoaDon);
-            if (hoadon == null)
-            {
-                return NotFound();
-            }
-            hoadon.Id_HoaDon = model.Id_HoaDon;
-            hoadon.NgayLapHoaDon = model.NgayLapHoaDon;
-            hoadon.Id_khachhang = model.Id_khachhang;
-            hoadon.Id_NhanVien = model.Id_NhanVien;
-            hoadon.TongTien = model.TongTien;
+            //var hoadon = _hoadonService.GetById(model.Id_HoaDon);
+            //if (hoadon == null)
+            //{
+            //    return NotFound();
+            //}
+            //hoadon.Id_HoaDon = model.Id_HoaDon;
+            //hoadon.NgayLapHoaDon = model.NgayLapHoaDon;
+            //hoadon.Id_khachhang = model.Id_khachhang;
+            //hoadon.Id_NhanVien = model.Id_NhanVien;
+            //hoadon.TongTien = model.TongTien;
 
-            await _hoadonService.UpdateAsSyncs(hoadon);
+            //await _hoadonService.UpdateAsSyncs(hoadon);
             //return RedirectToAction("Index");
 
             return View();

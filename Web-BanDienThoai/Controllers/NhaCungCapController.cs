@@ -4,7 +4,6 @@ using Web.Services;
 using Web.Services.implementation;
 using Web_BanDienThoai.Models.MauSac;
 using Web_BanDienThoai.Models.NhaCungCap;
-using Web_BanDienThoai.Models.NhanVien;
 
 namespace Web_BanDienThoai.Controllers
 {

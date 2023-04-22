@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Entities
@@ -9,11 +10,21 @@ namespace Web.Entities
         public string Id_HoaDon { get; set; }
         public DateTime NgayLapHoaDon { get; set; }
         public double TongTien { get; set; }        
-        [ForeignKey("KhachHang")] public string Id_khachhang { get; set; }  //Khách Hàng
-        public virtual KhachHang? KhachHang { get; set; }
-        [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }   //Nhân Viên
-        public virtual NhanVien? NhanVien { get; set; }
+        //[ForeignKey("KhachHang")] public string Id_khachhang { get; set; }  //Khách Hàng
+        //public virtual KhachHang? KhachHang { get; set; }
+        //[ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }   //Nhân Viên
+        //public virtual NhanVien? NhanVien { get; set; }
 
-        //public virtual SanPham? SanPham { get; set; }
+        public virtual SanPham? SanPham { get; set; }
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
+
+        [ForeignKey("KhachHang")]
+        public string Id_khachhang { get; set; }
+        public virtual TaiKhoan KhachHang { get; set; }
+
+        [ForeignKey("NhanVien")]
+        public string Id_NhanVien { get; set; }
+
+        public virtual TaiKhoan NhanVien { get; set; }
     }
 }

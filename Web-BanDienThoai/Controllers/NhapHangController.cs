@@ -10,16 +10,14 @@ namespace Web_BanDienThoai.Controllers
     public class NhapHangController : Controller
     {
         private INhaCungCapServices _nhacungcapService;
-        private INhanVienServices _nhanvienService;
         private ISanPhamServices _sanphamService;        
         private IWebHostEnvironment _webHostEnvironment; 
         private INhapHangServices _nhaphangService;
 
-        public NhapHangController(ISanPhamServices sanphamService,INhanVienServices nhanvienService, 
+        public NhapHangController(ISanPhamServices sanphamService, 
             INhaCungCapServices nhacungCapService, IWebHostEnvironment webHostEnvironment, INhapHangServices nhaphangService)
         {
             _nhaphangService = nhaphangService;
-            _nhanvienService = nhanvienService;
             _nhacungcapService = nhacungCapService;
             _sanphamService = sanphamService;      
             _webHostEnvironment = webHostEnvironment;
@@ -53,24 +51,24 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new CreateNhapHangViewModel();
-            List<SelectListItem> listNhanVien =_nhanvienService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_NhanVien.ToString(),
-                    Text = c.FullName
-                }).ToList();
-            model.NhanVien = listNhanVien;
+            //var model = new CreateNhapHangViewModel();
+            //List<SelectListItem> listNhanVien =_nhanvienService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_NhanVien.ToString(),
+            //        Text = c.FullName
+            //    }).ToList();
+            //model.NhanVien = listNhanVien;
 
-            List<SelectListItem> listNhaCungCap = _nhacungcapService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_NhaCungCap.ToString(),
-                    Text = c.Name
-                }).ToList();
-            model.NhaCungCap = listNhaCungCap;
+            //List<SelectListItem> listNhaCungCap = _nhacungcapService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_NhaCungCap.ToString(),
+            //        Text = c.Name
+            //    }).ToList();
+            //model.NhaCungCap = listNhaCungCap;
 
-            return View(model);
+            return View();
         }
 
 
@@ -78,23 +76,23 @@ namespace Web_BanDienThoai.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateNhapHangViewModel model) //Màu Sắc
         {
-            if (ModelState.IsValid)
-            {
-                var nhaphang = new NhapHang
-                {
-                    Id_NhapHang = model.Id_NhapHang,
-                    NgayLap = model.NgayLap,
-                    NgayGiao = model.NgayGiao,
-                    TrangThaiNhapHang = model.TrangThaiNhapHang,
-                    TongSoLuong = model.TongSoLuong,
-                    TongTien = model.TongTien,
-                    GhiChu = model.GhiChu,
-                    Id_NhaCungCap = model.Id_NhaCungCap,
-                    Id_NhanVien = model.Id_NhanVien
-                };
-                await _nhaphangService.CreateAsSync(nhaphang);
-                return RedirectToAction("Index");
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    var nhaphang = new NhapHang
+            //    {
+            //        Id_NhapHang = model.Id_NhapHang,
+            //        NgayLap = model.NgayLap,
+            //        NgayGiao = model.NgayGiao,
+            //        TrangThaiNhapHang = model.TrangThaiNhapHang,
+            //        TongSoLuong = model.TongSoLuong,
+            //        TongTien = model.TongTien,
+            //        GhiChu = model.GhiChu,
+            //        Id_NhaCungCap = model.Id_NhaCungCap,
+            //        Id_NhanVien = model.Id_NhanVien
+            //    };
+            //    await _nhaphangService.CreateAsSync(nhaphang);
+            //    return RedirectToAction("Index");
+            //}
             return View();
         }
 
@@ -116,20 +114,20 @@ namespace Web_BanDienThoai.Controllers
             //    list.Add(SanPham.Ten_SanPham);              
 
 
-            var model = new DetailNhapHangViewModel
-            {
-                Id_NhapHang = nhaphang.Id_NhapHang,
-                NgayLap = nhaphang.NgayLap,
-                NgayGiao = nhaphang.NgayGiao,
-                TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,
-                TongSoLuong = nhaphang.TongSoLuong,
-                TongTien = nhaphang.TongTien,
-                GhiChu = nhaphang.GhiChu,
-                Id_NhaCungCap = nhaphang.Id_NhaCungCap,
-                Id_NhanVien = nhaphang.Id_NhanVien,
-            };
+            //var model = new DetailNhapHangViewModel
+            //{
+            //    Id_NhapHang = nhaphang.Id_NhapHang,
+            //    NgayLap = nhaphang.NgayLap,
+            //    NgayGiao = nhaphang.NgayGiao,
+            //    TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,
+            //    TongSoLuong = nhaphang.TongSoLuong,
+            //    TongTien = nhaphang.TongTien,
+            //    GhiChu = nhaphang.GhiChu,
+            //    Id_NhaCungCap = nhaphang.Id_NhaCungCap,
+            //    Id_NhanVien = nhaphang.Id_NhanVien,
+            //};
 
-            return View(model);
+            return View();
         }
 
         [HttpGet]
@@ -172,23 +170,23 @@ namespace Web_BanDienThoai.Controllers
             }
             var model = new EditNhapHangViewModel
             {
-                Id_NhapHang = nhaphang.Id_NhapHang,
-                NgayLap = nhaphang.NgayLap,
-                NgayGiao = nhaphang.NgayGiao,
-                TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,
-                TongTien = nhaphang.TongTien,
-                TongSoLuong = nhaphang.TongSoLuong,
-                GhiChu = nhaphang.GhiChu,
-                Id_NhaCungCap = nhaphang.Id_NhaCungCap,
-                Id_NhanVien = nhaphang.Id_NhanVien
+                //Id_NhapHang = nhaphang.Id_NhapHang,
+                //NgayLap = nhaphang.NgayLap,
+                //NgayGiao = nhaphang.NgayGiao,
+                //TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,
+                //TongTien = nhaphang.TongTien,
+                //TongSoLuong = nhaphang.TongSoLuong,
+                //GhiChu = nhaphang.GhiChu,
+                //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
+                //Id_NhanVien = nhaphang.Id_NhanVien
             };
-            List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_NhanVien.ToString(),
-                    Text = c.FullName
-                }).ToList();
-            model.NhanVien = listNhanVien;
+            //List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_NhanVien.ToString(),
+            //        Text = c.FullName
+            //    }).ToList();
+            //model.NhanVien = listNhanVien;
 
             List<SelectListItem> listNhaCungCap = _nhacungcapService.GetAll().
                 Select(c => new SelectListItem
@@ -197,7 +195,7 @@ namespace Web_BanDienThoai.Controllers
                     Text = c.Name
                 }).ToList();
             model.NhaCungCap = listNhaCungCap;
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -209,15 +207,15 @@ namespace Web_BanDienThoai.Controllers
             {
                 return NotFound();
             }
-            nhaphang.Id_NhapHang = model.Id_NhapHang;
-            nhaphang.NgayLap = model.NgayLap;
-            nhaphang.NgayGiao = model.NgayGiao;
-            nhaphang.TrangThaiNhapHang = model.TrangThaiNhapHang;
-            nhaphang.TongSoLuong = model.TongSoLuong;
-            nhaphang.TongTien = model.TongTien;
-            nhaphang.GhiChu = model.GhiChu;
-            nhaphang.Id_NhaCungCap = model.Id_NhaCungCap;
-            nhaphang.Id_NhanVien = model.Id_NhanVien;
+            //nhaphang.Id_NhapHang = model.Id_NhapHang;
+            //nhaphang.NgayLap = model.NgayLap;
+            //nhaphang.NgayGiao = model.NgayGiao;
+            //nhaphang.TrangThaiNhapHang = model.TrangThaiNhapHang;
+            //nhaphang.TongSoLuong = model.TongSoLuong;
+            //nhaphang.TongTien = model.TongTien;
+            //nhaphang.GhiChu = model.GhiChu;
+            //nhaphang.Id_NhaCungCap = model.Id_NhaCungCap;
+            //nhaphang.Id_NhanVien = model.Id_NhanVien;
             
             await _nhaphangService.UpdateAsSyncs(nhaphang);
             //return RedirectToAction("Index");

@@ -9,19 +9,15 @@ namespace Web_BanDienThoai.Controllers
 {
     public class HoaDonController : Controller
     {
-        private IKhachHangServices _khachhangService;
-        private INhanVienServices _nhanvienService;
         private ISanPhamServices _sanphamService;
         private IChiTietHoaDonServices _cthdServices;
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
 
         public HoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
-            IKhachHangServices khachhangService, INhanVienServices nhanvienService, IChiTietHoaDonServices cthdServices,
+            IChiTietHoaDonServices cthdServices,
             IWebHostEnvironment webHostEnvironment)
         {            
-            _khachhangService = khachhangService;
-            _nhanvienService = nhanvienService;
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
             _cthdServices = cthdServices;
@@ -35,8 +31,8 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_HoaDon = hoadon.Id_HoaDon,
                 NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                Id_khachhang = hoadon.Id_khachhang,
-                Id_NhanVien = hoadon.Id_NhanVien,
+                //Id_khachhang = hoadon.Id_khachhang,
+                //Id_NhanVien = hoadon.Id_NhanVien,
                 TongTien   = hoadon.TongTien,
             });
 
@@ -53,24 +49,24 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new CreateHoaDonViewModel();
-            List<SelectListItem> listKhachHang = /*_context.CauHinh*/_khachhangService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_KhacHang.ToString(),
-                    Text = c.FullName,
-                }).ToList();
-            model.KhachHang = listKhachHang;
+            //var model = new CreateHoaDonViewModel();
+            //List<SelectListItem> listKhachHang = /*_context.CauHinh*/_khachhangService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_KhacHang.ToString(),
+            //        Text = c.FullName,
+            //    }).ToList();
+            //model.KhachHang = listKhachHang;
 
-            List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_NhanVien.ToString(),
-                    Text = c.FullName
-                }).ToList();
-            model.NhanVien = listNhanVien;
+            //List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_NhanVien.ToString(),
+            //        Text = c.FullName
+            //    }).ToList();
+            //model.NhanVien = listNhanVien;
 
-            return View(model);
+            return View();
         }
 
 
@@ -78,19 +74,19 @@ namespace Web_BanDienThoai.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateHoaDonViewModel model) //Màu Sắc
         {
-            if (ModelState.IsValid)
-            {                
-                var hoadon = new HoaDon
-                {
-                    Id_HoaDon = model.Id_HoaDon,
-                    NgayLapHoaDon = model.NgayLapHoaDon,
-                    Id_khachhang = model.Id_khachhang, 
-                    Id_NhanVien = model.Id_NhanVien,
-                    TongTien = model.TongTien,
-                };
-                await _hoadonService.CreateAsSync(hoadon);
-                return RedirectToAction("Index" );
-            }
+            //if (ModelState.IsValid)
+            //{                
+            //    var hoadon = new HoaDon
+            //    {
+            //        Id_HoaDon = model.Id_HoaDon,
+            //        NgayLapHoaDon = model.NgayLapHoaDon,
+            //        Id_khachhang = model.Id_khachhang, 
+            //        Id_NhanVien = model.Id_NhanVien,
+            //        TongTien = model.TongTien,
+            //    };
+            //    await _hoadonService.CreateAsSync(hoadon);
+            //    return RedirectToAction("Index" );
+            //}
             return View();
         }
 
@@ -114,11 +110,11 @@ namespace Web_BanDienThoai.Controllers
 
             var model = new DetailHoaDonViewModel
             {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                Id_khachhang = hoadon.Id_khachhang,
-                Id_NhanVien = hoadon.Id_NhanVien,
-                TongTien = hoadon.TongTien,
+                //Id_HoaDon = hoadon.Id_HoaDon,
+                //NgayLapHoaDon = hoadon.NgayLapHoaDon,
+                //Id_khachhang = hoadon.Id_khachhang,
+                //Id_NhanVien = hoadon.Id_NhanVien,
+                //TongTien = hoadon.TongTien,
                             
             };         
            
@@ -135,9 +131,9 @@ namespace Web_BanDienThoai.Controllers
             }
             var model = new DeleteHoaDonViewModel
             {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                Id_khachhang = hoadon.Id_khachhang,
-                Id_NhanVien = hoadon.Id_NhanVien,
+                //Id_HoaDon = hoadon.Id_HoaDon,
+                //Id_khachhang = hoadon.Id_khachhang,
+                //Id_NhanVien = hoadon.Id_NhanVien,
             };
            
             return View(model);
@@ -167,28 +163,28 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_HoaDon = hoadon.Id_HoaDon,
                 NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                Id_khachhang = hoadon.Id_khachhang, /*cauHinhIds*/
-                Id_NhanVien = hoadon.Id_NhanVien,
+                //Id_khachhang = hoadon.Id_khachhang, /*cauHinhIds*/
+                //Id_NhanVien = hoadon.Id_NhanVien,
                 TongTien = hoadon.TongTien,
             };
 
-            List<SelectListItem> listKhachHang = /*_context.CauHinh*/_khachhangService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_KhacHang.ToString(),
-                    Text = c.FullName,
-                }).ToList();
-            model.KhachHang = listKhachHang;
+            //List<SelectListItem> listKhachHang = /*_context.CauHinh*/_khachhangService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_KhacHang.ToString(),
+            //        Text = c.FullName,
+            //    }).ToList();
+            //model.KhachHang = listKhachHang;
 
-            List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_NhanVien.ToString(),
-                    Text = c.FullName
-                }).ToList();
-            model.NhanVien = listNhanVien;
+            //List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_NhanVien.ToString(),
+            //        Text = c.FullName
+            //    }).ToList();
+            //model.NhanVien = listNhanVien;
 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -202,8 +198,8 @@ namespace Web_BanDienThoai.Controllers
             }
             hoadon.Id_HoaDon = model.Id_HoaDon;
             hoadon.NgayLapHoaDon = model.NgayLapHoaDon;
-            hoadon.Id_khachhang = model.Id_khachhang;
-            hoadon.Id_NhanVien = model.Id_NhanVien;
+            //hoadon.Id_khachhang = model.Id_khachhang;
+            //hoadon.Id_NhanVien = model.Id_NhanVien;
             hoadon.TongTien = model.TongTien;
 
             await _hoadonService.UpdateAsSyncs(hoadon);
