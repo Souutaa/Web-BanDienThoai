@@ -9,7 +9,7 @@ using Web.Persistances;
 
 namespace Web.Services.implementation
 {
-    internal class ChiTietNhapHangServices : IChiTietNhapHangServices
+    public class ChiTietNhapHangServices : IChiTietNhapHangServices
     {
         private ApplicationDbContext _context;
         public ChiTietNhapHangServices(ApplicationDbContext context)

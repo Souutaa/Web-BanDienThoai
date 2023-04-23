@@ -1,9 +1,11 @@
 ﻿@{ViewData["Title"] = "Danh Sách Sản Phẩm";}
 
 @using Web_BanDienThoai.Models.SanPham;
-
-@model IEnumerable<IndexSanPhamViewModel>
-
+@*@using X.PagedList.Mvc.Core;
+@using X.PagedList;*@
+@using PagedList.Mvc;
+@*@model IEnumerable<IndexSanPhamViewModel>*@
+@model PagedList.IPagedList<IndexSanPhamViewModel>
 
 <section class="py-5">   
     <div class="container px-4 px-lg-5 mt-5">
@@ -67,5 +69,15 @@
                     </div>
             }                                        
                 </div>
-            </div>      
+            </div>
+    @{
+        for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <a class="btn btn-xs btn-outline-secondary float-md-rigth" asp-route-page="@i" asp-action="Index">  @i  </a>
+        }
+    }
+
 </section>
+
+                      
+                            

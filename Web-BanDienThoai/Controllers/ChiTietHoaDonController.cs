@@ -20,6 +20,7 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
+        public static int soluongduocthem;
         public ChiTietHoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             IKhachHangServices khachhangService, INhanVienServices nhanvienService, IChiTietHoaDonServices cthdService,
             IWebHostEnvironment webHostEnvironment)
@@ -97,7 +98,12 @@ namespace Web_BanDienThoai.Controllers
                     ThanhTien = model.ThanhTien,
                 };
                 await _cthdService.CreateAsSync(cthd);
-                
+
+                var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
+                sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
+                soluongduocthem = model.SoLuong;                               //
+                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
+
                 return RedirectToAction("Index", new { id = idtimkiem});
                 //}
                 //else
@@ -203,10 +209,14 @@ namespace Web_BanDienThoai.Controllers
             cthd.DonGia = model.DonGia;
             cthd.ThanhTien = model.ThanhTien;
 
-            await _cthdService.UpdateAsSyncs(cthd);
-            //return RedirectToAction("Index");
+            var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);     //
+            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong - soluongduocthem; // Cập nhật số lượng sản phẩm
+            sanphamcapnhat.SoLuong += model.SoLuong;                          //
+            soluongduocthem = model.SoLuong;
 
-            return View();
+            await _cthdService.UpdateAsSyncs(cthd);
+            return RedirectToAction("Index");
+
         }
     }
 }

@@ -2,6 +2,13 @@
 @model IEnumerable<IndexChiTietNhapHangViewModel>
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="NhapHang" asp-action="Index">Danh Sách Nhập Hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chi Tiết Đơn Nhập Hàng</li>
+        </ol>
+    </nav>
+
     <div class="col-md-12 table-responsive-md">
         <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Thêm sản phẩm vào đơn nhập hàng</a>
 
