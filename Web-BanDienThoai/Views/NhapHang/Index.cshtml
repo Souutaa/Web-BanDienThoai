@@ -24,6 +24,7 @@
                     <th>Mã nhập hàng</th>
                     <th>Ngày lập đơn nhập hàng</th>
                     <th>Ngày giao đơn nhập hàng</th>
+                    <th>Tổng số lượng</th>
                     <th>Tổng tiền</th>
                     <th>Trạn thái nhập hàng</th>
                     @*<th>Mã nhà cung cấp</th>
@@ -38,6 +39,7 @@
                         <td>@item.Id_NhapHang</td>
                         <td>@item.NgayLap.ToLongDateString()</td>
                         <td>@item.NgayGiao.ToShortTimeString()</td>
+                        <td>@item.TongSoLuong</td>
                         <td>@item.TongTien</td>
                         <td>@item.TrangThaiNhapHang</td>
                         @*<td>@item.Id_NhaCungCap</td>

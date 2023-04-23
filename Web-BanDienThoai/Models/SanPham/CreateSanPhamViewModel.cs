@@ -22,13 +22,13 @@ namespace Web_BanDienThoai.Models.SanPham
 
         [Required(ErrorMessage = "Phải nhập số lượng sản phẩm")]
         [Display(Name = "Số lượng sản phẩm")]
-        [RegularExpression(@"^[1-9]\d*$", ErrorMessage ="Phải nhập số lớn hơn 0")]
+        [RegularExpression(@"^[0-9]\d*$")]
         public int SoLuong { get; set; }
         public string Rom { get; set; }
 
         [Required(ErrorMessage = "Phải nhập mã loại sản phẩm")]
         [RegularExpression(@"^[Ll][Ss][Pp][0-9]\S*$", ErrorMessage ="Phải nhập theo cú pháp LSP__"), Display(Name = "Mã loại sản phẩm")]
-        public string Id_loai { get; set; } //Loại Sản Phẩm
+        public string? Id_loai { get; set; } //Loại Sản Phẩm
 
         [ValidateNever]
         public IEnumerable<SelectListItem>? LoaiSanPham { get; set; }

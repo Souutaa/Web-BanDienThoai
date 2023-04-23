@@ -18,7 +18,9 @@ namespace Web_BanDienThoai.Models.SanPham
         [Display(Name = "Giá tiền")]
         public double GiaTien { get; set; }
 
+        [Required(ErrorMessage = "Phải nhập số lượng sản phẩm")]
         [Display(Name = "Số lượng sản phẩm")]
+        [RegularExpression(@"^[0-9]\d*$")]
         public int SoLuong { get; set; }
         public string Rom { get; set; }
 

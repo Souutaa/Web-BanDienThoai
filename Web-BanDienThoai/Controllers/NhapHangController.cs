@@ -33,6 +33,7 @@ namespace Web_BanDienThoai.Controllers
                 NgayGiao=nhaphang.NgayGiao,
                 TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,                
                 TongTien = nhaphang.TongTien,
+                TongSoLuong = nhaphang.TongSoLuong
                 //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
                 //Id_NhanVien = nhaphang.Id_NhanVien
             });
@@ -44,6 +45,8 @@ namespace Web_BanDienThoai.Controllers
                 || people.NgayLap.Equals(valueOfSearch)
                 || people.TrangThaiNhapHang.Equals(valueOfSearch));
             }
+
+
 
             return View(model.ToList());
         }
@@ -76,23 +79,26 @@ namespace Web_BanDienThoai.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateNhapHangViewModel model) //Màu Sắc
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var nhaphang = new NhapHang
-            //    {
-            //        Id_NhapHang = model.Id_NhapHang,
-            //        NgayLap = model.NgayLap,
-            //        NgayGiao = model.NgayGiao,
-            //        TrangThaiNhapHang = model.TrangThaiNhapHang,
-            //        TongSoLuong = model.TongSoLuong,
-            //        TongTien = model.TongTien,
-            //        GhiChu = model.GhiChu,
-            //        Id_NhaCungCap = model.Id_NhaCungCap,
-            //        Id_NhanVien = model.Id_NhanVien
-            //    };
-            //    await _nhaphangService.CreateAsSync(nhaphang);
-            //    return RedirectToAction("Index");
-            //}
+            if (ModelState.IsValid)
+            {
+                var nhaphang = new NhapHang
+                {
+                    Id_NhapHang = model.Id_NhapHang,
+                    NgayLap = model.NgayLap,
+                    NgayGiao = model.NgayGiao,
+                    TrangThaiNhapHang = model.TrangThaiNhapHang,
+                    TongSoLuong = model.TongSoLuong,
+                    TongTien = model.TongTien,
+                    GhiChu = model.GhiChu,
+                    Id_NhaCungCap = model.Id_NhaCungCap,
+                    Id_NhanVien = model.Id_NhanVien
+                };
+                await _nhaphangService.CreateAsSync(nhaphang);
+
+
+
+                return RedirectToAction("Index");
+            }
             return View();
         }
 

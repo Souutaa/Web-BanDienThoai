@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.WebSockets;
 using Web.Entities;
 using Web.Services;
+using Web.Services.implementation;
 using Web_BanDienThoai.Models.ChiTietHoaDon;
 using Web_BanDienThoai.Models.HoaDon;
 
@@ -18,7 +19,7 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
-        public static int soluongduocthem;
+        public static int soluongdamua;
         public ChiTietHoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             IChiTietHoaDonServices cthdService,
             IWebHostEnvironment webHostEnvironment)
@@ -31,7 +32,7 @@ namespace Web_BanDienThoai.Controllers
 
        
         //public IActionResult Index(string id)
-            public IActionResult Index(string id)
+            public async Task<IActionResult> Index(string id)
         {
             //var hoadon = _hoadonService.GetById(id);
             //if (hoadon == null)
@@ -49,6 +50,23 @@ namespace Web_BanDienThoai.Controllers
                 ThanhTien = cthd.ThanhTien
             }).Where(x => x.Id_HoaDon == id);            
             idtimkiem = id;
+
+            //Tính tổng tiền và tổng số lượng ở CHI TIẾT HÓA ĐƠN và cập nhật đến bảng HÓA ĐƠN 
+            // VÍ dụ: HD01 có nhập 2 sản phẩm ở trong CTHD thì 2 sản phẩm có số lượng và tiền.
+            // Ta lấy tiền (SP1 + SP2) và số lượng (SP1 + SP2) sau đó đưa lên Tổng Tiền và Tổng Số Lượng lên bảng HÓA ĐƠN
+            var tongsoluong_tien = _hoadonService.GetById(id);
+            //tongsoluong.TongSoLuong = soluong.SoLuong + soluong.SoLuong;
+            //tongsoluong_tien.TongSoLuong = 0;
+            tongsoluong_tien.TongTien = 0;
+            await _hoadonService.UpdateAsSyncs(tongsoluong_tien);
+
+            foreach (var t in model)
+            {
+                //tongsoluong_tien.TongSoLuong += t.SoLuong;
+                tongsoluong_tien.TongTien += t.ThanhTien;
+                await _hoadonService.UpdateAsSyncs(tongsoluong_tien);
+            }
+
             return View(model.ToList());
         }
 
@@ -96,8 +114,8 @@ namespace Web_BanDienThoai.Controllers
                 await _cthdService.CreateAsSync(cthd);
 
                 var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
-                sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
-                soluongduocthem = model.SoLuong;                               //
+                sanphamcapnhat.SoLuong -= model.SoLuong;                        // Cập nhật số lượng
+                soluongdamua = model.SoLuong;                               //
                 await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
 
                 return RedirectToAction("Index", new { id = idtimkiem});
@@ -207,9 +225,9 @@ namespace Web_BanDienThoai.Controllers
             //hoadon.TongTien = model.TongTien;
 
             var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);     //
-            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong - soluongduocthem; // Cập nhật số lượng sản phẩm
+            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + soluongdamua; // Cập nhật số lượng sản phẩm
             sanphamcapnhat.SoLuong += model.SoLuong;                          //
-            soluongduocthem = model.SoLuong;
+            soluongdamua = model.SoLuong;
 
             await _cthdService.UpdateAsSyncs(cthd);
             return RedirectToAction("Index");
