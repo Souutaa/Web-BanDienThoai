@@ -71,33 +71,45 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var sanpham = new SanPham
+                
+                    var check = _sanphamService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
+                //var checkLoai = _sanphamService.GetAll().FirstOrDefault(s => s.Id_loai == model.Id_loai);
+                if (check == null /*&& (checkLoai == null || checkLoai != null)*/)
                 {
-                    Id_SanPham = model.Id_SanPham,
-                    Ten_SanPham = model.Ten_SanPham,
-                    GiaTien = model.GiaTien,
-                    SoLuong = model.SoLuong,
-                    Id_loai = model.Id_loai,
-                    Rom = model.Rom,
-                };
+                    var sanpham = new SanPham
+                    {
+                        Id_SanPham = model.Id_SanPham,
+                        Ten_SanPham = model.Ten_SanPham,
+                        GiaTien = model.GiaTien,
+                        SoLuong = model.SoLuong,
+                        Id_loai = model.Id_loai,
+                        Rom = model.Rom,
+                    };
 
-                if (model.ImageUrl != null && model.ImageUrl.Length > 0)
+                    if (model.ImageUrl != null && model.ImageUrl.Length > 0)
+                    {
+
+                        var uploadDir = @"images/SanPham";
+                        var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
+                        var extension = Path.GetExtension(model.ImageUrl.FileName);
+                        var webRootPath = _webHostEnvironment.WebRootPath;
+                        fileName = DateTime.UtcNow.ToString("yymmssfff") + fileName + extension;
+                        var path = Path.Combine(webRootPath, uploadDir, fileName);
+                        await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
+                        sanpham.ImageUrl = "/" + uploadDir + "/" + fileName;
+                        await _sanphamService.CreateAsSync(sanpham);
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
                 {
-
-                    var uploadDir = @"images/SanPham";
-                    var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
-                    var extension = Path.GetExtension(model.ImageUrl.FileName);
-                    var webRootPath = _webHostEnvironment.WebRootPath;
-                    fileName = DateTime.UtcNow.ToString("yymmssfff") + fileName + extension;
-                    var path = Path.Combine(webRootPath, uploadDir, fileName);
-                    await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
-                    sanpham.ImageUrl = "/" + uploadDir + "/" + fileName;
-                    await _sanphamService.CreateAsSync(sanpham);
-                    return RedirectToAction("Index");
+                    ViewBag.Error = "Mã Sản Phẩm này đã được tồn tại! Vui lòng tạo Mã Sản Phẩm khác";
+                    return View(model);
                 }
 
+                    
             }
-            return View();
+            return View(model);
         }
 
         [HttpGet]

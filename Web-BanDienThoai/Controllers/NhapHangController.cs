@@ -35,6 +35,7 @@ namespace Web_BanDienThoai.Controllers
                 NgayGiao=nhaphang.NgayGiao,
                 TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,                
                 TongTien = nhaphang.TongTien,
+                TongSoLuong = nhaphang.TongSoLuong
                 //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
                 //Id_NhanVien = nhaphang.Id_NhanVien
             });
@@ -46,6 +47,8 @@ namespace Web_BanDienThoai.Controllers
                 || people.NgayLap.Equals(valueOfSearch)
                 || people.TrangThaiNhapHang.Equals(valueOfSearch));
             }
+
+
 
             return View(model.ToList());
         }
@@ -93,6 +96,9 @@ namespace Web_BanDienThoai.Controllers
                     Id_NhanVien = model.Id_NhanVien
                 };
                 await _nhaphangService.CreateAsSync(nhaphang);
+
+
+
                 return RedirectToAction("Index");
             }
             return View();

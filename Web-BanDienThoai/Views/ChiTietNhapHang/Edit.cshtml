@@ -59,7 +59,7 @@
                     <label asp-for="ThanhTien" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="ThanhTien" class="form-control" />
+                    <input asp-for="ThanhTien" class="form-control" readonly/>
                     <span asp-validation-for="ThanhTien" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -68,7 +68,7 @@
        
         <div class="form-group" style=" margin-top:0.5cm">
             <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Edit</button>
-            <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+            <button type="button" onclick="quay_lai_trang_truoc()" class="btn btn-rounded btn-success float-right" @*asp-action="index"*@><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</button>
             <br />
             <br />
             <br />
@@ -82,3 +82,8 @@
     }
 }
 
+<script>
+    function quay_lai_trang_truoc(){
+        history.back();
+    }
+</script>

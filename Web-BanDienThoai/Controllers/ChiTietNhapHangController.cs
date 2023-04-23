@@ -33,7 +33,7 @@ namespace Web_BanDienThoai.Controllers
 
 
         //public IActionResult Index(string id)
-        public IActionResult Index(string id)
+        public async Task<IActionResult> Index(string id)
         {
             //var hoadon = _hoadonService.GetById(id);
             //if (hoadon == null)
@@ -51,6 +51,24 @@ namespace Web_BanDienThoai.Controllers
                 ThanhTien = cthd.ThanhTien
             }).Where(x => x.Id_NhapHang == id);
             idtimkiem = id;
+
+            //Tính tổng tiền và tổng số lượng ở CHI TIẾT NHẬP HÀNG và cập nhật đến bảng NHẬP HÀNG 
+            // VÍ dụ: NH01 có nhập 2 sản phẩm ở trong CTNH thì 2 sản phẩm có số lượng và tiền.
+            // Ta lấy tiền (SP1 + SP2) và số lượng (SP1 + SP2) sau đó đưa lên Tổng Tiền và Tổng Số Lượng lên bảng NHẬP HÀNG
+            var tongsoluong_tien = _nhaphangService.GetById(id);                    
+            //tongsoluong.TongSoLuong = soluong.SoLuong + soluong.SoLuong;
+            tongsoluong_tien.TongSoLuong = 0;
+            tongsoluong_tien.TongTien = 0;
+            await _nhaphangService.UpdateAsSyncs(tongsoluong_tien);
+
+            foreach (var t in model)
+            {
+                tongsoluong_tien.TongSoLuong += t.SoLuong;
+                tongsoluong_tien.TongTien += t.ThanhTien;
+                await _nhaphangService.UpdateAsSyncs(tongsoluong_tien);
+            }
+
+
             return View(model.ToList());
         }
 
@@ -100,7 +118,12 @@ namespace Web_BanDienThoai.Controllers
                 var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
                 sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
                 soluongduocthem = model.SoLuong;                               //
-                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
+                                                                              //
+                sanphamcapnhat.GiaTien = model.DonGia;                       // Cập nhật giá tiền
+                                            
+                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);        //
+
+                
 
                 return RedirectToAction("Index", new { id = idtimkiem });
                 //}
@@ -209,6 +232,8 @@ namespace Web_BanDienThoai.Controllers
             sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong - soluongduocthem; // Cập nhật số lượng sản phẩm
             sanphamcapnhat.SoLuong += model.SoLuong;                          //
             soluongduocthem = model.SoLuong;                                 //
+                                                                            //
+            sanphamcapnhat.GiaTien = model.DonGia;                         // Cập nhật giá tiền
 
             await _sanphamService.UpdateAsSyncs(sanphamcapnhat);
             return RedirectToAction("Index", new { id = idtimkiem });
