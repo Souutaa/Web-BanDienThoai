@@ -1,0 +1,84 @@
+﻿@using System.Collections;
+@using Web.Persistances;
+@using Web_BanDienThoai.Controllers;
+@using Web_BanDienThoai.Models.ChiTietHoaDon;
+@using Web_BanDienThoai.Models.DanhMucCon;
+@using Web_BanDienThoai.Models.CauHinh;
+@using Web.Services.implementation;
+@using Web.Services;
+@using Web.Entities;
+@model EditChiTietHoaDonViewModel;
+
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="NhapHang" asp-action="Index">Danh Sách Đơn Nhập Hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Chi Tiết Đơn Nhập Hàng</li>
+        </ol>
+    </nav>
+
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
+
+        <div class="col-md-12 table-responsive-md">
+            <div class="form-row">
+                <div class="col-2 form-group">
+                    <label asp-for="Id_HoaDon" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="Id_HoaDon" class="form-control" />
+                    <span asp-validation-for="Id_HoaDon" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="Id_SanPham" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="Id_SanPham" class="form-control" />
+                    <span asp-validation-for="Id_SanPham" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+            </div>
+            <div class="form-row">
+                <div class="col-2 form-group">
+                    <label asp-for="SoLuong" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="SoLuong" class="form-control" />
+                    <span asp-validation-for="SoLuong" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="DonGia" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="DonGia" class="form-control" />
+                    <span asp-validation-for="DonGia" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="ThanhTien" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="ThanhTien" class="form-control" />
+                    <span asp-validation-for="ThanhTien" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+            </div>
+
+
+            <div class="form-group" style=" margin-top:0.5cm">
+                <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Edit</button>
+                <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+                <br />
+                <br />
+                <br />
+            </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

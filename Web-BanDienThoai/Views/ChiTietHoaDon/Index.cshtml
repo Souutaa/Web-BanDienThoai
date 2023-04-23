@@ -2,6 +2,13 @@
 @model IEnumerable<IndexChiTietHoaDonViewModel>
 
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="HoaDon" asp-action="Index">Danh Sách Nhập Hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chi Tiết Hóa Đơn</li>
+        </ol>
+    </nav>
+
     <div class="col-md-12 table-responsive-md">
         <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Thêm sản phẩm vào hóa đơn</a>
 
@@ -18,6 +25,7 @@
 
         <table class="table table-strip table-dark">
             <thead>
+
                 <tr>
                     <th>Mã Hóa Đơn</th>
                     <th>Mã Sản Phẩm</th>

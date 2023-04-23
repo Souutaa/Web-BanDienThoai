@@ -18,15 +18,16 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
+        public static int soluongduocthem;
         public ChiTietNhapHangController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             INhanVienServices nhanvienService, IChiTietNhapHangServices ctnhService,
-            IWebHostEnvironment webHostEnvironment, INhapHangServices _nhaphangService)
+            IWebHostEnvironment webHostEnvironment, INhapHangServices nhaphangService)
         {
             _ctnhService = ctnhService;
             _nhanvienService = nhanvienService;
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
-            _ctnhService = ctnhService;
+            _nhaphangService = nhaphangService;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -95,6 +96,11 @@ namespace Web_BanDienThoai.Controllers
                     ThanhTien = model.ThanhTien,
                 };
                 await _ctnhService.CreateAsSync(ctnh);
+                
+                var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
+                sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
+                soluongduocthem = model.SoLuong;                               //
+                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
 
                 return RedirectToAction("Index", new { id = idtimkiem });
                 //}
@@ -110,8 +116,8 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Detail(string id)
         {
-            var nh = _nhaphangService.GetById(id);
-            if (nh == null)
+            var ctnh = _ctnhService.GetById(id);
+            if (ctnh == null)
             {
                 return NotFound();
             }
@@ -125,17 +131,10 @@ namespace Web_BanDienThoai.Controllers
             //    list.Add(SanPham.Ten_SanPham);              
 
 
-            var model = new DetailNhapHangViewModel
+            var model = new DetailChiTietNhapHangViewModel
             {
-                Id_NhapHang = nh.Id_NhapHang,
-                NgayGiao = nh.NgayGiao,
-                NgayLap = nh.NgayLap,
-                TongSoLuong = nh.TongSoLuong,
-                TongTien = nh.TongTien,
-                TrangThaiNhapHang = nh.TrangThaiNhapHang,
-                Id_NhaCungCap = nh.Id_NhaCungCap,
-                Id_NhanVien = nh.Id_NhanVien,
-                GhiChu = nh.GhiChu,                            
+                
+                         
             };
 
             return View(model);
@@ -178,13 +177,13 @@ namespace Web_BanDienThoai.Controllers
             {
                 return NotFound();
             }
-            var model = new EditChiTietHoaDonViewModel
+            var model = new EditChiTietNhapHangViewModel
             {
-                Id_HoaDon = ctnh.Id_NhapHang,
+                Id_NhapHang = ctnh.Id_NhapHang,
                 Id_SanPham = ctnh.Id_SanPham,
                 SoLuong = ctnh.SoLuong,
                 DonGia = ctnh.DonGia,
-                ThanhTien = ctnh.ThanhTien
+                    
             };
             return View(model);
         }
@@ -205,9 +204,16 @@ namespace Web_BanDienThoai.Controllers
             cthd.ThanhTien = model.ThanhTien;
 
             await _ctnhService.UpdateAsSyncs(cthd);
-            //return RedirectToAction("Index");
 
-            return View();
+            var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);     //
+            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong - soluongduocthem; // Cập nhật số lượng sản phẩm
+            sanphamcapnhat.SoLuong += model.SoLuong;                          //
+            soluongduocthem = model.SoLuong;                                 //
+
+            await _sanphamService.UpdateAsSyncs(sanphamcapnhat);
+            return RedirectToAction("Index", new { id = idtimkiem });
+
+            //return View();
         }
     }
 }
