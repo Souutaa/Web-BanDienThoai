@@ -1,4 +1,5 @@
-﻿@using Web_BanDienThoai.Controllers;
+﻿@inject SignInManager<TaiKhoan> signInManager;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +25,6 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhà Cung Cấp</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @*<li><hr class="dropdown-divider" /></li>*@
                             <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Create">Thêm Nhà Cung Cấp</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Index">Danh Sách Nhà Cung Cấp</a></li>
@@ -33,7 +33,6 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sản Phẩm</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @*<li><hr class="dropdown-divider" /></li>*@
                             <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Create">Thêm Sản Phẩm</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a></li>                    
@@ -43,7 +42,6 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hóa Đơn</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @*<li><hr class="dropdown-divider" /></li>*@
                             <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Create">Tạo Hóa Đơn</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Index">Danh Sách Hóa Đơn</a></li>
@@ -53,7 +51,6 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhập Hàng</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @*<li><hr class="dropdown-divider" /></li>*@
                             <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Create">Tạo Đơn Nhập Hàng</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Index">Danh Sách Đơn Nhập Hàng</a></li>
@@ -63,24 +60,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Khách Hàng</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @*<li><hr class="dropdown-divider" /></li>*@
                             <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Create">Thêm Khách Hàng</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Index">Danh Sách Khách Hàng</a></li>
                         </ul>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhân Viên</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @*<li><hr class="dropdown-divider" /></li>*@
-                            <li><a class="dropdown-item" asp-controller="NhanVien" asp-action="Create">Thêm Nhân Viên</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" asp-controller="NhanVien" asp-action="Index">Danh Sách Nhân Viên</a></li>
-                        </ul>
-                    </li>
-
-                    
                 </ul>
                 <form class="d-flex">
                     <button class="btn btn-outline-dark" type="submit">
@@ -93,10 +77,23 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">@TempData["user"]</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            @*<li><hr class="dropdown-divider" /></li>*@
-                            <li><a class="dropdown-item" asp-controller="User" asp-action="Create" >Logout</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            
+                            @if(!signInManager.IsSignedIn(User))
+                            {
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Register" >Register</a></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Login" >Login</a></li>  
+                            }
+                            @if(signInManager.IsSignedIn(User))
+                            {
+                                <li>@User.Identity.Name</li>
+                                <li ><hr class="dropdown-divider" /></li
+                                <li>
+                                    <form method="post" class="dropdown-item" asp-controller="User" asp-action="Logout">
+                                        <button type="submit">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            }
                         </ul>
                     </li>
                 </ul>
@@ -105,18 +102,15 @@
     </nav>
 
     <!-- Header--> 
-    <header class="bg-dark py-xxl-5" style="background-image:url('images/background/Panel.png'); background-size:contain">
+     <!-- header class="bg-dark py-xxl-5" style="background-image:url('images/background/Panel.png'); background-size:contain">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 @*<h1 class="display-4 fw-bolder">Shop in style</h1>
                 <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>*@
             </div>
         </div>
-    </header>
-
-
-        @RenderBody();
-       
+    </header> -->
+            @RenderBody()
         <!-- footer_web -->
         <footer class="border-top footer text-muted">
             <div class="container">

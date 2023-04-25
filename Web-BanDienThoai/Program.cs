@@ -1,5 +1,10 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 using Web.Entities;
 using Web.Persistances;
 using Web.Services;
@@ -24,15 +29,27 @@ builder.Services.AddScoped<ISanPhamServices, SanPhamServices>();
 builder.Services.AddScoped<IMauSacServices, MauSacServices>();
 builder.Services.AddScoped<ICauHinhServices, CauHinhServices>();
 
-//builder.Services.AddDefaultIdentity<CreateTaiKhoanViewModel>(options => options.SignIn.RequireConfirmedAccount = true)
-//                .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddIdentity<TaiKhoan, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/User/Login";
+    options.AccessDeniedPath = "/Shared/Error";
+    options.SlidingExpiration = true;
+});
+
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
