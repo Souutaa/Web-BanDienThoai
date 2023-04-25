@@ -49,13 +49,22 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var mausac = new MauSac
+                var check = _mausacService.GetAll().FirstOrDefault(s => s.Id_MauSac == model.Id_MauSac);
+                if (check == null)
                 {
-                    Id_MauSac = model.Id_MauSac,
-                    TenMauSac = model.TenMauSac,
-                };
-                await _mausacService.CreateAsSync(mausac);
-                return RedirectToAction("Index");
+                    var mausac = new MauSac
+                    {
+                        Id_MauSac = model.Id_MauSac,
+                        TenMauSac = model.TenMauSac,
+                    };
+                    await _mausacService.CreateAsSync(mausac);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error = "Mã Màu Sắc này đã được tồn tại! Vui lòng tạo Mã Nhà Màu Sắc khác";
+                    return View(model);
+                }
             }
             return View();
         }

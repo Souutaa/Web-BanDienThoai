@@ -62,17 +62,27 @@ namespace Web_BanDienThoai.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateDanhMucConViewModel model) //Màu Sắc
         {
+
             if (ModelState.IsValid)
             {
-                var cauHinhIds = _cauhinhService.GetAll().Select(ch => ch.Id_CauHinh).ToList();
-                var danhMucCon = new DanhMucCon
+                var check = _danhmucconService.GetAll().FirstOrDefault(s => s.Id_DanhMucCon == model.Id_DanhMucCon);
+                if (check == null)
                 {
-                    Id_DanhMucCon = model.Id_DanhMucCon,
-                    TenDanhMuc = model.TenDanhMuc,
-                    Id_CauHinh = model.Id_CauHinh, /*cauHinhIds*/
-                };
-                await _danhmucconService.CreateAsSync(danhMucCon);
-                return RedirectToAction("Index");
+                    var cauHinhIds = _cauhinhService.GetAll().Select(ch => ch.Id_CauHinh).ToList();
+                    var danhMucCon = new DanhMucCon
+                    {
+                        Id_DanhMucCon = model.Id_DanhMucCon,
+                        TenDanhMuc = model.TenDanhMuc,
+                        Id_CauHinh = model.Id_CauHinh, /*cauHinhIds*/
+                    };
+                    await _danhmucconService.CreateAsSync(danhMucCon);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error = "Mã Danh Mục Con này đã được tồn tại! Vui lòng tạo Mã Danh Mục Con khác";
+                    return View(model);
+                }
             }
             return View();
         }

@@ -78,19 +78,25 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var DanhMucIds = _danhmucconService.GetAll().Select(dm => dm.Id_DanhMucCon).ToList();
-                var MauSacIds = _mausacService.GetAll().Select(ms => ms.Id_MauSac).ToList();
-                var loaisanpham = new LoaiSanPham
+                var check = _loaisanphamService.GetAll().FirstOrDefault(s => s.Id_loai == model.Id_loai);
+                if (check == null)
+                {                    
+                    var loaisanpham = new LoaiSanPham
+                    {
+                        Id_loai = model.Id_loai,
+                        TenLoai = model.TenLoai,
+                        Id_DanhMucCon = model.Id_DanhMucCon,
+                        Id_MauSac = model.Id_MauSac,
+                    };
+                    await _loaisanphamService.CreateAsSync(loaisanpham);
+                    return RedirectToAction("Index");
+                }
+                else
                 {
-                    Id_loai = model.Id_loai,
-                    TenLoai = model.TenLoai,
-                    Id_DanhMucCon = model.Id_DanhMucCon,
-                    Id_MauSac = model.Id_MauSac,
-                    /*cauHinhIds*/
-                };
-                await _loaisanphamService.CreateAsSync(loaisanpham);
-                return RedirectToAction("Index");
-            }
+                    ViewBag.Error = "Mã Loại Sản Phẩm này đã được tồn tại! Vui lòng tạo Mã Loại Sản Phẩm khác";
+                    return View(model);
+                }
+            }            
             return View();
         }
 
