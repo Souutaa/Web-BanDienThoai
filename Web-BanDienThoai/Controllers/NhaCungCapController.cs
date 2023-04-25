@@ -52,16 +52,25 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var nhacungcap = new NhaCungCap
+                var check = _nhacungcapService.GetAll().FirstOrDefault(s => s.Id_NhaCungCap == model.Id_NhaCungCap);
+                if (check == null)
                 {
-                    Id_NhaCungCap = model.Id_NhaCungCap,
-                    Name = model.Name,
-                    Email = model.Email,
-                    Address = model.Address,
-                    Phone = model.Phone,
-                };
-                await _nhacungcapService.CreateAsSync(nhacungcap);
-                return RedirectToAction("Index");
+                    var nhacungcap = new NhaCungCap
+                    {
+                        Id_NhaCungCap = model.Id_NhaCungCap,
+                        Name = model.Name,
+                        Email = model.Email,
+                        Address = model.Address,
+                        Phone = model.Phone,
+                    };
+                    await _nhacungcapService.CreateAsSync(nhacungcap);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error = "Mã Nhà Cung Cấp này đã được tồn tại! \n Vui lòng tạo Mã Nhà Cung Cấp khác";
+                    return View(model);
+                }
             }
             return View();
         }

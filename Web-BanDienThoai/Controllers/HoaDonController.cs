@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Entities;
 using Web.Services;
+using Web.Services.implementation;
 using Web_BanDienThoai.Models.ChiTietHoaDon;
 using Web_BanDienThoai.Models.HoaDon;
 
@@ -79,17 +80,26 @@ namespace Web_BanDienThoai.Controllers
         public async Task<IActionResult> Create(CreateHoaDonViewModel model) //Màu Sắc
         {
             if (ModelState.IsValid)
-            {                
-                var hoadon = new HoaDon
+            {
+                var check = _hoadonService.GetAll().FirstOrDefault(s => s.Id_HoaDon == model.Id_HoaDon);
+                if (check == null)
                 {
-                    Id_HoaDon = model.Id_HoaDon,
-                    NgayLapHoaDon = model.NgayLapHoaDon,
-                    Id_khachhang = model.Id_khachhang, 
-                    Id_NhanVien = model.Id_NhanVien,
-                    TongTien = model.TongTien,
-                };
-                await _hoadonService.CreateAsSync(hoadon);
-                return RedirectToAction("Index" );
+                    var hoadon = new HoaDon
+                    {
+                        Id_HoaDon = model.Id_HoaDon,
+                        NgayLapHoaDon = model.NgayLapHoaDon,
+                        Id_khachhang = model.Id_khachhang,
+                        Id_NhanVien = model.Id_NhanVien,
+                        TongTien = model.TongTien,
+                    };
+                    await _hoadonService.CreateAsSync(hoadon);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Error = "Mã Hóa Đơn này đã được tồn tại! Vui lòng tạo Mã Hóa Đơn khác";
+                    return View(model);
+                }
             }
             return View();
         }

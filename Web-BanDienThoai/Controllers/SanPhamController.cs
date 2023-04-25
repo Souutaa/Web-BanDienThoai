@@ -109,7 +109,7 @@ namespace Web_BanDienThoai.Controllers
 
                     
             }
-            return View(model);
+            return View();
         }
 
         [HttpGet]

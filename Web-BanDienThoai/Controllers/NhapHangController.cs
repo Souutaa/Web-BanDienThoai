@@ -83,23 +83,31 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var nhaphang = new NhapHang
+                var check = _nhaphangService.GetAll().FirstOrDefault(s => s.Id_NhapHang == model.Id_NhapHang);
+                if (check == null)
                 {
-                    Id_NhapHang = model.Id_NhapHang,
-                    NgayLap = model.NgayLap,
-                    NgayGiao = model.NgayGiao,
-                    TrangThaiNhapHang = model.TrangThaiNhapHang,
-                    TongSoLuong = model.TongSoLuong,
-                    TongTien = model.TongTien,
-                    GhiChu = model.GhiChu,
-                    Id_NhaCungCap = model.Id_NhaCungCap,
-                    Id_NhanVien = model.Id_NhanVien
-                };
-                await _nhaphangService.CreateAsSync(nhaphang);
+                    var nhaphang = new NhapHang
+                    {
+                        Id_NhapHang = model.Id_NhapHang,
+                        NgayLap = model.NgayLap,
+                        NgayGiao = model.NgayGiao,
+                        TrangThaiNhapHang = model.TrangThaiNhapHang,
+                        TongSoLuong = model.TongSoLuong,
+                        TongTien = model.TongTien,
+                        GhiChu = model.GhiChu,
+                        Id_NhaCungCap = model.Id_NhaCungCap,
+                        Id_NhanVien = model.Id_NhanVien
+                    };
+                    await _nhaphangService.CreateAsSync(nhaphang);
+                    return RedirectToAction("Index");
 
+                }
+                else
+                {
+                    ViewBag.Error = "Mã Nhập Hàng này đã được tồn tại! Vui lòng tạo Mã Nhập Hàng khác";
+                    return View(model);
+                }
 
-
-                return RedirectToAction("Index");
             }
             return View();
         }

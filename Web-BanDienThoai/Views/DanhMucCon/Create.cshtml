@@ -26,6 +26,7 @@
                 <div class="col-3 form-group">
                     <input asp-for="Id_DanhMucCon" class="form-control" />
                     <span asp-validation-for="Id_DanhMucCon" class="text-danger"></span>
+                    <div class="text-danger">@ViewBag.Error</div>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
@@ -48,7 +49,7 @@
                     <span asp-validation-for="Id_CauHinh" class="text-danger"></span>
                 </div>
                 <div class="col-3 form-group">
-                    <a class="btn btn-rounded btn-primary form-label" asp-controller="MauSac" asp-action="Create" target="_blank"> <i class="fas fa-plus-square" style="margin-right:0.7em"></i>Thêm loại Sản Phẩm</a>
+                    <a class="btn btn-rounded btn-primary form-label" asp-controller="CauHinh" asp-action="Create" target="_blank"> <i class="fas fa-plus-square" style="margin-right:0.7em"></i>Thêm Cấu Hình</a>
                 </div>
             </div>
         </div>

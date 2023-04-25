@@ -68,7 +68,7 @@ namespace Web_BanDienThoai.Controllers
                 else
                 {
                     ViewBag.error = "Mã Cấu hình này đã được tồn tại! Vui lòng tạo Mã Cấu Hình khác";
-                    return View();
+                    return View(model);
                 }
             }
             return View();

@@ -58,6 +58,7 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {                
+
                     var people = new NhanVien
                     {
                         Id_NhanVien = model.Id_NhanVien,
