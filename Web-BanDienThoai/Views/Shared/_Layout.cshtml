@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/Web_BanDienThoai.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+ @*   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.css"/>
 </head>
 <body>
     <!-- Navigation-->
@@ -20,9 +21,16 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="home" asp-action="index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="DashBoard" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#!"></a></li>
                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-file-import"></i> Nhà Cung Cấp</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Create">Thêm Nhà Cung Cấp</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Index">Danh Sách Nhà Cung Cấp</a></li>
+                        </ul>
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhà Cung Cấp</a>
@@ -34,7 +42,7 @@
                         }
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sản Phẩm</a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-mobile-button"></i> Sản Phẩm</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                             {
@@ -46,7 +54,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hóa Đơn</a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-money-bill-transfer"></i> Hóa Đơn</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                             {
@@ -54,6 +62,16 @@
                                 <li><hr class="dropdown-divider" /></li>
                             }
                             <li><a class="dropdown-item" asp-controller="HoaDon" asp-action="Index">Danh Sách Hóa Đơn</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-boxes"></i> Nhập Hàng</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Create">Tạo Đơn Nhập Hàng</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Index">Danh Sách Đơn Nhập Hàng</a></li>
                         </ul>
                     </li>
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
@@ -68,6 +86,27 @@
                         </li>
                     }
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-users"></i> Khách Hàng</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="KhachHang" asp-action="Create">Thêm Khách Hàng</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="KhachHang" asp-action="Index">Danh Sách Khách Hàng</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-users"></i> Nhân Viên</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @*<li><hr class="dropdown-divider" /></li>*@
+                            <li><a class="dropdown-item" asp-controller="NhanVien" asp-action="Create">Thêm Nhân Viên</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" asp-controller="NhanVien" asp-action="Index">Danh Sách Nhân Viên</a></li>
+                        </ul>
+                    </li>
+
+                    
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         <li class="nav-item dropdown">
@@ -79,16 +118,16 @@
                         </li>
                     }
                 </ul>
-                <form class="d-flex">
+                <form class="d-flex" >
                     <button class="btn btn-outline-dark" type="submit">
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
+                        <i class="bi-cart-fill me-1 fa-solid fa-cart-shopping"></i>
+                           Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                     </button>
                 </form>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">                    
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">@TempData["user"]</a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-person" style="font-size:25px"></i> @TempData["user"]</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @if(!signInManager.IsSignedIn(User))
                             {

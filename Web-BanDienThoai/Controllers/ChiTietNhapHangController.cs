@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Construction;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Web.Entities;
 using Web.Services;
 using Web_BanDienThoai.Models.ChiTietHoaDon;
@@ -10,7 +12,7 @@ using Web_BanDienThoai.Models.NhapHang;
 namespace Web_BanDienThoai.Controllers
 {
     public class ChiTietNhapHangController : Controller
-    {       
+    {
         private INhanVienServices _nhanvienService;
         private ISanPhamServices _sanphamService;
         private IChiTietNhapHangServices _ctnhService;
@@ -18,7 +20,7 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
-        public static int soluongduocthem;
+        public static int soluongduocthem = 0;
         public ChiTietNhapHangController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             INhanVienServices nhanvienService, IChiTietNhapHangServices ctnhService,
             IWebHostEnvironment webHostEnvironment, INhapHangServices nhaphangService)
@@ -55,7 +57,7 @@ namespace Web_BanDienThoai.Controllers
             //Tính tổng tiền và tổng số lượng ở CHI TIẾT NHẬP HÀNG và cập nhật đến bảng NHẬP HÀNG 
             // VÍ dụ: NH01 có nhập 2 sản phẩm ở trong CTNH thì 2 sản phẩm có số lượng và tiền.
             // Ta lấy tiền (SP1 + SP2) và số lượng (SP1 + SP2) sau đó đưa lên Tổng Tiền và Tổng Số Lượng lên bảng NHẬP HÀNG
-            var tongsoluong_tien = _nhaphangService.GetById(id);                    
+            var tongsoluong_tien = _nhaphangService.GetById(id);
             //tongsoluong.TongSoLuong = soluong.SoLuong + soluong.SoLuong;
             tongsoluong_tien.TongSoLuong = 0;
             tongsoluong_tien.TongTien = 0;
@@ -108,22 +110,22 @@ namespace Web_BanDienThoai.Controllers
                 var ctnh = new ChiTietNhapHang
                 {
                     Id_NhapHang = model.Id_NhapHang,
-                    Id_SanPham = model.Id_SanPham,                   
+                    Id_SanPham = model.Id_SanPham,
                     SoLuong = model.SoLuong,
                     DonGia = model.DonGia,
                     ThanhTien = model.ThanhTien,
                 };
                 await _ctnhService.CreateAsSync(ctnh);
-                
-                var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
-                sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
-                soluongduocthem = model.SoLuong;                               //
-                                                                              //
-                sanphamcapnhat.GiaTien = model.DonGia;                       // Cập nhật giá tiền
-                                            
-                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);        //
 
-                
+                //var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
+                //sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
+                //soluongduocthem = model.SoLuong;                               //
+                //                                                              //
+                //sanphamcapnhat.GiaTien = model.DonGia;                       // Cập nhật giá tiền
+                //                                                            //
+                //await _sanphamService.UpdateAsSyncs(sanphamcapnhat);       //
+
+
 
                 return RedirectToAction("Index", new { id = idtimkiem });
                 //}
@@ -156,8 +158,8 @@ namespace Web_BanDienThoai.Controllers
 
             var model = new DetailChiTietNhapHangViewModel
             {
-                
-                         
+
+
             };
 
             return View(model);
@@ -174,7 +176,7 @@ namespace Web_BanDienThoai.Controllers
             var model = new DeleteChiTietNhapHangViewModel
             {
                 Id_NhapHang = cthd.Id_NhapHang,
-                Id_SanPham = cthd.Id_SanPham,               
+                Id_SanPham = cthd.Id_SanPham,
             };
 
             return View(model);
@@ -206,7 +208,7 @@ namespace Web_BanDienThoai.Controllers
                 Id_SanPham = ctnh.Id_SanPham,
                 SoLuong = ctnh.SoLuong,
                 DonGia = ctnh.DonGia,
-                    
+
             };
             return View(model);
         }
@@ -228,14 +230,18 @@ namespace Web_BanDienThoai.Controllers
 
             await _ctnhService.UpdateAsSyncs(cthd);
 
-            var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);     //
+            var trangthainhaphang = _nhaphangService.GetById(model.Id_NhapHang);
+            var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);
+
+
             sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong - soluongduocthem; // Cập nhật số lượng sản phẩm
             sanphamcapnhat.SoLuong += model.SoLuong;                          //
             soluongduocthem = model.SoLuong;                                 //
-                                                                            //
+                                                                             //
             sanphamcapnhat.GiaTien = model.DonGia;                         // Cập nhật giá tiền
 
             await _sanphamService.UpdateAsSyncs(sanphamcapnhat);
+
             return RedirectToAction("Index", new { id = idtimkiem });
 
             //return View();

@@ -14,10 +14,15 @@ using Web_BanDienThoai.Models.TaiKhoan;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+
+builder.Services.AddScoped<IDashBoardServices, DashBoardServices>();
 
 builder.Services.AddScoped<IChiTietNhapHangServices, ChiTietNhapHangServices>();
 builder.Services.AddScoped<INhapHangServices, NhapHangServices>();
