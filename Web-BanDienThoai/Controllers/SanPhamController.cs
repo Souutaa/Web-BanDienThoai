@@ -21,35 +21,60 @@ namespace Web_BanDienThoai.Controllers
             _loaisanphamService = loaisanphamService;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index(/*string valueOfSearch,*/ int? page) //Sản Phẩm
+        public IActionResult Index(string valueOfSearch, int? page) //Sản Phẩm
         {           
             int pageSize = 1;
 
             if(page == null)
             {
                 page = 1;
-            }           
-
+            }
             var model = _sanphamService.GetAll().Select(sanpham => new IndexSanPhamViewModel
             {
                 Id_SanPham = sanpham.Id_SanPham,
                 Ten_SanPham = sanpham.Ten_SanPham,
                 ImageUrl = sanpham.ImageUrl,
                 GiaTien = sanpham.GiaTien,
-            }).OrderBy(x => x.Id_SanPham).ToList();
+            }).OrderBy(x => x.Id_SanPham).ToList();            
 
+            //Tìm Kiếm Sản Phẩm
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(people => people.Id_SanPham.ToLower().Contains(valueOfSearch.ToLower())
+                || people.Ten_SanPham.ToLower().Contains(valueOfSearch.ToLower())
+                || people.GiaTien.Equals(valueOfSearch)).ToList();
+            }
+      
             //if (!String.IsNullOrEmpty(valueOfSearch))
             //{
             //    model = model.Where(people => people.Id_SanPham.ToLower().Contains(valueOfSearch.ToLower())
             //    || people.Ten_SanPham.ToLower().Contains(valueOfSearch.ToLower())
             //    || people.GiaTien.Equals(valueOfSearch));
             //}
-           
+
             return View(model.ToPagedList((int)page, pageSize));
         }
 
+        public IActionResult Find(string valueOfSearch)
+        {          
+            var model = _sanphamService.GetAll().Select(sanpham => new IndexSanPhamViewModel
+            {
+                Id_SanPham = sanpham.Id_SanPham,
+                Ten_SanPham = sanpham.Ten_SanPham,
+                ImageUrl = sanpham.ImageUrl,
+                GiaTien = sanpham.GiaTien,
+            });
 
-       
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(people => people.Id_SanPham.ToLower().Contains(valueOfSearch.ToLower())
+                || people.Ten_SanPham.ToLower().Contains(valueOfSearch.ToLower())
+                || people.GiaTien.Equals(valueOfSearch)).ToList();
+            }
+            return View(model);
+        }
+
+
         [HttpGet]
         public IActionResult Create() //Sản Phẩm
         {

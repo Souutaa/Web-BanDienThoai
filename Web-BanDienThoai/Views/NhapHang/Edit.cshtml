@@ -17,7 +17,7 @@
         </ol>
     </nav>
 
-    <form method="post" asp-action="Create" enctype="multipart/form-data">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">
             <div class="form-row">
@@ -63,6 +63,16 @@
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
+                    <label asp-for="TrangThaiNhapHang" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <select asp-for="TrangThaiNhapHang" class="form-control" asp-items="Html.GetEnumSelectList<TrangThaiNhapHang>()">
+                        @*<option value=""> --Chọn nhân viên-- </option>*@
+                    </select>
+                    <span asp-validation-for="TrangThaiNhapHang" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
                     <label asp-for="GhiChu" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
@@ -84,7 +94,7 @@
                     <label asp-for="Id_NhaCungCap" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_NhaCungCap" class="form-control" asp-items="@Model.NhanVien">
+                    <select asp-for="Id_NhaCungCap" class="form-control" asp-items="@Model.NhaCungCap">
                         <option value=""> --Chọn nhà cung cấp-- </option>
                     </select>
                     <span asp-validation-for="Id_NhaCungCap" class="text-danger"></span>

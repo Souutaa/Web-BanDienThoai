@@ -196,6 +196,7 @@ namespace Web_BanDienThoai.Controllers
                 Id_NhaCungCap = nhaphang.Id_NhaCungCap,
                 Id_NhanVien = nhaphang.Id_NhanVien
             };
+
             List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
                 Select(c => new SelectListItem
                 {
@@ -211,6 +212,7 @@ namespace Web_BanDienThoai.Controllers
                     Text = c.Name
                 }).ToList();
             model.NhaCungCap = listNhaCungCap;
+
             return View(model);
         }
 
@@ -234,9 +236,9 @@ namespace Web_BanDienThoai.Controllers
             nhaphang.Id_NhanVien = model.Id_NhanVien;
             
             await _nhaphangService.UpdateAsSyncs(nhaphang);
-            //return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
-            return View();
+            //return View();
         }
     }
 }
