@@ -19,6 +19,7 @@
                 <div class="col-3 form-group">
                     <input asp-for="@Model.Id_NhanVien" class="form-control" />
                     <span asp-validation-for="@Model.Id_NhanVien" class="text-danger"></span>
+                    <div class="text-danger">@ViewBag.Error</div>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">

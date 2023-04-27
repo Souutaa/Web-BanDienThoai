@@ -105,8 +105,8 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var check = _cthdService.GetAll().FirstOrDefault(s => s.Id_HoaDon == model.Id_HoaDon);
-                //if(check == null) { 
+                var check = _ctnhService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
+                if(check == null) { 
                 var ctnh = new ChiTietNhapHang
                 {
                     Id_NhapHang = model.Id_NhapHang,
@@ -117,23 +117,20 @@ namespace Web_BanDienThoai.Controllers
                 };
                 await _ctnhService.CreateAsSync(ctnh);
 
-                //var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
-                //sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
-                //soluongduocthem = model.SoLuong;                               //
-                //                                                              //
-                //sanphamcapnhat.GiaTien = model.DonGia;                       // Cập nhật giá tiền
-                //                                                            //
-                //await _sanphamService.UpdateAsSyncs(sanphamcapnhat);       //
-
-
-
+                var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
+                sanphamcapnhat.SoLuong += model.SoLuong;                        // Cập nhật số lượng
+                soluongduocthem = model.SoLuong;                               //
+                                                                               //
+                sanphamcapnhat.GiaTien = model.DonGia;                       // Cập nhật giá tiền
+                                                                             //
+                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);       //               
                 return RedirectToAction("Index", new { id = idtimkiem });
-                //}
-                //else
-                //{
-                //    ViewBag.error = "Sản phẩm này đã được tồn tại trong giỏ hàng";
-                //    return View();
-                //}
+                }
+                else
+                {
+                    ViewBag.error = "Sản phẩm này đã được tồn tại trong giỏ hàng";
+                    return View(model);
+                }
             }
             return View();
         }

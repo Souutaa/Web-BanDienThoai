@@ -16,14 +16,24 @@ namespace Web.Services.implementation
         {
             _context = context;
         }
-        public IEnumerable<HoaDon> GetAll()
+        public IEnumerable<HoaDon> GetAllHoaDon()
         {
             return _context.HoaDon.ToList();
         }
 
-        public HoaDon GetById(string id)
+        public IEnumerable<NhapHang> GetAllNhapHang()
+        {
+            return _context.NhapHang.ToList();
+        }
+
+        public HoaDon GetByIdHoaDon(string id)
         {
             return _context.HoaDon.Where(x => x.Id_HoaDon == id).FirstOrDefault();
+        }
+
+        public NhapHang GetByIdNhapHang(string id)
+        {
+            return _context.NhapHang.Where(x => x.Id_NhapHang == id).FirstOrDefault();
         }
     }
 }

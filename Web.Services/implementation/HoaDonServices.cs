@@ -71,6 +71,11 @@ namespace Web.Services.implementation
             });
             return ListSanPhamforDetail;
         }
+
+        public NhanVien GetIdNV(string id)
+        {
+            return _context.NhanVien.Where(x => x.Id_NhanVien == id).FirstOrDefault();
+        }
     }
 }
 

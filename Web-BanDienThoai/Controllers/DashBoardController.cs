@@ -20,14 +20,27 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpPost]
-        public List<object> GetDataDashboard() 
+        public List<object> GetDataHoaDonDashboard() 
         {
             List<object> data = new List<object>();
 
-            List<string> labels = _dashboardService.GetAll().Select(x => x.Id_HoaDon).ToList();
+            List<string> labels = _dashboardService.GetAllHoaDon().Select(x => x.Id_HoaDon).ToList();
             data.Add(labels);
 
-            List<double> Tongtien = _dashboardService.GetAll().Select(x => x.TongTien).ToList();
+            List<double> Tongtien = _dashboardService.GetAllHoaDon().Select(x => x.TongTien).ToList();
+            data.Add(Tongtien);
+
+            return data;
+        }
+
+        public List<object> GetDataNhapHangDashboard()
+        {
+            List<object> data = new List<object>();
+
+            List<string> labels = _dashboardService.GetAllNhapHang().Select(x => x.Id_NhapHang).ToList();
+            data.Add(labels);
+
+            List<double> Tongtien = _dashboardService.GetAllNhapHang().Select(x => x.TongTien).ToList();
             data.Add(Tongtien);
 
             return data;

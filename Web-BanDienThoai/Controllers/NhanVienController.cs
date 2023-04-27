@@ -14,11 +14,13 @@ namespace Web_BanDienThoai.Controllers
     {
         private INhanVienServices _nhanvienService;
         private IWebHostEnvironment _webHostEnvironment;
+        private IHoaDonServices _hoadonService;
 
-        public NhanVienController(INhanVienServices nhanvienService, IWebHostEnvironment webHostEnvironment)
+        public NhanVienController(INhanVienServices nhanvienService, IWebHostEnvironment webHostEnvironment, IHoaDonServices hoadonService)
         {
             _nhanvienService = nhanvienService;
             _webHostEnvironment = webHostEnvironment;
+            _hoadonService = hoadonService;
         }
         public IActionResult Index(string valueOfSearch)
         {
@@ -120,6 +122,12 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
+                var peopleinhoadon = _hoadonService.GetIdNV(model.Id_NhanVien);
+                if (peopleinhoadon != null)
+                {
+                    ViewBag.error = "Nhân viên tồn tại trong hóa đơn nên không thể xóa";
+                    return View();
+                }
                 await _nhanvienService.DeleteById(model.Id_NhanVien);
                 return RedirectToAction("Index");
             }
@@ -169,9 +177,9 @@ namespace Web_BanDienThoai.Controllers
             people.Phone = model.Phone;
 
             await _nhanvienService.UpdateNhanVienAsSyncs(people);
-            //return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
-            return View();
+            //return View();
         }
     }
 }

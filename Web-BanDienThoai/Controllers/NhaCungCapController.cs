@@ -133,6 +133,9 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_NhaCungCap = nhacungcap.Id_NhaCungCap,
                 Name = nhacungcap.Name,
+                Address = nhacungcap.Address,
+                Email = nhacungcap.Email,
+                Phone = nhacungcap.Phone
             };
             return View(model);
         }
@@ -148,9 +151,14 @@ namespace Web_BanDienThoai.Controllers
             }
             nhacungcap.Id_NhaCungCap = model.Id_NhaCungCap;
             nhacungcap.Name = model.Name;
-            //return RedirectToAction("Index");
+            nhacungcap.Address = model.Address;
+            nhacungcap.Email = model.Email;
+            nhacungcap.Phone = model.Phone;
 
-            return View();
+            await _nhacungcapService.UpdateAsSyncs(nhacungcap);
+            return RedirectToAction("Index");
+
+            //return View();
         }
     }
 }
