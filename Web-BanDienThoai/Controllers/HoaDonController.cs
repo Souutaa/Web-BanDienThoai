@@ -159,7 +159,6 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {               
-
                 await _hoadonService.DeleteById(model.Id_HoaDon);
                 return RedirectToAction("Index");
             }
