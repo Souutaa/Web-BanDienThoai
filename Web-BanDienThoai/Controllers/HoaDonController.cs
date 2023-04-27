@@ -162,12 +162,14 @@ namespace Web_BanDienThoai.Controllers
         public async Task<IActionResult> Delete(DeleteHoaDonViewModel model)
         {
             if (ModelState.IsValid)
-            {
+            {               
+
                 await _hoadonService.DeleteById(model.Id_HoaDon);
                 return RedirectToAction("Index");
             }
             return View();
         }
+
 
         [HttpGet]
         public ActionResult Edit(string id)
@@ -221,9 +223,9 @@ namespace Web_BanDienThoai.Controllers
             hoadon.TongTien = model.TongTien;
 
             await _hoadonService.UpdateAsSyncs(hoadon);
-            //return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
-            return View();
+            //return View();
         }
     }
 }

@@ -17,7 +17,7 @@
                     <label asp-for="Id_NhaCungCap" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="Id_NhaCungCap" class="form-control" />
+                    <input asp-for="Id_NhaCungCap" class="form-control" readonly/>
                     <span asp-validation-for="Id_NhaCungCap" class=" text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -62,7 +62,7 @@
             <div class="form-group">
 
                 <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Update</button>
-                <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+                <a asp-action="Index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
                 <br />
                 <br />
                 <br />

@@ -30,9 +30,9 @@ namespace Web_BanDienThoai.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-       
+
         //public IActionResult Index(string id)
-            public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(string id)
         {
             //var hoadon = _hoadonService.GetById(id);
             //if (hoadon == null)
@@ -48,7 +48,7 @@ namespace Web_BanDienThoai.Controllers
                 SoLuong = cthd.SoLuong,
                 DonGia = cthd.DonGia,
                 ThanhTien = cthd.ThanhTien
-            }).Where(x => x.Id_HoaDon == id);            
+            }).Where(x => x.Id_HoaDon == id);
             idtimkiem = id;
 
             //Tính tổng tiền và tổng số lượng ở CHI TIẾT HÓA ĐƠN và cập nhật đến bảng HÓA ĐƠN 
@@ -98,12 +98,13 @@ namespace Web_BanDienThoai.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateChiTietHoaDonViewModel model) //Màu Sắc
-        {           
+        {
             if (ModelState.IsValid)
             {
-                //var check = _cthdService.GetAll().FirstOrDefault(s => s.Id_HoaDon == model.Id_HoaDon);
-                //if(check == null) { 
-                var cthd = new ChiTietHoaDon
+                var check = _cthdService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
+                if (check == null)
+                {
+                    var cthd = new ChiTietHoaDon
                 {
                     Id_HoaDon = model.Id_HoaDon,
                     Id_SanPham = model.Id_SanPham,
@@ -118,14 +119,14 @@ namespace Web_BanDienThoai.Controllers
                 soluongdamua = model.SoLuong;                               //
                 await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
 
-                return RedirectToAction("Index", new { id = idtimkiem});
-                //}
-                //else
-                //{
-                //    ViewBag.error = "Sản phẩm này đã được tồn tại trong giỏ hàng";
-                //    return View();
-                //}
-            }           
+                return RedirectToAction("Index", new { id = idtimkiem });
+                }
+                else
+                {
+                    ViewBag.error = "Sản phẩm này đã được tồn tại trong giỏ hàng";
+                    return View(model);
+                }
+            }
             return View();
         }
 
@@ -163,17 +164,16 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public IActionResult Delete(string id)
         {
-            //var hoadon = _hoadonService.GetById(id);
-            //if (hoadon == null)
-            //{
-            //    return NotFound();
-            //}
-            //var model = new DeleteHoaDonViewModel
-            //{
-            //    Id_HoaDon = hoadon.Id_HoaDon,
-            //    Id_khachhang = hoadon.Id_khachhang,
-            //    Id_NhanVien = hoadon.Id_NhanVien,
-            //};
+            var cthd = _cthdService.GetById(id);
+            if (cthd == null)
+            {
+                return NotFound();
+            }
+            var model = new DeleteChiTietHoaDonViewModel
+            {
+                Id_HoaDon = cthd.Id_HoaDon,
+                Id_SanPham = cthd.Id_SanPham,
+            };
 
             return View();
         }

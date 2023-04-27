@@ -9,7 +9,10 @@ namespace Web.Services
 {
     public interface IDashBoardServices
     {
-        IEnumerable<HoaDon> GetAll();
-        HoaDon GetById(string id);
+        IEnumerable<HoaDon> GetAllHoaDon();
+        HoaDon GetByIdHoaDon(string id);
+
+        IEnumerable<NhapHang> GetAllNhapHang();
+        NhapHang GetByIdNhapHang(string id);
     }
 }
