@@ -31,11 +31,15 @@ namespace Web_BanDienThoai.Controllers
                 var newUser = new TaiKhoan();
                 newUser.FullName = model.FullName;
                 newUser.UserName = model.UserName;
+                newUser.Email = model.Email;
                 var result = await _userManager.CreateAsync(newUser, model.Password);
-                if (result.Succeeded)
+                if (result.Succeeded && !_signInManager.IsSignedIn(User))
                 {
                     return RedirectToAction("Login");
-                } else
+                } else if (result.Succeeded && _signInManager.IsSignedIn(User))
+                {
+                    return RedirectToAction("listusers", "administration");
+                } else 
                 {
                     throw new Exception(result.Errors.ToString());
                 }
@@ -49,19 +53,19 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginTaiKhoanViewModel model, string returnUrl)
+        public async Task<IActionResult> Login(LoginTaiKhoanViewModel model, string returnUrl = null)
         {
-            
+  
             if (ModelState.IsValid)
             {
                 var checkResult = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
                 if (checkResult.Succeeded)
                 {
-                    //if (!string.IsNullOrEmpty(returnUrl))
-                    //{
-                    //    return Redirect(returnUrl);
-                    //}
-                    //else
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
                     {
                         return RedirectToAction("index", "home");
                     }
@@ -75,6 +79,13 @@ namespace Web_BanDienThoai.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View("error");
         }
     }
 }

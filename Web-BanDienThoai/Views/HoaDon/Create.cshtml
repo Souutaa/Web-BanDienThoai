@@ -34,17 +34,29 @@
                     <input asp-for="NgayLapHoaDon" class="form-control" />
                     <span asp-validation-for="NgayLapHoaDon" class="text-danger"></span>
                 </div>
+
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
-                    <label asp-for="Id_khachhang" class="form-label"></label>
+                    <label asp-for="Id_NhanVien" class="form-label">Nhân viên</label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_khachhang" class="form-control" asp-items="@Model.KhachHang">
-                        <option value=""> Chọn Khách Hàng </option>
+                    <select asp-for="Id_NhanVien" class="form-control" asp-items="@Model.Staffs">
+                        <option value=""> Chọn nhân viên </option>
+                    </select>
+                    <span asp-validation-for="Id_NhanVien" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="Id_khachhang" class="form-label">Khách hàng</label>
+                </div>
+                <div class="col-3 form-group">
+                    <select asp-for="Id_khachhang" class="form-control" asp-items="@Model.Users">
+                        <option value=""> Chọn khách hàng </option>
                     </select>
                     <span asp-validation-for="Id_khachhang" class="text-danger"></span>
                 </div>
-                <div class="col-2 form-group"></div>
+
+               @* <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
                     <label asp-for="Id_NhanVien" class="form-label"></label>
                 </div>
@@ -53,7 +65,7 @@
                         <option value=""> Chọn nhân viên </option>
                     </select>
                     <span asp-validation-for="Id_NhanVien" class="text-danger"></span>
-                </div>
+                </div>*@
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
                     <label asp-for="TongTien" class="form-label"></label>
