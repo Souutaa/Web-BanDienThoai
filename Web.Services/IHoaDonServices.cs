@@ -13,7 +13,7 @@ namespace Web.Services
         IEnumerable<HoaDon> GetAll();
         HoaDon GetById(string id); 
 
-        NhanVien GetIdNV (string id);
+        //NhanVien GetIdNV (string id);
         Task CreateAsSync(HoaDon hoaDon); 
         Task UpdateAsSyncs(HoaDon hoaDon); 
         Task UpdateById(string id); 

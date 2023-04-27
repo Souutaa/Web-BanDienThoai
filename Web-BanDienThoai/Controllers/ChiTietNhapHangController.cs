@@ -13,7 +13,6 @@ namespace Web_BanDienThoai.Controllers
 {
     public class ChiTietNhapHangController : Controller
     {
-        private INhanVienServices _nhanvienService;
         private ISanPhamServices _sanphamService;
         private IChiTietNhapHangServices _ctnhService;
         private INhapHangServices _nhaphangService;
@@ -22,11 +21,10 @@ namespace Web_BanDienThoai.Controllers
         public static string idtimkiem;
         public static int soluongduocthem = 0;
         public ChiTietNhapHangController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
-            INhanVienServices nhanvienService, IChiTietNhapHangServices ctnhService,
+            IChiTietNhapHangServices ctnhService,
             IWebHostEnvironment webHostEnvironment, INhapHangServices nhaphangService)
         {
             _ctnhService = ctnhService;
-            _nhanvienService = nhanvienService;
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
             _nhaphangService = nhaphangService;

@@ -105,21 +105,21 @@ namespace Web_BanDienThoai.Controllers
                 if (check == null)
                 {
                     var cthd = new ChiTietHoaDon
-                {
-                    Id_HoaDon = model.Id_HoaDon,
-                    Id_SanPham = model.Id_SanPham,
-                    SoLuong = model.SoLuong,
-                    DonGia = model.DonGia,
-                    ThanhTien = model.ThanhTien,
-                };
-                await _cthdService.CreateAsSync(cthd);
+                    {
+                        Id_HoaDon = model.Id_HoaDon,
+                        Id_SanPham = model.Id_SanPham,
+                        SoLuong = model.SoLuong,
+                        DonGia = model.DonGia,
+                        ThanhTien = model.ThanhTien,
+                    };
+                    await _cthdService.CreateAsSync(cthd);
 
-                var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
-                sanphamcapnhat.SoLuong -= model.SoLuong;                        // Cập nhật số lượng
-                soluongdamua = model.SoLuong;                               //
-                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
+                    var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
+                    sanphamcapnhat.SoLuong -= model.SoLuong;                        // Cập nhật số lượng
+                    soluongdamua = model.SoLuong;                               //
+                    await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
 
-                return RedirectToAction("Index", new { id = idtimkiem });
+                    return RedirectToAction("Index", new { id = idtimkiem });
                 }
                 else
                 {
@@ -148,17 +148,17 @@ namespace Web_BanDienThoai.Controllers
             //    list.Add(SanPham.Ten_SanPham);              
 
 
-            //var model = new DetailHoaDonViewModel
-            //{
-            //    Id_HoaDon = hoadon.Id_HoaDon,
-            //    NgayLapHoaDon = hoadon.NgayLapHoaDon,
-            //    Id_khachhang = hoadon.Id_khachhang,
-            //    Id_NhanVien = hoadon.Id_NhanVien,
-            //    TongTien = hoadon.TongTien,
+            var model = new DetailHoaDonViewModel
+            {
+                Id_HoaDon = hoadon.Id_HoaDon,
+                NgayLapHoaDon = hoadon.NgayLapHoaDon,
+                Id_khachhang = hoadon.Id_khachhang,
+                Id_NhanVien = hoadon.Id_NhanVien,
+                TongTien = hoadon.TongTien,
 
-            //};
+            };
 
-            return View();
+            return View(model);
         }
 
         [HttpGet]
@@ -175,7 +175,7 @@ namespace Web_BanDienThoai.Controllers
                 Id_SanPham = cthd.Id_SanPham,
             };
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -193,36 +193,36 @@ namespace Web_BanDienThoai.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            //var hoadon = _hoadonService.GetById(id);
-            //if (hoadon == null)
-            //{
-            //    return NotFound();
-            //}
-            //var model = new EditHoaDonViewModel
-            //{
-            //    Id_HoaDon = hoadon.Id_HoaDon,
-            //    NgayLapHoaDon = hoadon.NgayLapHoaDon,
-            //    Id_khachhang = hoadon.Id_khachhang, /*cauHinhIds*/
-            //    Id_NhanVien = hoadon.Id_NhanVien,
-            //    TongTien = hoadon.TongTien,
-            //};
-            return View();
+            var cthd = _cthdService.GetById(id);
+            if (cthd == null)
+            {
+                return NotFound();
+            }
+            var model = new EditChiTietHoaDonViewModel
+            {
+                Id_HoaDon = cthd.Id_HoaDon,
+                Id_SanPham = cthd.Id_SanPham,
+                SoLuong = cthd.SoLuong,
+                DonGia = cthd.DonGia,
+                ThanhTien = cthd.ThanhTien
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditChiTietHoaDonViewModel model)
         {
-            //var hoadon = _hoadonService.GetById(model.Id_HoaDon);
-            //if (hoadon == null)
-            //{
-            //    return NotFound();
-            //}
-            //hoadon.Id_HoaDon = model.Id_HoaDon;
-            //hoadon.NgayLapHoaDon = model.NgayLapHoaDon;
-            //hoadon.Id_khachhang = model.Id_khachhang;
-            //hoadon.Id_NhanVien = model.Id_NhanVien;
-            //hoadon.TongTien = model.TongTien;
+            var cthd = _cthdService.GetById(model.Id_HoaDon);
+            if (cthd == null)
+            {
+                return NotFound();
+            }
+            cthd.Id_HoaDon = model.Id_HoaDon;
+            cthd.Id_SanPham = model.Id_SanPham;
+            cthd.SoLuong = model.SoLuong;
+            cthd.DonGia = model.DonGia;
+            cthd.ThanhTien = model.ThanhTien;
 
             var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);     //
             sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + soluongdamua; // Cập nhật số lượng sản phẩm
@@ -235,6 +235,3 @@ namespace Web_BanDienThoai.Controllers
         }
     }
 }
-
-
-
