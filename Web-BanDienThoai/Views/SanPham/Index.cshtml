@@ -1,5 +1,6 @@
 ﻿@{ViewData["Title"] = "Danh Sách Sản Phẩm";}
 
+@inject SignInManager<TaiKhoan> signInManager;
 @using Web_BanDienThoai.Models.SanPham;
 @*@using X.PagedList.Mvc.Core;
 @using X.PagedList;*@
@@ -9,8 +10,9 @@
 
 <section class="py-5">   
     <div class="container px-4 px-lg-5 mt-5">
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin")){
         <a class="btn btn-xs btn-outline-success float-md-rigth" style="margin-top:-3cm" asp-action="Create">Tạo Sản Phẩm</a>
-
+        }
         <div class="col-xs-12">
             <form method="get" asp-action="Index" enctype="multipart/form-data">
                 <div class="col-md-2">

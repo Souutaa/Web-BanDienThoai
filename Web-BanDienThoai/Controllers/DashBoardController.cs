@@ -19,20 +19,21 @@ namespace Web_BanDienThoai.Controllers
             return View();
         }
 
+        //[HttpPost]
+        //public List<object> GetDataHoaDonDashboard() 
+        //{
+        //    List<object> data = new List<object>();
+
+        //    List<string> labels = _dashboardService.GetAllHoaDon().Select(x => x.Id_HoaDon).ToList();
+        //    data.Add(labels);
+
+        //    List<double> Tongtien = _dashboardService.GetAllHoaDon().Select(x => x.TongTien).ToList();
+        //    data.Add(Tongtien);
+
+        //    return data;
+        //}
+
         [HttpPost]
-        public List<object> GetDataHoaDonDashboard() 
-        {
-            List<object> data = new List<object>();
-
-            List<string> labels = _dashboardService.GetAllHoaDon().Select(x => x.Id_HoaDon).ToList();
-            data.Add(labels);
-
-            List<double> Tongtien = _dashboardService.GetAllHoaDon().Select(x => x.TongTien).ToList();
-            data.Add(Tongtien);
-
-            return data;
-        }
-
         public List<object> GetDataNhapHangDashboard()
         {
             List<object> data = new List<object>();

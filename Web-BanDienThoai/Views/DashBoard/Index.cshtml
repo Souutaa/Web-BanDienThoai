@@ -1,5 +1,5 @@
-﻿<div class="row-">
-    <div class="col">
+﻿<div class="row">
+    <div class="col-8">
         <div class="row">
             <label><b>Kiểu Bảng Thống Kê</b></label>
         </div>
@@ -12,39 +12,24 @@
                 <option>doughnut</option>
             </select>
         </div>
-       
+   
         <div class="row-4" style="margin-top:7px">
             <input id="ID" value="Hiển thị thống kê" type="button" />
-        </>
-    </div>
-
-    <div class="col">
-        <div class="row">
-            <label><b>Kiểu Bảng Thống Kê</b></label>
-        </div>
-        <div class="row-4">
-            <select id="ChartType" class="form-control" style="width:fit-content">
-                <option selected>--Chọn Bảng Thống Kê--</option>
-                <option>bar</option>
-                <option>line</option>
-                <option>pie</option>
-                <option>doughnut</option>
-            </select>
-        </div>
-        
-        <div class="row-4" style="margin-top:7px">
-            <input id="ID" value="Hiển thị thống kê" type="button" />
-        </div>
-    </div>
-</div>
+            </>
+        </div>        
+    </div>           
+</div> 
 <br />
 
 <div id="ChartView">
     <canvas id="myChart"></canvas>
 </div>
 
+
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script type="text/javascript">
 
     $(function () {
@@ -59,7 +44,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/DashBoard/GetDataHoaDonDashboard",
+                url: "/DashBoard/GetDataNhapHangDashboard",
                 data: "",
                 contextType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -86,8 +71,8 @@
                     ];
 
 
-                new Chart("myChart",
-                    {
+                var myChart = new Chart(chartView,
+                {
                         options:
                         {
                             responsive: true,
@@ -112,7 +97,7 @@
                                 }]
                         }
 
-                    });
+                });
 
             }
 
@@ -121,5 +106,7 @@
             }
         });
     });
-
 </script>
+
+
+

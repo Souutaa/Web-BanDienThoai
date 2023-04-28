@@ -47,18 +47,18 @@ namespace Web_BanDienThoai.Controllers
                 {
                     Id_HoaDon = hoadon.Id_HoaDon,
                     NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                    FullName_khachhang = khachHang.FullName ?? nhanVien.UserName,
+                    FullName_khachhang = khachHang.FullName ?? khachHang.UserName,
                     FullName_NhanVien = nhanVien.FullName ?? nhanVien.UserName,
                     TongTien = hoadon.TongTien,
                 };
                 return HoaDon;
             }));
-            //if (!String.IsNullOrEmpty(valueOfSearch))
-            //{
-            //    model = model.Where(cauhinh => cauhinh.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
-            //    || cauhinh.Id_khachhang.ToLower().Contains(valueOfSearch.ToLower())
-            //    || cauhinh.Id_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
-            //}
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = (IndexHoaDonViewModel[])model.Where(cauhinh => cauhinh.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.FullName_khachhang.ToLower().Contains(valueOfSearch.ToLower())
+                || cauhinh.FullName_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
+            }
             return View(model.ToList());
 
         }
@@ -77,10 +77,10 @@ namespace Web_BanDienThoai.Controllers
                 };
                 if (await userManager.IsInRoleAsync(user, "Admin"))
                 {
-                    model.Users.Add(item);
+                    model.Staffs.Add(item);
                 } else
                 {
-                    model.Staffs.Add(item);
+                    model.Users.Add(item);
                 }
             }
 

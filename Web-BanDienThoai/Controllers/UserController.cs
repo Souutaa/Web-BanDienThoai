@@ -67,7 +67,7 @@ namespace Web_BanDienThoai.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("index", "home");
+                        return RedirectToAction("index", "sanpham");
                     }
                 }
             }
@@ -78,7 +78,7 @@ namespace Web_BanDienThoai.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("index", "sanpham");
         }
 
         [HttpGet]
