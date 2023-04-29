@@ -107,11 +107,11 @@
                             }
                             @if(signInManager.IsSignedIn(User))
                             {
-                                <li>@User.Identity.Name</li>
+                                <li style="text-align:center; color:brown"><b>@User.Identity.Name</b></li>
                                 <li ><hr class="dropdown-divider" /></li
                                 <li>
                                     <form asp-controller="User" asp-action="Logout" method="post" class="dropdown-item"  >
-                                        <button type="submit">
+                                        <button type="submit" style="width:130px">
                                             Logout
                                         </button>
                                     </form>
