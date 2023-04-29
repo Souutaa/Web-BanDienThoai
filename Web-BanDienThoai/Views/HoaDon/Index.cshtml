@@ -32,11 +32,13 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+                    var khachHang = await userManager.FindByIdAsync(item.id_khachhang);
+                    var nhanVien = await userManager.FindByIdAsync(item.id_NhanVien);
                     <tr>
                         <td>@item.Id_HoaDon</td>
                         <td>@item.NgayLapHoaDon</td>
-                        <td>@item.FullName_khachhang</td>
-                        <td>@item.FullName_NhanVien</td>
+                        <td>@khachHang.FullName</td>
+                        <td>@nhanVien.FullName</td>
                         <td>@item.TongTien</td>
                         <td>
                             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin")){

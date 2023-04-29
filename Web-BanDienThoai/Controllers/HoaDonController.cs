@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using Web.Entities;
@@ -20,11 +21,10 @@ namespace Web_BanDienThoai.Controllers
         private IHoaDonServices _hoadonService;
         private readonly RoleManager<IdentityRole> roleManager;
         private UserManager<TaiKhoan> userManager;
-        private readonly ApplicationDbContext context;
         public HoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             IChiTietHoaDonServices cthdServices,
             IWebHostEnvironment webHostEnvironment, UserManager<TaiKhoan> userManager, 
-            RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
+            RoleManager<IdentityRole> roleManager)
         {            
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
@@ -32,35 +32,29 @@ namespace Web_BanDienThoai.Controllers
             _webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.context = context;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string valueOfSearch)
+        public IActionResult Index(string valueOfSearch)
         {
-
-            var model = await Task.WhenAll(_hoadonService.GetAll().Select(async hoadon =>
+            var model = _hoadonService.GetAll().Select((hoadon) =>
             {
-                var khachHang = await userManager.FindByIdAsync(hoadon.Id_khachhang);
-                var nhanVien = await userManager.FindByIdAsync(hoadon.Id_NhanVien);
-                var HoaDon = new IndexHoaDonViewModel
+                return (new IndexHoaDonViewModel
                 {
                     Id_HoaDon = hoadon.Id_HoaDon,
                     NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                    FullName_khachhang = khachHang.FullName ?? khachHang.UserName,
-                    FullName_NhanVien = nhanVien.FullName ?? nhanVien.UserName,
+                    id_khachhang = hoadon.Id_khachhang,
+                    id_NhanVien = hoadon.Id_NhanVien,
                     TongTien = hoadon.TongTien,
-                };
-                return HoaDon;
-            }));
-            if (!String.IsNullOrEmpty(valueOfSearch))
-            {
-                model = (IndexHoaDonViewModel[])model.Where(cauhinh => cauhinh.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
-                || cauhinh.FullName_khachhang.ToLower().Contains(valueOfSearch.ToLower())
-                || cauhinh.FullName_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
-            }
+                });
+            });
+            //if (!String.IsNullOrEmpty(valueOfSearch))
+            //{
+            //    model = (IndexHoaDonViewModel[])model.Where(cauhinh => cauhinh.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
+            //    || cauhinh.FullName_khachhang.ToLower().Contains(valueOfSearch.ToLower())
+            //    || cauhinh.FullName_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
+            //}
             return View(model.ToList());
-
         }
 
         [HttpGet]
@@ -140,20 +134,21 @@ namespace Web_BanDienThoai.Controllers
         }
     
         [HttpGet]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             var hoadon = _hoadonService.GetById(id);
             if (hoadon == null)
             {
                 return NotFound();
             }
+
             var model = new DeleteHoaDonViewModel
             {
-                //Id_HoaDon = hoadon.Id_HoaDon,
-                //Id_khachhang = hoadon.Id_khachhang,
-                //Id_NhanVien = hoadon.Id_NhanVien,
+                Id_HoaDon = hoadon.Id_HoaDon,
+                Id_KhachHang = hoadon.Id_khachhang,
+                Id_NhanVien = hoadon.Id_NhanVien,
+                CreatedAt = hoadon.NgayLapHoaDon,
             };
-           
             return View(model);
         }
 
@@ -171,39 +166,38 @@ namespace Web_BanDienThoai.Controllers
 
 
         [HttpGet]
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             var hoadon = _hoadonService.GetById(id);
             if (hoadon == null)
             {
                 return NotFound();
             }
-            var model = new EditHoaDonViewModel
+            var model = new EditHoaDonViewModel();
+            model.Id_HoaDon = hoadon.Id_HoaDon;
+            model.NgayLapHoaDon = hoadon.NgayLapHoaDon;
+            model.Id_customer = hoadon.Id_khachhang;
+            model.Id_staff = hoadon.Id_NhanVien;
+            model.TongTien = hoadon.TongTien;
+
+            foreach (var user in userManager.Users)
             {
-                Id_HoaDon = hoadon.Id_HoaDon,
-                NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                //Id_khachhang = hoadon.Id_khachhang, /*cauHinhIds*/
-                //Id_NhanVien = hoadon.Id_NhanVien,
-                TongTien = hoadon.TongTien,
-            };
+                var item = new SelectListItem
+                {
+                    Text = user.UserName,
+                    Value = user.Id
+                };
+                if (await userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    model.Staffs.Add(item);
+                }
+                else
+                {
+                    model.Customers.Add(item);
+                }
+            }
 
-            //List<SelectListItem> listKhachHang = /*_context.CauHinh*/_khachhangService.GetAll().
-            //    Select(c => new SelectListItem
-            //    {
-            //        Value = c.Id_KhacHang.ToString(),
-            //        Text = c.FullName,
-            //    }).ToList();
-            //model.KhachHang = listKhachHang;
-
-            //List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
-            //    Select(c => new SelectListItem
-            //    {
-            //        Value = c.Id_NhanVien.ToString(),
-            //        Text = c.FullName
-            //    }).ToList();
-            //model.NhanVien = listNhanVien;
-
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -215,16 +209,13 @@ namespace Web_BanDienThoai.Controllers
             {
                 return NotFound();
             }
-            hoadon.Id_HoaDon = model.Id_HoaDon;
             hoadon.NgayLapHoaDon = model.NgayLapHoaDon;
-            //hoadon.Id_khachhang = model.Id_khachhang;
-            //hoadon.Id_NhanVien = model.Id_NhanVien;
+            hoadon.Id_khachhang = model.Id_customer;
+            hoadon.Id_NhanVien = model.Id_staff;
             hoadon.TongTien = model.TongTien;
 
             await _hoadonService.UpdateAsSyncs(hoadon);
             return RedirectToAction("Index");
-
-            //return View();
         }
     }
 }

@@ -1,13 +1,17 @@
-﻿@using Web_BanDienThoai.Models.HoaDon;
+﻿@{ViewData["Title"] = "Xóa Hóa Đơn";}
+
+@using Web_BanDienThoai.Models.HoaDon;
 @model DeleteHoaDonViewModel
+@inject UserManager<TaiKhoan> userManager;
 
 <div class="row">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="HoaDon" asp-action="Index">Danh Sách Hóa Đơn</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Xóa Hóa Đơn</li>
+            <li class="breadcrumb-item"><a asp-controller="NhapHang" asp-action="Index">Danh Sách Nhập Hàng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Xóa Đơn Nhập Hàng</li>
         </ol>
     </nav>
+
     <form method="post" asp-action="Delete" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">
@@ -16,27 +20,46 @@
                     <label asp-for="@Model.Id_HoaDon" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.Id_HoaDon" class="form-control" readonly />
+                    <input asp-for="@Model.Id_HoaDon" class="form-control" />
                     <span asp-validation-for="@Model.Id_HoaDon" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
-                    <label asp-for="@Model.NgayLapHoaDon" class="form-label"></label>
+                    <label asp-for="@Model.CreatedAt" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.NgayLapHoaDon" class="form-control" readonly />
-                    <span asp-validation-for="@Model.NgayLapHoaDon" class="text-danger"></span>
+                    <input asp-for="@Model.CreatedAt" class="form-control" />
+                    <span asp-validation-for="@Model.CreatedAt" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+
+                @{
+                    var customer = await userManager.FindByIdAsync(Model.Id_KhachHang);
+                    var staff = await userManager.FindByIdAsync(Model.Id_NhanVien);
+                }
+                <div class="col-2 form-group">
+                    <label class="form-label">Khách Hàng</label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@customer.FullName" class="form-control" />
+                    <span asp-validation-for="@customer.FullName" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group">
+                    <label class="form-label">Nhân Viên</label>
+                </div>
+                <div class="col-3 form-group">
+                    <input asp-for="@staff.FullName" class="form-control" />
+                    <span asp-validation-for="@staff.FullName" class="text-danger"></span>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-
-            <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Delete</button>
-            <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
-            <br />
-            <br />
-            <br />
-        </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Delete</button>
+                <a asp-action="index" class="btn btn-rounded btn-success float-right"><i class="fas fa-caret-square-left" style="margin-right:0.7em"></i>Back</a>
+                <br />
+                <br />
+                <br />
+            </div>
     </form>
 </div>
 
@@ -45,8 +68,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-<script>
-    var xacnhan = function () {
-
-    }
-</script>

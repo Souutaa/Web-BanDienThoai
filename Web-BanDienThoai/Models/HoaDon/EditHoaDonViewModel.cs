@@ -7,26 +7,22 @@ namespace Web_BanDienThoai.Models.HoaDon
 {
     public class EditHoaDonViewModel
     {
-        [Key]
-        [Required(ErrorMessage = "Phải nhập mã Hóa Đơn (HD__)")]
-        [RegularExpression(@"^[hH][dD][0-9]\S*$"), Display(Name = "Mã Hóa Đơn")]
+
+        public EditHoaDonViewModel() {
+            Staffs = new List<SelectListItem>();
+            Customers = new List<SelectListItem>();
+        }
+
         public string Id_HoaDon { get; set; }
        
         [DataType(DataType.Date), Display(Name = "Ngày lập hóa đơn")]
         public DateTime NgayLapHoaDon { get; set; }
         [Display(Name =" Tổng tiền")]
         public double TongTien { get; set; }
-
-        [Required(ErrorMessage = "Phải nhập mã khách hàng (KH__)")]
-        [RegularExpression(@"^[kK][hH][0-9]\S*$"), Display(Name = "Mã Khách Hàng")]
-        [ForeignKey("KhachHang")] public string Id_khachhang { get; set; }  //Khách Hàng
-        [ValidateNever]
-        public IEnumerable<SelectListItem>? KhachHang { set; get; }
-
-        [Required(ErrorMessage = "Phải nhập mã Nhân Viên (NV__)")]
-        [RegularExpression(@"^[nN][vV][0-9]\S*$"), Display(Name = "Mã Nhân Viên")]
-        [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }   //Nhân Viên
-        [ValidateNever]
-        public IEnumerable<SelectListItem>? NhanVien { set; get; }
+        public string Id_customer { get; set; }  //Khách Hàng
+        public List<SelectListItem> Customers { set; get; }
+        
+        public string Id_staff { get; set; }   //Nhân Viên
+        public List<SelectListItem> Staffs { set; get; }
     }
 }

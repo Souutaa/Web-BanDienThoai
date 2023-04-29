@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Entities;
 using Web.Services;
@@ -13,14 +14,20 @@ namespace Web_BanDienThoai.Controllers
         private ISanPhamServices _sanphamService;        
         private IWebHostEnvironment _webHostEnvironment; 
         private INhapHangServices _nhaphangService;
+        private readonly UserManager<TaiKhoan> userManager;
 
         public NhapHangController(ISanPhamServices sanphamService, 
-            INhaCungCapServices nhacungCapService, IWebHostEnvironment webHostEnvironment, INhapHangServices nhaphangService)
+            INhaCungCapServices nhacungCapService, 
+            IWebHostEnvironment webHostEnvironment, 
+            INhapHangServices nhaphangService,
+            UserManager<TaiKhoan> userManager
+            )
         {
             _nhaphangService = nhaphangService;
             _nhacungcapService = nhacungCapService;
             _sanphamService = sanphamService;      
             _webHostEnvironment = webHostEnvironment;
+            this.userManager = userManager;
         }
 
         public IActionResult Index(string valueOfSearch)
@@ -36,6 +43,7 @@ namespace Web_BanDienThoai.Controllers
                 TongSoLuong = nhaphang.TongSoLuong
                 //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
                 //Id_NhanVien = nhaphang.Id_NhanVien
+                
             });
 
             if (!String.IsNullOrEmpty(valueOfSearch))
@@ -52,26 +60,33 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            //var model = new CreateNhapHangViewModel();
-            //List<SelectListItem> listNhanVien =_nhanvienService.GetAll().
-            //    Select(c => new SelectListItem
-            //    {
-            //        Value = c.Id_NhanVien.ToString(),
-            //        Text = c.FullName
-            //    }).ToList();
-            //model.NhanVien = listNhanVien;
 
-            //List<SelectListItem> listNhaCungCap = _nhacungcapService.GetAll().
-            //    Select(c => new SelectListItem
-            //    {
-            //        Value = c.Id_NhaCungCap.ToString(),
-            //        Text = c.Name
-            //    }).ToList();
-            //model.NhaCungCap = listNhaCungCap;
+            var model = new CreateNhapHangViewModel();
 
-            return View();
+            foreach (var user in userManager.Users)
+            {
+                var item = new SelectListItem
+                {
+                    Text = user.UserName,
+                    Value = user.Id
+                };
+                if (await userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    model.Staffs.Add(item);
+                }
+            }
+
+            List<SelectListItem> listNhaCungCap = _nhacungcapService.GetAll().
+            Select(c => new SelectListItem
+            {
+                Value = c.Id_NhaCungCap.ToString(),
+                Text = c.Name
+            }).ToList();
+            model.NhaCungCap = listNhaCungCap;
+
+            return View(model);
         }
 
 
@@ -94,7 +109,7 @@ namespace Web_BanDienThoai.Controllers
                         TongTien = model.TongTien,
                         GhiChu = model.GhiChu,
                         Id_NhaCungCap = model.Id_NhaCungCap,
-                        Id_NhanVien = model.Id_NhanVien
+                        Id_NhanVien = model.id_staff
                     };
                     await _nhaphangService.CreateAsSync(nhaphang);
                     return RedirectToAction("Index");
@@ -175,7 +190,7 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(string id)
+        public async Task<ActionResult> Edit(string id)
         {
             var nhaphang = _nhaphangService.GetById(id);
             if (nhaphang == null)
@@ -184,23 +199,29 @@ namespace Web_BanDienThoai.Controllers
             }
             var model = new EditNhapHangViewModel
             {
-                //Id_NhapHang = nhaphang.Id_NhapHang,
-                //NgayLap = nhaphang.NgayLap,
-                //NgayGiao = nhaphang.NgayGiao,
-                //TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,
-                //TongTien = nhaphang.TongTien,
-                //TongSoLuong = nhaphang.TongSoLuong,
-                //GhiChu = nhaphang.GhiChu,
-                //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
-                //Id_NhanVien = nhaphang.Id_NhanVien
+                Id_NhapHang = nhaphang.Id_NhapHang,
+                NgayLap = nhaphang.NgayLap,
+                NgayGiao = nhaphang.NgayGiao,
+                TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,
+                TongTien = nhaphang.TongTien,
+                TongSoLuong = nhaphang.TongSoLuong,
+                GhiChu = nhaphang.GhiChu,
+                Id_NhaCungCap = nhaphang.Id_NhaCungCap,
+                id_staff = nhaphang.Id_NhanVien
             };
-            //List<SelectListItem> listNhanVien = _nhanvienService.GetAll().
-            //    Select(c => new SelectListItem
-            //    {
-            //        Value = c.Id_NhanVien.ToString(),
-            //        Text = c.FullName
-            //    }).ToList();
-            //model.NhanVien = listNhanVien;
+
+            foreach (var user in userManager.Users)
+            {
+                var item = new SelectListItem
+                {
+                    Text = user.UserName,
+                    Value = user.Id
+                };
+                if (await userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    model.Staffs.Add(item);
+                }
+            }
 
             List<SelectListItem> listNhaCungCap = _nhacungcapService.GetAll().
                 Select(c => new SelectListItem
@@ -209,7 +230,7 @@ namespace Web_BanDienThoai.Controllers
                     Text = c.Name
                 }).ToList();
             model.NhaCungCap = listNhaCungCap;
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -221,16 +242,16 @@ namespace Web_BanDienThoai.Controllers
             {
                 return NotFound();
             }
-            //nhaphang.Id_NhapHang = model.Id_NhapHang;
-            //nhaphang.NgayLap = model.NgayLap;
-            //nhaphang.NgayGiao = model.NgayGiao;
-            //nhaphang.TrangThaiNhapHang = model.TrangThaiNhapHang;
-            //nhaphang.TongSoLuong = model.TongSoLuong;
-            //nhaphang.TongTien = model.TongTien;
-            //nhaphang.GhiChu = model.GhiChu;
-            //nhaphang.Id_NhaCungCap = model.Id_NhaCungCap;
-            //nhaphang.Id_NhanVien = model.Id_NhanVien;
-            
+            nhaphang.Id_NhapHang = model.Id_NhapHang;
+            nhaphang.NgayLap = model.NgayLap;
+            nhaphang.NgayGiao = model.NgayGiao;
+            nhaphang.TrangThaiNhapHang = model.TrangThaiNhapHang;
+            nhaphang.TongSoLuong = model.TongSoLuong;
+            nhaphang.TongTien = model.TongTien;
+            nhaphang.GhiChu = model.GhiChu;
+            nhaphang.Id_NhaCungCap = model.Id_NhaCungCap;
+            nhaphang.Id_NhanVien = model.id_staff;
+
             await _nhaphangService.UpdateAsSyncs(nhaphang);
             return RedirectToAction("Index");
 

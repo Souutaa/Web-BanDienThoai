@@ -35,23 +35,23 @@
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
-                    <label asp-for="Id_khachhang" class="form-label"></label>
+                    <label asp-for="Id_customer" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_khachhang" class="form-control" asp-items="@Model.KhachHang">
-                        <option value=""> Chọn Khách Hàng </option>
+                    <select asp-for="Id_customer" class="form-control" asp-items="@Model.Customers">
+                        @*<option value=""> Chọn Khách Hàng </option>*@
                     </select>
-                    <span asp-validation-for="Id_khachhang" class="text-danger"></span>
+                    <span asp-validation-for="Id_customer" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
-                    <label asp-for="Id_NhanVien" class="form-label"></label>
+                    <label asp-for="Id_staff" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_NhanVien" class="form-control" asp-items="@Model.NhanVien">
-                        <option value=""> Chọn nhân viên </option>
+                    <select asp-for="Id_staff" class="form-control" asp-items="@Model.Staffs">
+                        @*<option value=""> Chọn nhân viên </option>*@
                     </select>
-                    <span asp-validation-for="Id_NhanVien" class="text-danger"></span>
+                    <span asp-validation-for="Id_staff" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">

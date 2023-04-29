@@ -8,6 +8,11 @@ namespace Web_BanDienThoai.Models.NhapHang
 {
     public class EditNhapHangViewModel
     {
+
+        public EditNhapHangViewModel() {
+            Staffs = new List<SelectListItem>();
+        }
+
         [Key]
         [Required(ErrorMessage = "Phải nhập mã nhập hàng")]
         [RegularExpression(@"^[nN][hH][0-9]\S*$"), Display(Name = "Mã nhập hàng")]
@@ -29,10 +34,7 @@ namespace Web_BanDienThoai.Models.NhapHang
         [ValidateNever]
         public IEnumerable<SelectListItem> NhaCungCap { set; get; }
 
-        [Required(ErrorMessage = "Phải nhập mã Nhân Viên (NV__)")]
-        [RegularExpression(@"^[nN][vV][0-9]\S*$"), Display(Name = "Mã Nhân Viên")]
-        [ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }   //Nhân Viên
-        [ValidateNever]
-        public IEnumerable<SelectListItem> NhanVien { set; get; }
+        public List<SelectListItem> Staffs { get; set; }
+        public string id_staff { get; set; }
     }
 }
