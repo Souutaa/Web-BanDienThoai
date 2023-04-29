@@ -21,13 +21,16 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
                     <li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="DashBoard" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!"></a></li>
+                    
+                        }
                     <li class="nav-item dropdown">
                         
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhà Cung Cấp</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-folder-plus"></i> Nhà Cung Cấp</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" asp-controller="NhaCungCap" asp-action="Create">Thêm Nhà Cung Cấp</a></li>
                                     <li><hr class="dropdown-divider" /></li>
@@ -59,18 +62,11 @@
                         </ul>
                     </li>
 
-                   <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhập Hàng</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Create">Tạo Đơn Nhập Hàng</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Index">Danh Sách Đơn Nhập Hàng</a></li>
-                            </ul>
-                        </li>
+
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Nhập Hàng</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-sharp fa-solid fa-file-import"></i> Nhập Hàng</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" asp-controller="NhapHang" asp-action="Create">Tạo Đơn Nhập Hàng</a></li>
                                 <li><hr class="dropdown-divider" /></li>
@@ -83,9 +79,10 @@
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Người dùng</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-users"></i> Người dùng</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" asp-controller="Administration" asp-action="ListRoles">Roles</a></li>
+                                <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" asp-controller="Administration" asp-action="ListUsers">Users</a></li>
                             </ul>
                         </li>
@@ -105,6 +102,7 @@
                             @if(!signInManager.IsSignedIn(User))
                             {
                                 <li><a class="dropdown-item" asp-controller="User" asp-action="Register" >Register</a></li>
+                                <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" asp-controller="User" asp-action="Login" >Login</a></li>  
                             }
                             @if(signInManager.IsSignedIn(User))
@@ -112,7 +110,7 @@
                                 <li>@User.Identity.Name</li>
                                 <li ><hr class="dropdown-divider" /></li
                                 <li>
-                                    <form method="post" class="dropdown-item" asp-controller="User" asp-action="Logout">
+                                    <form asp-controller="User" asp-action="Logout" method="post" class="dropdown-item"  >
                                         <button type="submit">
                                             Logout
                                         </button>

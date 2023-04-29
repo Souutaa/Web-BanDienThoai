@@ -26,7 +26,7 @@
                     <label asp-for="Id_SanPham" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="Id_SanPham" class="form-control" />
+                    <input asp-for="Id_SanPham" class="form-control" placeholder="Nhập mã sản phẩm SP__"/>
                     <span asp-validation-for="Id_SanPham" class="text-danger"></span>
                     <div class="text-danger">@ViewBag.Error</div>
                 </div>
@@ -35,7 +35,7 @@
                     <label asp-for="Ten_SanPham" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="Ten_SanPham" class="form-control" />
+                    <input asp-for="Ten_SanPham" class="form-control" placeholder="Nhập tên sản phẩm"/>
                     <span asp-validation-for="Ten_SanPham" class="text-danger"></span>
                 </div>
             </div>

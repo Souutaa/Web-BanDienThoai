@@ -6,11 +6,14 @@ namespace Web_BanDienThoai.Models.NhaCungCap
     {
         [Key]
         [Required(ErrorMessage = "Phải nhập mã nhà cung cấp (NCC__)")]
-        [RegularExpression(@"^[nN][cC][cC][0-9]\S*$"), Display(Name = "Mã Nhà Cung Cấp")]
+        [RegularExpression(@"^[nN][cC][cC][0-9]\S*$", ErrorMessage = "Phải nhập mã nhà cung cấp (NCC__)"), Display(Name = "Mã Nhà Cung Cấp")]
         public string Id_NhaCungCap { get; set; }
+        [Required(ErrorMessage = "Phải nhập tên")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Phải nhập email")]
         public string Email { get; set; }
-        [Required, MaxLength(50)]
+        
+        [Required(ErrorMessage = "Phải nhập địa chỉ")]
         public string Address { get; set; }
         
 

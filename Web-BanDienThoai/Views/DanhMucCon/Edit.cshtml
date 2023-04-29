@@ -16,7 +16,7 @@
         </ol>
     </nav>
 
-    <form method="post" asp-action="Create" enctype="multipart/form-data">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
 
         <div class="col-md-12 table-responsive-md">
             <div class="form-row">
@@ -24,7 +24,7 @@
                     <label asp-for="Id_DanhMucCon" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="Id_DanhMucCon" class="form-control" />
+                    <input asp-for="Id_DanhMucCon" class="form-control" readonly/>
                     <span asp-validation-for="Id_DanhMucCon" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
