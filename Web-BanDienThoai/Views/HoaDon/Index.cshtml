@@ -1,6 +1,7 @@
 ﻿@using Web_BanDienThoai.Models.HoaDon;
 @model IEnumerable<IndexHoaDonViewModel>;
 @inject UserManager<TaiKhoan> userManager;
+@inject SignInManager<TaiKhoan> signInManager;
 
 <div class="row">
     <div class="col-md-12 table-responsive-md">
@@ -38,9 +39,11 @@
                         <td>@item.FullName_NhanVien</td>
                         <td>@item.TongTien</td>
                         <td>
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin")){
                             <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_HoaDon">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
+                            }
                             <a class="text-success" asp-controller="ChiTietHoaDon" asp-action="Index" asp-route-id="@item.Id_HoaDon">
                                 <i class="fas fa-bars"></i> Detail
                             </a>

@@ -1,6 +1,7 @@
 ﻿@{ViewData["Title"] = "Danh Sách Sản Phẩm";}
 
 @inject SignInManager<TaiKhoan> signInManager;
+
 @using Web_BanDienThoai.Models.SanPham;
 @*@using X.PagedList.Mvc.Core;
 @using X.PagedList;*@
@@ -55,9 +56,11 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-3 border-top-0 bg-transparent">
                             <div class="text-center" style="margin-bottom: 0.3cm">
+                                 @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin")){
                             <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_SanPham" style="margin-right:10px">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
+                                 }
                                 <a class="text-success" asp-action="Detail" asp-route-id="@item.Id_SanPham" style="margin-right:10px">
                                 <i class="fas fa-bars"></i> Detail
                             </a>
