@@ -68,9 +68,12 @@
                                 <a class="text-success" asp-action="Detail" asp-route-id="@item.Id_SanPham" style="margin-right:10px">
                                     <i class="fas fa-bars"></i> Detail
                                 </a>
-                                <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_SanPham">
-                                    <i class="far fa-trash-alt"></i> Delete
-                                </a>
+                                @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                {
+                                    <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_SanPham">
+                                        <i class="far fa-trash-alt"></i> Delete
+                                    </a>
+                                }
                             </div>
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                         </div>

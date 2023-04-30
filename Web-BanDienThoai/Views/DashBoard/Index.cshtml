@@ -26,86 +26,88 @@
 </div>
 
 
-
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script type="text/javascript">
+    $('document').ready(function () {
+        $(function () {
+            $("#ID").click(function () {
 
-    $(function () {
-        $("#ID").click(function () {
+                var chartType = $("#ChartType").val();
+                var chartView = document.getElementById('ChartView');
 
-            var chartType = $("#ChartType").val();
-            var chartView = document.getElementById('ChartView');
+                chartView.innerHTML = '&nbsp;';
 
-            chartView.innerHTML = /*'$nbsp;'*/ " ";
+                $('#ChartView').append('<canvas id="myChart" style="max-width:500px; max-height:400px;"></canvas>');
 
-            $('#ChartView').append('<canvas id="myChart" style="max-width:500px; max-height:400px;"></canvas>');
-
-            $.ajax({
-                type: "POST",
-                url: "/DashBoard/GetDataNhapHangDashboard",
-                data: "",
-                contextType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: OnSuccessResult,
-                error: OnError
-            });
-
-            function OnSuccessResult(data) {
-
-                var _data = data;
-                var _chartLabels = _data[0];
-                var _chartData = _data[1];
-                //var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
-
-                var barColor =
-                    [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ];
-
-
-                var myChart = new Chart(chartView,
-                {
-                        options:
-                        {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Biểu đồ thống kê HÓA ĐƠN BÁN HÀNG'
-                                }
-                            }
-                        },
-                        type: chartType,
-                        data: {
-                            labels: _chartLabels,
-                            datasets:
-                                [{
-                                    backgroundColor: barColor,
-                                    data: _chartData
-
-                                }]
-                        }
-
+                $.ajax({
+                    type: "POST",
+                    url: "/DashBoard/GetDataHoaDonDashboard",
+                    data: "",
+                    contextType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccessResult,
+                    error: OnError
                 });
 
-            }
+                function OnSuccessResult(data) {
 
-            function OnError(err) {
+                    var _data = data;
+                    var _chartLabels = _data[0];
+                    var _chartData = _data[1];
+                    //var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
 
-            }
+                    var barColor =
+                        [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ];
+
+
+                    var myChart = new Chart(chartView,
+                        {
+                            options:
+                            {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Biểu đồ thống kê HÓA ĐƠN BÁN HÀNG'
+                                    }
+                                }
+                            },
+                            type: chartType,
+                            data: {
+                                labels: _chartLabels,
+                                datasets:
+                                    [{
+                                        backgroundColor: barColor,
+                                        data: _chartData
+
+                                    }]
+                            }
+
+                        });
+
+                }
+
+                function OnError(err) {
+
+                }
+            });
         });
-    });
+    })
+    
 </script>
 
 
