@@ -12,8 +12,8 @@
 <div class="row">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="NhapHang" asp-action="Index">Danh Sách Đơn Nhập Hàng</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Chi Tiết Đơn Nhập Hàng</li>
+            <li class="breadcrumb-item"><a asp-controller="HoaDon" asp-action="Index">Danh Sách Hóa Đơn</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Chi Tiết Hóa Đơn</li>
         </ol>
     </nav>
 
@@ -28,15 +28,17 @@
                     <input asp-for="Id_HoaDon" class="form-control" readonly/>
                     <span asp-validation-for="Id_HoaDon" class="text-danger"></span>
                 </div>
-                <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">
                     <label asp-for="Id_SanPham" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="Id_SanPham" class="form-control" />
+                    <select asp-for="Id_SanPham" class="form-control" asp-items="@Model.SanPham" id="click">
+                        <option value=""> Chọn Sản Phẫm </option>
+                    </select>
                     <span asp-validation-for="Id_SanPham" class="text-danger"></span>
-                </div>
+                    <div class="text-danger">@ViewBag.error</div>
                 <div class="col-2 form-group"></div>
+                </div>
             </div>
             <div class="form-row">
                 <div class="col-2 form-group">
@@ -51,7 +53,7 @@
                     <label asp-for="DonGia" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="DonGia" class="form-control" />
+                    <input asp-for="DonGia" class="form-control" readonly/>
                     <span asp-validation-for="DonGia" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -59,12 +61,12 @@
                     <label asp-for="ThanhTien" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="ThanhTien" class="form-control" />
+                    <input asp-for="ThanhTien" class="form-control" readonly/>
                     <span asp-validation-for="ThanhTien" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
             </div>
-
+            </div>
 
             <div class="form-group" style=" margin-top:0.5cm">
                 <button type="submit" class="btn btn-rounded btn-primary float-left"><i class="fas fa-plus-square" style="margin-right:0.7em"></i>Edit</button>
@@ -80,10 +82,34 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        function quay_lai_trang_truoc() {
+            history.back();
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#click").change(function () {
+                id = $(this).val();
+                console.log(id);
+                $.ajax({
+                    url: "/SanPham/List",
+                    method: "GET",
+                    data: {
+                        data: id
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        $("#giatien").val(data.GiaTien);
+                        console.log(data.GiaTien);
+                        console.log(data);
+                    },
+                    error: function (er) {
+                        console.log(er);
+                    }
+                });
+            });
+        });
+    </script>
 }
-
-<script>
-    function quay_lai_trang_truoc() {
-        history.back();
-    }
-</script>

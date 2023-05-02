@@ -5,6 +5,8 @@ using Web.Services;
 using Web.Services.implementation;
 using Web_BanDienThoai.Models.SanPham;
 using PagedList;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Web_BanDienThoai.Controllers
 
@@ -54,23 +56,12 @@ namespace Web_BanDienThoai.Controllers
             return View(model.ToPagedList((int)page, pageSize));
         }
 
-        public IActionResult Find(string valueOfSearch)
-        {          
-            var model = _sanphamService.GetAll().Select(sanpham => new IndexSanPhamViewModel
-            {
-                Id_SanPham = sanpham.Id_SanPham,
-                Ten_SanPham = sanpham.Ten_SanPham,
-                ImageUrl = sanpham.ImageUrl,
-                GiaTien = sanpham.GiaTien,
-            });
-
-            if (!String.IsNullOrEmpty(valueOfSearch))
-            {
-                model = model.Where(people => people.Id_SanPham.ToLower().Contains(valueOfSearch.ToLower())
-                || people.Ten_SanPham.ToLower().Contains(valueOfSearch.ToLower())
-                || people.GiaTien.Equals(valueOfSearch)).ToList();
-            }
-            return View(model);
+        [HttpGet]
+        public JsonResult List(/*[FromServices] HttpRequest request*/string data)
+        {           
+            var list = _sanphamService.GetById(data);              
+            var json = JsonConvert.SerializeObject(list);
+            return Json(json);             
         }
 
 

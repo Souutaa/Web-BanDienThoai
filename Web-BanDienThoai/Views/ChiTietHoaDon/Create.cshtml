@@ -36,7 +36,7 @@
                     <label asp-for="Id_SanPham" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <select asp-for="Id_SanPham" class="form-control" asp-items="@Model.SanPham">
+                    <select asp-for="Id_SanPham" class="form-control" asp-items="@Model.SanPham" id="click">
                         <option value=""> Chọn Sản Phẫm </option>
                     </select>
                     <span asp-validation-for="Id_SanPham" class="text-danger"></span>
@@ -55,7 +55,7 @@
                     <label asp-for="DonGia" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="DonGia" class="form-control" />
+                    <input asp-for="DonGia" class="form-control" id="giatien" readonly/>
                     <span asp-validation-for="DonGia" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -84,10 +84,37 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        function quay_lai_trang_truoc() {
+            history.back();
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#click").change(function () {
+                id = $(this).val();
+                console.log(id);
+                $.ajax({
+                    url: "/SanPham/List",
+                    method: "GET",
+                    data: {
+                        data: id
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        $("#giatien").val(data.GiaTien);
+                        console.log(data.GiaTien);
+                        console.log(data);
+                    },
+                    error: function (er) {
+                        console.log(er);
+                    }
+                });
+            });
+        });
+    </script>
 }
 
-<script>
-    function quay_lai_trang_truoc() {
-        history.back();
-    }
-</script>

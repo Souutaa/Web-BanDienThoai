@@ -10,7 +10,7 @@ namespace Web_BanDienThoai.Models.ChiTietHoaDon
         //[ForeignKey("HoaDon")]
         [Key]
         [Required(ErrorMessage = "Phải nhập mã Hóa Đơn (HD__)")]
-        [RegularExpression(@"^[hH][dD][0-9]\S*$"), Display(Name = "Mã Hóa Đơn")]
+        //[RegularExpression(@"^[hH][dD][0-9]\S*$"), Display(Name = "Mã Hóa Đơn")]
         public string Id_HoaDon { get; set; }  //Hóa Đơn
         [ValidateNever]
         public IEnumerable<SelectListItem> HoaDon { set; get; }
@@ -28,6 +28,12 @@ namespace Web_BanDienThoai.Models.ChiTietHoaDon
 
         [Required(ErrorMessage = "Phải nhập đơn giá"), Display(Name = "Đơn giá:")]
         public double DonGia { get; set; }
-        public double ThanhTien { get; set; }
+        public double ThanhTien
+        {
+            get
+            {
+                return SoLuong * DonGia;
+            }
+        }
     }
 }

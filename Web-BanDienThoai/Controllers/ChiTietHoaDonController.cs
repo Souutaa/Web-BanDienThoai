@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Identity.Client;
 using System.Linq;
 using System.Net.WebSockets;
 using Web.Entities;
+using Web.Persistances;
 using Web.Services;
 using Web.Services.implementation;
 using Web_BanDienThoai.Models.ChiTietHoaDon;
@@ -19,15 +22,16 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
-        public static int soluongdamua;
+        public static int soluongdamua=0;
         public ChiTietHoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             IChiTietHoaDonServices cthdService,
-            IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment)
         {
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
             _cthdService = cthdService;
             _webHostEnvironment = webHostEnvironment;
+
         }
 
 
@@ -70,6 +74,8 @@ namespace Web_BanDienThoai.Controllers
             return View(model.ToList());
         }
 
+
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -103,10 +109,20 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                var check = _cthdService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
-                //var id_hoadon = _hoadonService.GetById(model.Id_HoaDon);
-                if (check == null)
+
+                var check = _cthdService.GetAll().Where(s => s.Id_HoaDon == model.Id_HoaDon).ToList();
+
+                bool tao = true;
+                foreach (var item in check)
+                {
+                    if (model.Id_SanPham == item.Id_SanPham)
+                    {
+                        tao = false;
+                    }
+
+                }
+
+                if (tao == true)
                 {
                     var cthd = new ChiTietHoaDon
                     {
@@ -208,8 +224,16 @@ namespace Web_BanDienThoai.Controllers
                 Id_SanPham = cthd.Id_SanPham,
                 SoLuong = cthd.SoLuong,
                 DonGia = cthd.DonGia,
-                ThanhTien = cthd.ThanhTien
+                
             };
+            List<SelectListItem> listSanPham = _sanphamService.GetAll().
+                Select(c => new SelectListItem
+                {
+                    Value = c.Id_SanPham.ToString(),
+                    Text = c.Ten_SanPham
+                }).ToList();
+            model.SanPham = listSanPham;
+
             return View(model);
         }
 
@@ -217,11 +241,13 @@ namespace Web_BanDienThoai.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditChiTietHoaDonViewModel model)
         {
+
             var cthd = _cthdService.GetById(model.Id_HoaDon);
             if (cthd == null)
             {
                 return NotFound();
             }
+
             cthd.Id_HoaDon = model.Id_HoaDon;
             cthd.Id_SanPham = model.Id_SanPham;
             cthd.SoLuong = model.SoLuong;
@@ -229,13 +255,15 @@ namespace Web_BanDienThoai.Controllers
             cthd.ThanhTien = model.ThanhTien;
 
             var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);     //
-            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + soluongdamua; // Cập nhật số lượng sản phẩm
-            sanphamcapnhat.SoLuong += model.SoLuong;                          //
+            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + soluongdamua;    // Cập nhật số lượng sản phẩm
+            sanphamcapnhat.SoLuong -= model.SoLuong;                          //
             soluongdamua = model.SoLuong;
 
             await _cthdService.UpdateAsSyncs(cthd);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = idtimkiem });
 
+
+            return View();
         }
     }
 }
