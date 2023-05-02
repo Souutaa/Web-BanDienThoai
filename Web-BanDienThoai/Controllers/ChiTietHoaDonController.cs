@@ -75,13 +75,15 @@ namespace Web_BanDienThoai.Controllers
         {
             var model = new CreateChiTietHoaDonViewModel();
 
-            List<SelectListItem> listHoaDon = _hoadonService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_HoaDon.ToString(),
-                    Text = c.Id_HoaDon,
-                }).ToList();
-            model.HoaDon = listHoaDon;
+            //List<SelectListItem> listHoaDon = _hoadonService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_HoaDon.ToString(),
+            //        Text = c.Id_HoaDon,
+            //    }).ToList();
+            //model.HoaDon = listHoaDon;
+            var getidhoadon = _hoadonService.GetById(idtimkiem);
+            model.Id_HoaDon = getidhoadon.Id_HoaDon;
 
             List<SelectListItem> listSanPham = _sanphamService.GetAll().
                 Select(c => new SelectListItem
@@ -101,7 +103,9 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var check = _cthdService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
+                //var id_hoadon = _hoadonService.GetById(model.Id_HoaDon);
                 if (check == null)
                 {
                     var cthd = new ChiTietHoaDon

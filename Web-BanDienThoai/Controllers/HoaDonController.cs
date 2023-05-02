@@ -35,11 +35,11 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string valueOfSearch)
+        public IActionResult Index(string? valueOfSearch)
         {
-            var model = _hoadonService.GetAll().Select((hoadon) =>
-            {
-                return (new IndexHoaDonViewModel
+            var model = _hoadonService.GetAll().Select(hoadon =>
+
+                new IndexHoaDonViewModel
                 {
                     Id_HoaDon = hoadon.Id_HoaDon,
                     NgayLapHoaDon = hoadon.NgayLapHoaDon,
@@ -47,13 +47,13 @@ namespace Web_BanDienThoai.Controllers
                     id_NhanVien = hoadon.Id_NhanVien,
                     TongTien = hoadon.TongTien,
                 });
-            });
-            //if (!String.IsNullOrEmpty(valueOfSearch))
-            //{
-            //    model = (IndexHoaDonViewModel[])model.Where(cauhinh => cauhinh.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
-            //    || cauhinh.FullName_khachhang.ToLower().Contains(valueOfSearch.ToLower())
-            //    || cauhinh.FullName_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
-            //}
+       
+            if (!String.IsNullOrEmpty(valueOfSearch))
+            {
+                model = model.Where(hd => hd.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
+                || hd.id_khachhang.ToLower().Contains(valueOfSearch.ToLower())
+                || hd.id_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
+            }
             return View(model.ToList());
         }
 

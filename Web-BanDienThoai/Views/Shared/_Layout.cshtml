@@ -44,9 +44,21 @@
                             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                             {
                                 <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Create">Thêm Sản Phẩm</a></li>
-                                <li><hr class="dropdown-divider" /></li>
+                                <li><hr class="dropdown-divider"/></li>
                             }
-                            <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a></li>                    
+                            <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Index">Danh Sách Sản Phẩm</a></li>    
+                            
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-controller="LoaiSanPham" asp-action="Index">Loại Sản Phẩm</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-controller="DanhMucCon" asp-action="Index">Danh Mục Con</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-controller="CauHinh" asp-action="Index">Cấu Hình</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-controller="MauSac" asp-action="Index">Màu Sắc</a></li>
+                            }
                         </ul>
                     </li>
 
@@ -108,7 +120,7 @@
                             @if(signInManager.IsSignedIn(User))
                             {
                                 <li style="text-align:center; color:brown"><b>@User.Identity.Name</b></li>
-                                <li ><hr class="dropdown-divider" /></li
+                                <li ><hr class="dropdown-divider" /></li>
                                 <li>
                                     <form asp-controller="User" asp-action="Logout" method="post" class="dropdown-item"  >
                                         <button type="submit" style="width:130px">

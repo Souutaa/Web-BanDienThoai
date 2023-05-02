@@ -18,6 +18,10 @@
     position: relative;
 }
 
+.dropdown:hover .dropdown-menu2{
+    display: block;
+    margin-top:0;
+}
 /* .header__nav_item-link--strong_separate::after{
     content: "";
     display: block;

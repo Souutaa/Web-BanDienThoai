@@ -2,6 +2,8 @@
 
 @using Web_BanDienThoai.Models.NhapHang;
 @model IEnumerable<IndexNhapHangViewModel>
+@inject UserManager<TaiKhoan> userManager;
+@inject SignInManager<TaiKhoan> signInManager;
 
 <div class="row">
     <div class="col-md-12 table-responsive-md">
@@ -26,21 +28,25 @@
                     <th>Ngày giao đơn nhập hàng</th>
                     <th>Tổng số lượng</th>
                     <th>Tổng tiền</th>
+                    <th>Mã nhà cung cấp</th>
+                    <th>Mã nhân viên</th>
                     <th>Trạn thái nhập hàng</th>
-                    @*<th>Mã nhà cung cấp</th>
-                    <th>Mã nhân viên</th>        *@            
+                               
                     <th class="text-warning">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
+                    @*var nhanVien = await userManager.FindByIdAsync(item.Id_NhanVien);*@
                     <tr>
                         <td>@item.Id_NhapHang</td>
                         <td>@item.NgayLap.ToLongDateString()</td>
                         <td>@item.NgayGiao.ToShortTimeString()</td>
                         <td>@item.TongSoLuong</td>
                         <td>@item.TongTien</td>
+                        @*<td>@item.Id_NhaCungCap</td>
+                        <td>@nhanVien.FullName</td>*@
                         <td>@item.TrangThaiNhapHang</td>
                         @*<td>@item.Id_NhaCungCap</td>
                         <td>@item.Id_NhanVien</td>       *@                

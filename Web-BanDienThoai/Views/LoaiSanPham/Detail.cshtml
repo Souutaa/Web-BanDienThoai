@@ -5,16 +5,16 @@
     <div class="card-body">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-controller="LoaiSanPham" asp-action="Index">Danh Sách Danh Mục Con</a></li>
+                <li class="breadcrumb-item"><a asp-controller="LoaiSanPham" asp-action="Index">Danh Sách Loại Sản Phẩm</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Chi Tiết Loại Sản Phẩm</li>
             </ol>
         </nav>
         <div class="wrap d-flex justify-content-start justify-content-sm-start flex-wrap">
             <div class="wrap align-items-center ml-5">
-                <p class="font-weight-bold text-success" style="font-size:20px"><b>Mã Danh Mục Con:</b> @Model.TenLoai</p>
-                <p class="font-weight-normal"> <b>Tên Danh Mục Con:</b> @Model.Id_loai</p>
-                <p class="font-weight-normal"> <b>Mã Cấu Hình:</b> @Model.Id_DanhMucCon</p>
-                <p class="font-weight-normal"> <b>Mã Cấu Hình:</b> @Model.Id_MauSac</p>
+                <p class="font-weight-bold text-success" style="font-size:20px"><b>Tên loại:</b> @Model.TenLoai</p>
+                <p class="font-weight-normal"> <b>Mã Loại:</b> @Model.Id_loai</p>
+                <p class="font-weight-normal"> <b>Mã Danh Mục Con:</b> @Model.Id_DanhMucCon</p>
+                <p class="font-weight-normal"> <b>Mã Màu Sắc:</b> @Model.Id_MauSac</p>
             </div>
         </div>
     </div>

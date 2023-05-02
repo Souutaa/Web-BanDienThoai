@@ -35,6 +35,6 @@ namespace Web_BanDienThoai.Models.NhapHang
         public IEnumerable<SelectListItem> NhaCungCap { set; get; }
 
         public List<SelectListItem> Staffs { get; set; }
-        public string id_staff { get; set; }
+        public string id_nhanvien { get; set; }
     }
 }

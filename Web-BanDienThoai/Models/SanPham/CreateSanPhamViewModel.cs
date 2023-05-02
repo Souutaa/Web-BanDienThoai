@@ -10,11 +10,11 @@ namespace Web_BanDienThoai.Models.SanPham
     {
         [Key]
         [Required(ErrorMessage = "Phải nhập mã sản phẩm (ID_SanPham)")]
-        [RegularExpression(@"^[a-zA-Z]{2}[0-9]\S*$"), Display(Name = "Mã sản phẩm")]
+        [RegularExpression(@"^[nS][pP][0-9]\S*$"), Display(Name = "Mã sản phẩm")]
         public string Id_SanPham { get; set; }
 
         [Required(ErrorMessage = "Phải nhập tên sản phẩm")]
-        [RegularExpression(@"^[A-Z][a-zA-Z""'\s-]*$"), Display(Name = "Tên Sản Phẩm")]
+        [Display(Name = "Tên Sản Phẩm")]
         public string Ten_SanPham { get; set; }     
         public IFormFile ImageUrl { get; set; }
         [Display(Name = "Giá tiền")]

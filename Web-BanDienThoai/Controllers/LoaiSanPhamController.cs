@@ -30,6 +30,7 @@ namespace Web_BanDienThoai.Controllers
         {
             var DanhMucIds = _danhmucconService.GetAll().Select(dm => dm.Id_DanhMucCon).ToList();
             var MauSacIds = _mausacService.GetAll().Select(ms => ms.Id_MauSac).ToList();
+
             var model = _loaisanphamService.GetAll().Select(loaisanpham => new IndexLoaiSanPhamViewModel
             {
                 Id_loai = loaisanpham.Id_loai,
@@ -78,13 +79,15 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
+                var tenmausac = _mausacService.GetById(model.Id_MauSac);
+                var tendanhmuc = _danhmucconService.GetById(model.Id_DanhMucCon);
                 var check = _loaisanphamService.GetAll().FirstOrDefault(s => s.Id_loai == model.Id_loai);
                 if (check == null)
                 {                    
                     var loaisanpham = new LoaiSanPham
                     {
                         Id_loai = model.Id_loai,
-                        TenLoai = model.TenLoai,
+                        TenLoai = model.TenLoai+ tendanhmuc.TenDanhMuc +" "+ tenmausac.TenMauSac,
                         Id_DanhMucCon = model.Id_DanhMucCon,
                         Id_MauSac = model.Id_MauSac,
                     };

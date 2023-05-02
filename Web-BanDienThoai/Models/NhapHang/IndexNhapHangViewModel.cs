@@ -11,9 +11,8 @@ namespace Web_BanDienThoai.Models.NhapHang
         public DateTime NgayGiao { get; set; }
         public TrangThaiNhapHang TrangThaiNhapHang { get; set; }
         public double TongTien { get; set; }
-
         public int TongSoLuong { get; set; }
-        //[ForeignKey("NhaCungCap")] public string Id_NhaCungCap { get; set; }     
-        //[ForeignKey("NhanVien")] public string Id_NhanVien { get; set; }
+        //public string Id_NhaCungCap { get; set; }
+        //public string Id_NhanVien { get; set; }
     }
 }

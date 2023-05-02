@@ -15,12 +15,13 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment; 
         private INhapHangServices _nhaphangService;
         private readonly UserManager<TaiKhoan> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public NhapHangController(ISanPhamServices sanphamService, 
             INhaCungCapServices nhacungCapService, 
             IWebHostEnvironment webHostEnvironment, 
             INhapHangServices nhaphangService,
-            UserManager<TaiKhoan> userManager
+            UserManager<TaiKhoan> userManager, RoleManager<IdentityRole> roleManager
             )
         {
             _nhaphangService = nhaphangService;
@@ -28,6 +29,7 @@ namespace Web_BanDienThoai.Controllers
             _sanphamService = sanphamService;      
             _webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public IActionResult Index(string valueOfSearch)
@@ -40,7 +42,7 @@ namespace Web_BanDienThoai.Controllers
                 NgayGiao=nhaphang.NgayGiao,
                 TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,                
                 TongTien = nhaphang.TongTien,
-                TongSoLuong = nhaphang.TongSoLuong
+                TongSoLuong = nhaphang.TongSoLuong,
                 //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
                 //Id_NhanVien = nhaphang.Id_NhanVien
                 
@@ -109,7 +111,7 @@ namespace Web_BanDienThoai.Controllers
                         TongTien = model.TongTien,
                         GhiChu = model.GhiChu,
                         Id_NhaCungCap = model.Id_NhaCungCap,
-                        Id_NhanVien = model.id_staff
+                        Id_NhanVien = model.id_nhanvien
                     };
                     await _nhaphangService.CreateAsSync(nhaphang);
                     return RedirectToAction("Index");
