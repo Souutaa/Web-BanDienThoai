@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Web.Entities;
 
 namespace Web_BanDienThoai.Models.HoaDon
 {
@@ -10,6 +11,6 @@ namespace Web_BanDienThoai.Models.HoaDon
         public double TongTien { get; set; }
         public string id_khachhang { get; set; }
         public string id_NhanVien { get; set; }
-
+        public TrangThaiDonHang status { get; set; }
     }
 }

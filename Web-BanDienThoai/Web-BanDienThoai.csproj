@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Role\**" />
+    <Content Remove="Views\Role\**" />
+    <EmbeddedResource Remove="Views\Role\**" />
+    <None Remove="Views\Role\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.5" />
@@ -33,7 +41,6 @@
 
   <ItemGroup>
 	<Folder Include="Models\SanPham\" />
-	<Folder Include="Views\Role\" />
 	<Folder Include="wwwroot\images\SanPham\" />
   </ItemGroup>
 

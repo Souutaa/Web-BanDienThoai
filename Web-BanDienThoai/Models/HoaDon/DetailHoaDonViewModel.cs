@@ -8,6 +8,7 @@ namespace Web_BanDienThoai.Models.HoaDon
 {
     public class DetailHoaDonViewModel
     {
+        [ValidateNever]
         public string Id_HoaDon { get; set; }
         public DateTime NgayLapHoaDon { get; set; }
         public double TongTien { get; set; }

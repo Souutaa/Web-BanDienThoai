@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Web.Entities;
 
 namespace Web_BanDienThoai.Models.HoaDon
 {
@@ -22,6 +23,8 @@ namespace Web_BanDienThoai.Models.HoaDon
         public string Id_customer { get; set; }  //Khách Hàng
         public List<SelectListItem> Customers { set; get; }
         
+        public TrangThaiDonHang status { get; set; }
+
         public string Id_staff { get; set; }   //Nhân Viên
         public List<SelectListItem> Staffs { set; get; }
     }

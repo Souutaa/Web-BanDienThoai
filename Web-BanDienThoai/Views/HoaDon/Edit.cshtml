@@ -6,7 +6,6 @@
 @using Web.Entities;
 @using Web_BanDienThoai.Models.HoaDon;
 @model EditHoaDonViewModel;
-
 <div class="row">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -52,6 +51,14 @@
                         @*<option value=""> Chọn nhân viên </option>*@
                     </select>
                     <span asp-validation-for="Id_staff" class="text-danger"></span>
+                </div>
+                <div class="col-2 form-group"></div>
+                <div class="col-2 form-group">
+                    <label asp-for="@Model.status" class="form-label"></label>
+                </div>
+                <div class="col-3 form-group">
+                    <select asp-for="@Model.status" asp-items="Html.GetEnumSelectList<TrangThaiDonHang>()" class="form-control"></select>
+                    <span asp-validation-for="@Model.status" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">

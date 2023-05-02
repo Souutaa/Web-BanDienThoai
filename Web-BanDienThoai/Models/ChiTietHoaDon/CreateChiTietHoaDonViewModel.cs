@@ -10,16 +10,12 @@ namespace Web_BanDienThoai.Models.ChiTietHoaDon
     {
         //[ForeignKey("HoaDon")]
         [Key]
-        [Required(ErrorMessage = "Phải nhập mã Hóa Đơn (HD__)")]
-        [RegularExpression(@"^[hH][dD][0-9]\S*$"), Display(Name = "Mã Hóa Đơn")]
         public string Id_HoaDon { get; set; }  //Hóa Đơn
         [ValidateNever]
         public IEnumerable<SelectListItem> HoaDon { set; get; }
 
         //[ForeignKey("SanPham")]
         [Key]
-        [Required(ErrorMessage = "Phải nhập mã sản phẩm (SP__)")]
-        [RegularExpression(@"^[a-zA-Z]{2}[0-9]\S*$"), Display(Name = "Mã sản phẩm")]
         public string Id_SanPham { get; set; }  //Sản Phẩm
         [ValidateNever]
         public IEnumerable<SelectListItem> SanPham { set; get; }

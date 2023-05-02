@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
+using NuGet.Protocol;
 using System.Data;
+using System.Web.Helpers;
 using Web.Entities;
 using Web.Persistances;
 using Web.Services;
@@ -13,6 +18,7 @@ using Web_BanDienThoai.Models.HoaDon;
 
 namespace Web_BanDienThoai.Controllers
 {
+    [Authorize]
     public class HoaDonController : Controller
     {
         private ISanPhamServices _sanphamService;
@@ -21,10 +27,13 @@ namespace Web_BanDienThoai.Controllers
         private IHoaDonServices _hoadonService;
         private readonly RoleManager<IdentityRole> roleManager;
         private UserManager<TaiKhoan> userManager;
+        private SignInManager<TaiKhoan> signInManager;
         public HoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             IChiTietHoaDonServices cthdServices,
             IWebHostEnvironment webHostEnvironment, UserManager<TaiKhoan> userManager, 
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<TaiKhoan> signInManager
+            )
         {            
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
@@ -32,13 +41,13 @@ namespace Web_BanDienThoai.Controllers
             _webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.signInManager = signInManager;
         }
 
         [HttpGet]
         public IActionResult Index(string? valueOfSearch)
         {
             var model = _hoadonService.GetAll().Select(hoadon =>
-
                 new IndexHoaDonViewModel
                 {
                     Id_HoaDon = hoadon.Id_HoaDon,
@@ -46,6 +55,7 @@ namespace Web_BanDienThoai.Controllers
                     id_khachhang = hoadon.Id_khachhang,
                     id_NhanVien = hoadon.Id_NhanVien,
                     TongTien = hoadon.TongTien,
+                    status = hoadon.status,
                 });
        
             if (!String.IsNullOrEmpty(valueOfSearch))
@@ -110,7 +120,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 return NotFound();
             }
-            
+
             //var sanphamchitiet = _cthdServices.GetID(hoadon.Id_HoaDon);
             //List<string> list = new List<string>();
             //foreach(var item in sanphamchitiet)
@@ -118,7 +128,7 @@ namespace Web_BanDienThoai.Controllers
             //    string id_sp = item.Text;
             //    SanPham SanPham = _sanphamService.GetById(id_sp);
             //    list.Add(SanPham.Ten_SanPham);              
-            
+
 
             var model = new DetailHoaDonViewModel
             {
@@ -127,8 +137,8 @@ namespace Web_BanDienThoai.Controllers
                 //Id_khachhang = hoadon.Id_khachhang,
                 //Id_NhanVien = hoadon.Id_NhanVien,
                 //TongTien = hoadon.TongTien,
-                            
-            };         
+
+            };
            
             return View(model);
         }
@@ -179,6 +189,7 @@ namespace Web_BanDienThoai.Controllers
             model.Id_customer = hoadon.Id_khachhang;
             model.Id_staff = hoadon.Id_NhanVien;
             model.TongTien = hoadon.TongTien;
+            model.status = hoadon.status;
 
             foreach (var user in userManager.Users)
             {
@@ -213,9 +224,53 @@ namespace Web_BanDienThoai.Controllers
             hoadon.Id_khachhang = model.Id_customer;
             hoadon.Id_NhanVien = model.Id_staff;
             hoadon.TongTien = model.TongTien;
+            hoadon.status = model.status;
 
             await _hoadonService.UpdateAsSyncs(hoadon);
             return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> CreateUserOrder(string json)
+        {
+            dynamic items = JObject.Parse(json);
+
+            var productList = new List<SanPham>();
+            double ThanhTien = 0;
+            foreach (var item in items)
+            {
+                var product = _sanphamService.GetById(item.Path);
+                ThanhTien += double.Parse(item.Value.Value.ToString()) * product.GiaTien;
+            }
+
+            var user = await userManager.GetUserAsync(User);
+
+            var hoaDon = new HoaDon
+            {
+                Id_HoaDon = Guid.NewGuid().ToString("N"),
+                NgayLapHoaDon = DateTime.Now,
+                Id_khachhang = user.Id,
+                TongTien = ThanhTien,
+            };
+
+            await _hoadonService.CreateAsSync(hoaDon);
+
+            foreach (var item in items)
+            {
+                var product = _sanphamService.GetById(item.Path);
+                var cthd = new ChiTietHoaDon();
+                cthd.Id_HoaDon = hoaDon.Id_HoaDon;
+                cthd.Id_SanPham = product.Id_SanPham;
+                cthd.SoLuong = int.Parse(item.Value.Value.ToString());
+                cthd.DonGia = product.GiaTien;
+                cthd.ThanhTien = double.Parse(item.Value.Value.ToString()) * product.GiaTien;
+                
+
+                await _cthdServices.CreateAsSync(cthd);
+            }
+
+            return Json("success".ToJson());
         }
     }
 }

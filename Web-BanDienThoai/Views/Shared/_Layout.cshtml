@@ -1,6 +1,6 @@
 ﻿@inject SignInManager<TaiKhoan> signInManager;
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,7 +17,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#!"><b>BS_SHOP</b></a>
+            <a class="navbar-brand" href="/"><b>BS_SHOP</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 flex-fill">
@@ -101,11 +101,11 @@
                     }
                 </ul>
                 <form class="d-flex float-right" >
-                    <button class="btn btn-outline-dark" type="submit">
+                    <a @*asp-action="Index" asp-controller="Cart"*@ class="btn btn-outline-dark cart-btn" type="button">
                         <i class="bi-cart-fill me-1 fa-solid fa-cart-shopping"></i>
                            Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill cart-badge">0</span>
+                    </a>
                 </form>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 float-right" >                    
                     <li class="nav-item dropdown">

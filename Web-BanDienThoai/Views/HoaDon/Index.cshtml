@@ -24,36 +24,73 @@
                     <th>Mã hóa đơn</th>
                     <th>Ngày lập hóa đơn</th>
                     <th>Mã khách hàng</th>
-                    <th>Mã nhân viên</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th>Mã nhân viên</th>
+                    }
+                    <th>Trạng thái</th>
                     <th>Tổng tiền</th>
                     <th class="text-warning">Action</th>
                 </tr>
             </thead>
             <tbody>
+                @{
+                    var currentUser = await userManager.GetUserAsync(User);
+                }
                 @foreach (var item in Model)
                 {
-                    var khachHang = await userManager.FindByIdAsync(item.id_khachhang);
-                    var nhanVien = await userManager.FindByIdAsync(item.id_NhanVien);
-                    <tr>
-                        <td>@item.Id_HoaDon</td>
-                        <td>@item.NgayLapHoaDon</td>
-                        <td>@khachHang.FullName</td>
-                        <td>@nhanVien.FullName</td>
-                        <td>@item.TongTien</td>
-                        <td>
-                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin")){
-                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_HoaDon">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
+                    if (User.IsInRole("Admin"))
+                    {
+                        var khachHang = await userManager.FindByIdAsync(item.id_khachhang);
+                        <tr>
+                            <td>@item.Id_HoaDon</td>
+                            <td>@item.NgayLapHoaDon</td>
+                            <td>@khachHang.Email</td>
+                            @if (item.id_NhanVien != null)
+                            {
+                                var nhanVien = await userManager.FindByIdAsync(item.id_NhanVien);
+                                <td>@nhanVien.Email</td>
+                            } else
+                            {
+                                <td></td>
                             }
-                            <a class="text-success" asp-controller="ChiTietHoaDon" asp-action="Index" asp-route-id="@item.Id_HoaDon">
-                                <i class="fas fa-bars"></i> Detail
-                            </a>
-                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_HoaDon">
-                                <i class="far fa-trash-alt"></i> Delete
-                            </a>
-                        </td>
-                    </tr>
+                            <td>@item.status</td>
+                            <td>@item.TongTien</td>
+                            <td>
+                                <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_HoaDon">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a class="text-success" asp-controller="ChiTietHoaDon" asp-action="Index" asp-route-id="@item.Id_HoaDon">
+                                    <i class="fas fa-bars"></i> Detail
+                                </a>
+                                <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_HoaDon">
+                                    <i class="far fa-trash-alt"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    else if (currentUser.Id.ToString() == item.id_khachhang)
+                    {
+                        var khachHang = await userManager.FindByIdAsync(item.id_khachhang);
+                        <tr>
+                            <td>@item.Id_HoaDon</td>
+                            <td>@item.NgayLapHoaDon</td>
+                            <td>@khachHang.Email</td>
+                            <td>@item.status</td>
+                            <td>@item.TongTien</td>
+                            <td>
+                                <a class="text-success" asp-controller="ChiTietHoaDon" asp-action="Index" asp-route-id="@item.Id_HoaDon">
+                                    <i class="fas fa-bars"></i> Detail
+                                </a>
+                                <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_HoaDon">
+                                    <i class="far fa-trash-alt"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    } else
+                    {
+                        continue;
+                    }
                 }
             </tbody>
         </table>

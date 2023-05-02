@@ -1,0 +1,271 @@
+﻿@using Web_BanDienThoai.Models.Cart;
+@model List<CartProductViewModel>;
+@inject SignInManager<TaiKhoan> signInManager;
+
+
+<section class="h-100 gradient-custom">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center my-4">
+      <div class="col-md-8">
+        <div class="card mb-4">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Cart</h5>
+          </div>
+          <div class="card-body" id="cart-body">
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+          <div class="card-body">
+            <p><strong>We accept</strong></p>
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+              alt="Visa" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+              alt="American Express" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+              alt="Mastercard" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-header py-3">
+            <h5 class="mb-0">Summary</h5>
+          </div>
+          <div class="card-body">
+
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0" >
+                Products
+                <span id="subTotal">$0.0</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                Shipping
+                <span>Gratis</span>
+              </li>
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                <div>
+                  <strong>Total amount</strong>
+                  <strong>
+                    <p class="mb-0">(including VAT)</p>
+                  </strong>
+                </div>
+                <span id="totalAmount"><strong>$0.0</strong></span>
+              </li>
+            </ul>
+
+            <button type="button" id="checkout-btn" class="btn btn-primary btn-lg btn-block">
+              Go to checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+@section Scripts
+{
+    <script>
+
+        const updateProductValue = (id, value) => {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+            cart[id] = value
+            localStorage.setItem('cart',JSON.stringify(cart))
+            updateTotal();
+        }
+
+        const updateTotal = () => {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+
+            var data = {
+                json: JSON.stringify(cart),
+            };
+
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: 'RenderCart',
+                data: data,
+                success: function(json) {
+                    if (json) {
+                        const productList = JSON.parse(json);
+                        let total = 0;
+                        for (let productIndex in productList) {
+                            const product = productList[productIndex]
+                            total += product.GiaTien * cart[product.Id_SanPham]
+                        }
+                        $('#subTotal').text("$"+total);
+                        $('#totalAmount').text("$"+total);
+                    } else {
+                        alert('failed');
+                    }
+                },
+            });
+        }
+
+        const removeProduct = (id) => {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+            delete cart[id];
+            localStorage.setItem('cart',JSON.stringify(cart))
+            renderCart();
+        }
+
+        const renderCart = () => {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+
+            if (Object.keys(cart).length <= 0) {
+                $('#cart-body').empty();
+                $('#cart-body').append(`
+                <div class="card-body cart">
+						<div class="col-sm-12 empty-cart-cls text-center">
+							<img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+							<h3><strong>Your Cart is Empty</strong></h3>
+							<h4>Add something to make me happy :)</h4>
+							<a href="/" class="btn continue-btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+						</div>
+				</div>
+                `)
+
+            } else {
+                var data = {
+                    json: JSON.stringify(cart),
+                };
+
+                $.ajax({
+                    type: 'get',
+                    dataType: 'json',
+                    url: 'RenderCart',
+                    data: data,
+                    success: function(json) {
+                        if (json) {
+                            const productList = JSON.parse(json);
+                            $('#cart-body').empty();
+                            for (let productIndex in productList) {
+                                const product = productList[productIndex]
+                                $('#cart-body').append(`
+                                    <div class="row">
+                                      <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                        <!-- Image -->
+                                        <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                                          <img src="${product.ImageUrl}"
+                                            class="w-100" alt="${product.Ten_SanPham}" />
+                                          <a href="#!">
+                                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                          </a>
+                                        </div>
+                                        <!-- Image -->
+                                      </div>
+
+                                      <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                        <!-- Data -->
+                                        <p><strong>${product.Ten_SanPham}</strong></p>
+                                        <p>Color: blue</p>
+                                        <button type="button" id="remove-btn-${product.Id_SanPham}" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                                          title="Remove item">
+                                          <i class="fas fa-trash"></i>
+                                        </button>
+                                        <!-- Data -->
+                                      </div>
+
+                                      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                        <!-- Quantity -->
+                                        <div class="d-flex mb-4" style="max-width: 300px">
+                                          <button class="btn btn-primary px-3 me-2 change-qty-btn-${product.Id_SanPham}"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i class="fas fa-minus"></i>
+                                          </button>
+
+                                          <div class="form-outline">
+                                            <input id="quantity-${product.Id_SanPham}" min="0" name="quantity" value="${cart[product.Id_SanPham]}" type="number" class="form-control" />
+                                            <label class="form-label" for="quantity">Quantity</label>
+                                          </div>
+
+                                          <button class="btn btn-primary px-3 ms-2 change-qty-btn-${product.Id_SanPham}"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i class="fas fa-plus"></i>
+                                          </button>
+                                        </div>
+                                        <!-- Quantity -->
+
+                                        <!-- Price -->
+                                        <p class="text-start text-md-center">
+                                          <strong>$${product.GiaTien}</strong>
+                                        </p>
+                                        <!-- Price -->
+                                      </div>
+                                    </div>`)
+                                    if (productIndex + 1 < productList.length) {
+                                        $('#cart-body').append('<hr class="my-4"/>')
+                                    }
+                                    $(`.change-qty-btn-${product.Id_SanPham}`).click(function(e) {
+                                        updateProductValue(product.Id_SanPham, $(`#quantity-${product.Id_SanPham}`).val())
+                                    })
+                                    $(`#remove-btn-${product.Id_SanPham}`).click(function(e) {
+                                        if(confirm("Do you want to remove this item?")) {
+                                            removeProduct(product.Id_SanPham)
+                                        }
+                                    })
+                            }
+                        } else {
+                            alert('failed');
+                        }
+                    },
+                });
+            }
+            updateTotal();
+        }
+
+        $('document').ready(function(e) {
+            if (!localStorage.getItem('cart')) {
+                localStorage.setItem('cart', JSON.stringify({}))
+            } else {
+                $('.cart-badge').text(Object.keys(JSON.parse(localStorage.getItem('cart'))).length);
+            }
+            renderCart();
+        })
+    </script>
+     @if (signInManager.IsSignedIn(User))
+            {
+                <script>
+                    $('#checkout-btn').click(function(e) {
+                        
+                        let cart = JSON.parse(localStorage.getItem('cart'));
+
+                        if (Object.keys(cart).length > 0) {
+                            var data = {
+                                json: JSON.stringify(cart),
+                            };
+
+                            $.ajax({
+                                type: 'post',
+                                dataType: 'json',
+                                url: '@Url.Action("CreateUserOrder", "HoaDon")',
+                                data: data,
+                                success: function(json) {
+                                    if (json) {
+                                        alert(JSON.parse(json))
+                                        localStorage.setItem('cart', JSON.stringify({}))
+                                        renderCart();
+                                    }
+                                },
+                            });
+                        } else {
+                            alert('Please purchase something first :(')
+                        }
+
+                    })
+            </script>
+        } else
+        {
+            <script>
+                    $('#checkout-btn').click(function(e) {
+                        alert("Login Required")
+                    })
+            </script>
+        }
+}

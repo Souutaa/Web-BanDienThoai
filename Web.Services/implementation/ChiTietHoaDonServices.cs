@@ -46,8 +46,8 @@ namespace Web.Services.implementation
 
         public ChiTietHoaDon GetById(string id)
         {
-            //return _context.ChiTietHoaDon.Where(x => x.Id_HoaDon == id).FirstOrDefault();
-            throw new NotImplementedException();
+            return _context.ChiTietHoaDon.Where(x => x.Id_HoaDon == id).FirstOrDefault();
+            //throw new NotImplementedException();
 
         }
 
