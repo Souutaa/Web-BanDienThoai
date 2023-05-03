@@ -12,7 +12,7 @@ namespace Web_BanDienThoai.Models.NhapHang
         public TrangThaiNhapHang TrangThaiNhapHang { get; set; }
         public double TongTien { get; set; }
         public int TongSoLuong { get; set; }
-        //public string Id_NhaCungCap { get; set; }
-        //public string Id_NhanVien { get; set; }
+        public string Id_NhaCungCap { get; set; }
+        public string Id_NhanVien { get; set; }
     }
 }

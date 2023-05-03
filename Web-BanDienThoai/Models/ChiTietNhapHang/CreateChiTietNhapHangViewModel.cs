@@ -27,6 +27,7 @@ namespace Web_BanDienThoai.Models.ChiTietNhapHang
         [Required(ErrorMessage = "Phải nhập đơn giá"), Display(Name = "Đơn giá:")]
         public double DonGia { get; set; }
         public double ThanhTien { 
+
             get
             {
                  return SoLuong* DonGia;

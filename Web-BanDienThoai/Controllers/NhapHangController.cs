@@ -43,8 +43,8 @@ namespace Web_BanDienThoai.Controllers
                 TrangThaiNhapHang = nhaphang.TrangThaiNhapHang,                
                 TongTien = nhaphang.TongTien,
                 TongSoLuong = nhaphang.TongSoLuong,
-                //Id_NhaCungCap = nhaphang.Id_NhaCungCap,
-                //Id_NhanVien = nhaphang.Id_NhanVien
+                Id_NhaCungCap = nhaphang.Id_NhaCungCap,
+                Id_NhanVien = nhaphang.Id_NhanVien
                 
             });
 

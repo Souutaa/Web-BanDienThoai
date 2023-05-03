@@ -1,5 +1,5 @@
-﻿@using Web_BanDienThoai.Models.ChiTietHoaDon;
-@model DeleteChiTietHoaDonViewModel
+﻿@using Web_BanDienThoai.Models.ChiTietNhapHang;
+@model DeleteChiTietNhapHangViewModel
 
 <div class="row">
     <nav aria-label="breadcrumb">
@@ -13,11 +13,11 @@
         <div class="col-md-12 table-responsive-md">
             <div class="form-row">
                 <div class="col-2 form-group">
-                    <label asp-for="@Model.Id_HoaDon" class="form-label"></label>
+                    <label asp-for="@Model.Id_NhapHang" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.Id_HoaDon" class="form-control" readonly/>
-                    <span asp-validation-for="@Model.Id_HoaDon" class="text-danger"></span>
+                    <input asp-for="@Model.Id_NhapHang" class="form-control" readonly/>
+                    <span asp-validation-for="@Model.Id_NhapHang" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
                 <div class="col-2 form-group">

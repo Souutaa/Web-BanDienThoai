@@ -103,9 +103,21 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
-                var check = _ctnhService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
-                if(check == null) { 
-                var ctnh = new ChiTietNhapHang
+                var check = _ctnhService.GetAll().Where(s => s.Id_NhapHang == model.Id_NhapHang).ToList();
+
+                bool tao = true;
+                foreach (var item in check)
+                {
+                    if (model.Id_SanPham == item.Id_SanPham)
+                    {
+                        tao = false;
+                    }
+
+                }
+
+                if (tao == true)
+                {
+                    var ctnh = new ChiTietNhapHang
                 {
                     Id_NhapHang = model.Id_NhapHang,
                     Id_SanPham = model.Id_SanPham,
