@@ -235,7 +235,7 @@ namespace Web_BanDienThoai.Controllers
         public async Task<JsonResult> CreateUserOrder(string json)
         {
             dynamic items = JObject.Parse(json);
-
+            
             var productList = new List<SanPham>();
             double ThanhTien = 0;
             foreach (var item in items)
@@ -256,6 +256,7 @@ namespace Web_BanDienThoai.Controllers
 
             await _hoadonService.CreateAsSync(hoaDon);
 
+            CreateChiTietHoaDonViewModel model = new CreateChiTietHoaDonViewModel();
             foreach (var item in items)
             {
                 var product = _sanphamService.GetById(item.Path);
@@ -264,10 +265,17 @@ namespace Web_BanDienThoai.Controllers
                 cthd.Id_SanPham = product.Id_SanPham;
                 cthd.SoLuong = int.Parse(item.Value.Value.ToString());
                 cthd.DonGia = product.GiaTien;
+                cthd.SoLuongThayDoi = cthd.SoLuong;
                 cthd.ThanhTien = double.Parse(item.Value.Value.ToString()) * product.GiaTien;
                 
-
                 await _cthdServices.CreateAsSync(cthd);
+
+                var sanphamcapnhat = _sanphamService.GetById(product.Id_SanPham);  //
+                sanphamcapnhat.SoLuong -= cthd.SoLuong;                        // Cập nhật số lượng
+                                                                                // soluongdamua = model.SoLuong;  
+
+                cthd.SoLuongThayDoi = cthd.SoLuong;
+                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
             }
 
             return Json("success".ToJson());

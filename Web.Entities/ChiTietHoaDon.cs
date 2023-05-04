@@ -12,8 +12,10 @@ namespace Web.Entities
         [Key, Column(Order = 1)] public string Id_SanPham { get; set; }  //Sản Phẩm
 
         public int SoLuong { get; set; }
+        public int SoLuongThayDoi { get; set; } = 0;
         public double DonGia { get; set; }
         public double ThanhTien { get; set; }
+
         public virtual HoaDon HoaDon { get; set; }
         public virtual SanPham SanPham { get; set; }
     }

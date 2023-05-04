@@ -129,6 +129,7 @@ namespace Web_BanDienThoai.Controllers
                         Id_HoaDon = model.Id_HoaDon,
                         Id_SanPham = model.Id_SanPham,
                         SoLuong = model.SoLuong,
+                        SoLuongThayDoi = model.SoLuong,
                         DonGia = model.DonGia,
                         ThanhTien = model.ThanhTien,
                     };
@@ -136,7 +137,9 @@ namespace Web_BanDienThoai.Controllers
 
                     var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
                     sanphamcapnhat.SoLuong -= model.SoLuong;                        // Cập nhật số lượng
-                    soluongdamua = model.SoLuong;                               //
+                   // soluongdamua = model.SoLuong;  
+                    
+                    cthd.SoLuongThayDoi = model.SoLuong;
                     await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
 
                     return RedirectToAction("Index", new { id = idtimkiem });
@@ -250,15 +253,18 @@ namespace Web_BanDienThoai.Controllers
 
             cthd.Id_HoaDon = model.Id_HoaDon;
             cthd.Id_SanPham = model.Id_SanPham;
-            cthd.SoLuong = model.SoLuong;
+            cthd.SoLuong = model.SoLuong;          
             cthd.DonGia = model.DonGia;
             cthd.ThanhTien = model.ThanhTien;
+            await _cthdService.UpdateAsSyncs(cthd);
 
             var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);     //
-            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + soluongdamua;    // Cập nhật số lượng sản phẩm
-            sanphamcapnhat.SoLuong -= model.SoLuong;                          //
-            soluongdamua = model.SoLuong;
-
+            sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + cthd.SoLuongThayDoi; //+soluongdamua;    // Cập nhật số lượng sản phẩm
+            sanphamcapnhat.SoLuong -= model.SoLuong;
+            await _sanphamService.UpdateAsSyncs(sanphamcapnhat);
+            
+            cthd.SoLuongThayDoi = model.SoLuong;
+            //soluongdamua = model.SoLuong;
             await _cthdService.UpdateAsSyncs(cthd);
             return RedirectToAction("Index", new { id = idtimkiem });
 
