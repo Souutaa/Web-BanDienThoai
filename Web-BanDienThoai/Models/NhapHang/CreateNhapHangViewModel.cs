@@ -8,7 +8,8 @@ namespace Web_BanDienThoai.Models.NhapHang
 {
     public class CreateNhapHangViewModel
     {
-        public CreateNhapHangViewModel() {
+        public CreateNhapHangViewModel() 
+        {
             Staffs = new List<SelectListItem>();
         }   
 

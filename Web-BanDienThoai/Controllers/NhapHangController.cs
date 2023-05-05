@@ -50,13 +50,11 @@ namespace Web_BanDienThoai.Controllers
 
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
-                model = model.Where(people => people.Id_NhapHang.ToLower().Contains(valueOfSearch.ToLower())
+                model = model.Where(people => people.Id_NhapHang.Contains(valueOfSearch)
                 || people.NgayGiao.Equals(valueOfSearch)
                 || people.NgayLap.Equals(valueOfSearch)
                 || people.TrangThaiNhapHang.Equals(valueOfSearch));
             }
-
-
 
             return View(model.ToList());
         }

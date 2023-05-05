@@ -30,11 +30,11 @@ namespace Web_BanDienThoai.Controllers
         private SignInManager<TaiKhoan> signInManager;
         public HoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             IChiTietHoaDonServices cthdServices,
-            IWebHostEnvironment webHostEnvironment, UserManager<TaiKhoan> userManager, 
+            IWebHostEnvironment webHostEnvironment, UserManager<TaiKhoan> userManager,
             RoleManager<IdentityRole> roleManager,
             SignInManager<TaiKhoan> signInManager
             )
-        {            
+        {
             _hoadonService = hoadonService;
             _sanphamService = sanphamService;
             _cthdServices = cthdServices;
@@ -45,25 +45,26 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string? valueOfSearch)
+        public IActionResult Index(string valueOfSearch)
         {
-            var model = _hoadonService.GetAll().Select(hoadon =>
-                new IndexHoaDonViewModel
-                {
-                    Id_HoaDon = hoadon.Id_HoaDon,
-                    NgayLapHoaDon = hoadon.NgayLapHoaDon,
-                    id_khachhang = hoadon.Id_khachhang,
-                    id_NhanVien = hoadon.Id_NhanVien,
-                    TongTien = hoadon.TongTien,
-                    status = hoadon.status,
-                });
-       
+            var model = _hoadonService.GetAll().Select(hoadon => new IndexHoaDonViewModel
+            {
+                Id_HoaDon = hoadon.Id_HoaDon,
+                NgayLapHoaDon = hoadon.NgayLapHoaDon,
+                id_khachhang = hoadon.Id_khachhang,
+                id_NhanVien = hoadon.Id_NhanVien,
+                TongTien = hoadon.TongTien,
+                status = hoadon.status,
+            });
+
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
-                model = model.Where(hd => hd.Id_HoaDon.ToLower().Contains(valueOfSearch.ToLower())
-                || hd.id_khachhang.ToLower().Contains(valueOfSearch.ToLower())
-                || hd.id_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
+                model = model.Where(people => people.Id_HoaDon.Contains(valueOfSearch)
+                || people.id_khachhang.ToLower().Contains(valueOfSearch.ToLower())
+                || people.NgayLapHoaDon.Equals(valueOfSearch)
+                || people.id_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
             }
+
             return View(model.ToList());
         }
 
@@ -82,7 +83,8 @@ namespace Web_BanDienThoai.Controllers
                 if (await userManager.IsInRoleAsync(user, "Admin"))
                 {
                     model.Staffs.Add(item);
-                } else
+                }
+                else
                 {
                     model.Users.Add(item);
                 }
@@ -139,10 +141,10 @@ namespace Web_BanDienThoai.Controllers
                 //TongTien = hoadon.TongTien,
 
             };
-           
+
             return View(model);
         }
-    
+
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
@@ -167,7 +169,7 @@ namespace Web_BanDienThoai.Controllers
         public async Task<IActionResult> Delete(DeleteHoaDonViewModel model)
         {
             if (ModelState.IsValid)
-            {               
+            {
                 await _hoadonService.DeleteById(model.Id_HoaDon);
                 return RedirectToAction("Index");
             }
@@ -235,7 +237,7 @@ namespace Web_BanDienThoai.Controllers
         public async Task<JsonResult> CreateUserOrder(string json)
         {
             dynamic items = JObject.Parse(json);
-            
+
             var productList = new List<SanPham>();
             double ThanhTien = 0;
             foreach (var item in items)
@@ -267,12 +269,12 @@ namespace Web_BanDienThoai.Controllers
                 cthd.DonGia = product.GiaTien;
                 cthd.SoLuongThayDoi = cthd.SoLuong;
                 cthd.ThanhTien = double.Parse(item.Value.Value.ToString()) * product.GiaTien;
-                
+
                 await _cthdServices.CreateAsSync(cthd);
 
                 var sanphamcapnhat = _sanphamService.GetById(product.Id_SanPham);  //
                 sanphamcapnhat.SoLuong -= cthd.SoLuong;                           // Cập nhật số lượng
-                                                                                 
+
 
                 cthd.SoLuongThayDoi = cthd.SoLuong;
                 await _sanphamService.UpdateAsSyncs(sanphamcapnhat);           //
