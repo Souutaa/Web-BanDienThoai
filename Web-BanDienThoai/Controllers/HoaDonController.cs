@@ -271,11 +271,11 @@ namespace Web_BanDienThoai.Controllers
                 await _cthdServices.CreateAsSync(cthd);
 
                 var sanphamcapnhat = _sanphamService.GetById(product.Id_SanPham);  //
-                sanphamcapnhat.SoLuong -= cthd.SoLuong;                        // Cập nhật số lượng
-                                                                                // soluongdamua = model.SoLuong;  
+                sanphamcapnhat.SoLuong -= cthd.SoLuong;                           // Cập nhật số lượng
+                                                                                 
 
                 cthd.SoLuongThayDoi = cthd.SoLuong;
-                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
+                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);           //
             }
 
             return Json("success".ToJson());
