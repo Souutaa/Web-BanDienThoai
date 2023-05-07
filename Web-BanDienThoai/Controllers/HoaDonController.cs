@@ -60,9 +60,9 @@ namespace Web_BanDienThoai.Controllers
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
                 model = model.Where(people => people.Id_HoaDon.Contains(valueOfSearch)
-                || people.id_khachhang.ToLower().Contains(valueOfSearch.ToLower())
+                || people.id_khachhang.Contains(valueOfSearch)
                 || people.NgayLapHoaDon.Equals(valueOfSearch)
-                || people.id_NhanVien.ToLower().Contains(valueOfSearch.ToLower()));
+                || people.id_NhanVien.Contains(valueOfSearch));
             }
 
             return View(model.ToList());

@@ -26,6 +26,11 @@ namespace Web.Services.implementation
             return _context.NhapHang.ToList();
         }
 
+        public IEnumerable<SanPham> GetAllSanPham()
+        {
+            return _context.SanPham.ToList();
+        }
+
         public HoaDon GetByIdHoaDon(string id)
         {
             return _context.HoaDon.Where(x => x.Id_HoaDon == id).FirstOrDefault();
@@ -34,6 +39,11 @@ namespace Web.Services.implementation
         public NhapHang GetByIdNhapHang(string id)
         {
             return _context.NhapHang.Where(x => x.Id_NhapHang == id).FirstOrDefault();
+        }
+
+        public SanPham GetByIdSanPham(string id)
+        {
+            return _context.SanPham.Where(x => x.Id_SanPham == id).FirstOrDefault();
         }
     }
 }

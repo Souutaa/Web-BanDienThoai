@@ -14,5 +14,10 @@ namespace Web.Services
 
         IEnumerable<NhapHang> GetAllNhapHang();
         NhapHang GetByIdNhapHang(string id);
+
+        IEnumerable<SanPham> GetAllSanPham();
+        SanPham GetByIdSanPham(string id);
+
+        
     }
 }

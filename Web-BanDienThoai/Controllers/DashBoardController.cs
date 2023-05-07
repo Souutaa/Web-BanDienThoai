@@ -46,5 +46,19 @@ namespace Web_BanDienThoai.Controllers
 
             return data;
         }
+
+        [HttpPost]
+        public List<object> GetDataSanPhamDashboard()
+        {
+            List<object> data = new List<object>();
+
+            List<string> labels = _dashboardService.GetAllSanPham().Select(x => x.Id_SanPham).ToList();
+            data.Add(labels);
+
+            List<int> TongSoLuong = _dashboardService.GetAllSanPham().Select(x => x.SoLuong).ToList();
+            data.Add(TongSoLuong);
+
+            return data;
+        }
     }
 }
