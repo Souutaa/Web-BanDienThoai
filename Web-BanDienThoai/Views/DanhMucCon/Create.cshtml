@@ -24,7 +24,7 @@
                     <label asp-for="Id_DanhMucCon" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="Id_DanhMucCon" class="form-control" />
+                    <input asp-for="Id_DanhMucCon" class="form-control" placeholder="Nhập mã danh mục con (DMC__)"/>
                     <span asp-validation-for="Id_DanhMucCon" class="text-danger"></span>
                     <div class="text-danger">@ViewBag.Error</div>
                 </div>
@@ -33,7 +33,7 @@
                     <label asp-for="TenDanhMuc" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="TenDanhMuc" class="form-control" />
+                    <input asp-for="TenDanhMuc" class="form-control" placeholder="Nhập tên danh mục con"/>
                     <span asp-validation-for="TenDanhMuc" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-3 form-group">
                     <select asp-for="Id_CauHinh" class="form-control" asp-items="@Model.CauHinh">
-                        <option value=""> Chọn Cấu Hình </option>
+                        <option value="">---Chọn Cấu Hình---</option>
                     </select>
                     <span asp-validation-for="Id_CauHinh" class="text-danger"></span>
                 </div>

@@ -14,7 +14,7 @@ namespace Web_BanDienThoai.Models.TaiKhoan
 
         [Required, MinLength(6)]
         [Display(Name = "Confirm Password")]
-        [Compare("Password", ErrorMessage = "Password and password confirmation is not match!")]
+        [Compare("Password", ErrorMessage = "Mật khẩu và mật khẩu nhập lại không đúng!")]
         public string ConfirmPassword { get; set; }
     }
 }

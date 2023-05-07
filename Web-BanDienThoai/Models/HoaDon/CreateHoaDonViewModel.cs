@@ -17,7 +17,7 @@ namespace Web_BanDienThoai.Models.HoaDon
         public List<SelectListItem> Staffs { get; set; }
 
         [Key]
-        [Required(ErrorMessage = "Phải nhập mã Hóa Đơn (HD__)")]
+        [Required(ErrorMessage = "Phải nhập mã Hóa Đơn (HD__)"), Display(Name = "Mã Hóa Đơn")]
         //[RegularExpression(@"^[hH][dD][0-9]\S*$"), Display(Name = "Mã Hóa Đơn")]
         public string Id_HoaDon { get; set; }
 

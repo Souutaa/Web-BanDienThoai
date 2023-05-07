@@ -16,7 +16,7 @@
                     <label asp-for="@Model.Id_CauHinh" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.Id_CauHinh" class="form-control" />
+                    <input asp-for="@Model.Id_CauHinh" class="form-control" placeholder="Nhập mã cấu hình (CH__)"/>
                     <span asp-validation-for="@Model.Id_CauHinh" class="text-danger"></span>
                     <div class="text-danger">@ViewBag.error</div>
                 </div>
@@ -25,7 +25,7 @@
                     <label asp-for="@Model.DoPhanGiai" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.DoPhanGiai" class="form-control" />
+                    <input asp-for="@Model.DoPhanGiai" class="form-control" placeholder="Nhập độ phân giải"/>
                     <span asp-validation-for="@Model.DoPhanGiai" class="text-danger"></span>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     <label asp-for="@Model.CameraTruoc" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.CameraTruoc" class="form-control" />
+                    <input asp-for="@Model.CameraTruoc" class="form-control" placeholder="Nhập độ phân giải cam trước"/>
                     <span asp-validation-for="@Model.CameraTruoc" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -43,7 +43,7 @@
                     <label asp-for="@Model.CameraSau" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.CameraSau" class="form-control" />
+                    <input asp-for="@Model.CameraSau" class="form-control" placeholder="Nhập độ phân giải cam sau" />
                     <span asp-validation-for="@Model.CameraSau" class="text-danger"></span>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     <label asp-for="@Model.Ram" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.Ram" class="form-control" />
+                    <input asp-for="@Model.Ram" class="form-control" placeholder="Nhập bộ nhớ ram"/>
                     <span asp-validation-for="@Model.Ram" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -61,7 +61,7 @@
                     <label asp-for="@Model.Chipset" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="@Model.Chipset" class="form-control" />
+                    <input asp-for="@Model.Chipset" class="form-control" placeholder="Nhập chipset"/>
                     <span asp-validation-for="@Model.Chipset" class="text-danger"></span>
                 </div>
             </div>

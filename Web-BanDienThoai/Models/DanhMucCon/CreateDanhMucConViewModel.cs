@@ -22,6 +22,7 @@ namespace Web_BanDienThoai.Models.DanhMucCon
         public /*List<String>*/ string  Id_CauHinh { get; set; }  //Cấu Hình
                                                                   ////public CauHinh cauHinh { get; set; };
         [ValidateNever]
+        [Display(Name = "Cấu Hình")]
         public IEnumerable<SelectListItem> CauHinh { set; get; }
 
     }
