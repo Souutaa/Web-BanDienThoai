@@ -44,13 +44,13 @@
                         <td>@item.DonGia</td>
                         <td>@item.ThanhTien</td>
                         <td>
-                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_NhapHang">
+                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id_NhapHang " asp-route-id_sanpham="@item.Id_SanPham">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
                             @*<a class="text-success" asp-action="Detail" asp-route-id="@item.Id_NhapHang">
                                 <i class="fas fa-bars"></i> Detail
                             </a>*@
-                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_NhapHang">
+                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id_NhapHang" asp-route-id_sanpham="@item.Id_SanPham">
                                 <i class="far fa-trash-alt"></i> Delete
                             </a>
                         </td>

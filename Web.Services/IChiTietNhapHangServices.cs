@@ -13,7 +13,7 @@ namespace Web.Services
         IEnumerable<ChiTietNhapHang> GetAll();
         ChiTietNhapHang GetById(string id);
         IEnumerable<SelectListItem> GetID(string id);
-        SanPham GetbyIDListSanPham(string id);
+        ChiTietNhapHang GetbyID_sp(string id,string id_nhaphang);
         Task CreateAsSync(ChiTietNhapHang ctnh);
         Task UpdateAsSyncs(ChiTietNhapHang ctnh);
         Task UpdateById(string id);

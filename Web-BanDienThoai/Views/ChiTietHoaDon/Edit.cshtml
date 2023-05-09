@@ -53,7 +53,7 @@
                     <label asp-for="DonGia" class="form-label"></label>
                 </div>
                 <div class="col-3 form-group">
-                    <input asp-for="DonGia" class="form-control" readonly/>
+                    <input asp-for="DonGia" class="form-control" id="giatien" readonly />
                     <span asp-validation-for="DonGia" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>
@@ -82,11 +82,7 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
-        function quay_lai_trang_truoc() {
-            history.back();
-        }
-    </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $("#click").change(function () {
@@ -112,4 +108,11 @@
             });
         });
     </script>
+
+    <script>
+        function quay_lai_trang_truoc() {
+            history.back();
+        }
+    </script>
+    
 }

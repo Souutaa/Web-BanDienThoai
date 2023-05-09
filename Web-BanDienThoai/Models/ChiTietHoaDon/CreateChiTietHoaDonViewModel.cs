@@ -10,12 +10,14 @@ namespace Web_BanDienThoai.Models.ChiTietHoaDon
     {
         //[ForeignKey("HoaDon")]
         [Key]
+        [Display(Name = "Mã hóa đơn:")]
         public string Id_HoaDon { get; set; }  //Hóa Đơn
         [ValidateNever]
         public IEnumerable<SelectListItem> HoaDon { set; get; }
 
         //[ForeignKey("SanPham")]
-        [Key]
+        [Key] 
+        [Display(Name = "Sản Phẩm:")]
         public string Id_SanPham { get; set; }  //Sản Phẩm
         [ValidateNever]
         public IEnumerable<SelectListItem> SanPham { set; get; }
@@ -26,6 +28,7 @@ namespace Web_BanDienThoai.Models.ChiTietHoaDon
         [Required(ErrorMessage = "Phải nhập đơn giá"), Display(Name = "Đơn giá:")]
         public double DonGia { get; set; }
 
+        [Display(Name = "Thành tiền:")]
         public double ThanhTien
         {
             get

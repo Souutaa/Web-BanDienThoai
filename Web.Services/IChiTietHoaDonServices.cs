@@ -11,8 +11,8 @@ namespace Web.Services
     public interface IChiTietHoaDonServices
     {
         IEnumerable<ChiTietHoaDon> GetAll();
-        ChiTietHoaDon GetById(string id);       
-        SanPham GetbyIDListSanPham(string id);
+        ChiTietHoaDon GetById(string id);
+        ChiTietHoaDon GetbyID_sp(string id, string id_sanpham);
         Task CreateAsSync(ChiTietHoaDon cthoaDon);
         Task UpdateAsSyncs(ChiTietHoaDon hoaDon);
         Task UpdateById(string id);

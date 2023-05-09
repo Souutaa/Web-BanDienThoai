@@ -173,9 +173,9 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id, string id_sanpham)
         {
-            var cthd = _ctnhService.GetById(id);
+            var cthd = _ctnhService.GetbyID_sp(id,id_sanpham);
             if (cthd == null)
             {
                 return NotFound();
@@ -184,6 +184,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_NhapHang = cthd.Id_NhapHang,
                 Id_SanPham = cthd.Id_SanPham,
+                SoLuong = cthd.SoLuong,
             };
 
             return View(model);
@@ -196,15 +197,15 @@ namespace Web_BanDienThoai.Controllers
             if (ModelState.IsValid)
             {
                 await _ctnhService.DeleteById(model.Id_NhapHang);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = idtimkiem });
             }
             return View();
         }
 
         [HttpGet]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string id_sanpham)
         {
-            var ctnh = _ctnhService.GetById(id);
+            var ctnh = _ctnhService.GetbyID_sp(id,id_sanpham);
             if (ctnh == null)
             {
                 return NotFound();

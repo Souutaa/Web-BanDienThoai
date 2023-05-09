@@ -21,20 +21,24 @@ namespace Web_BanDienThoai.Models.NhapHang
         [DataType(DataType.Date), Display(Name = "Ngày lập đơn nhập hàng")]
         public DateTime NgayLap { get; set; }
 
-        [DataType(DataType.Date), Display(Name = "Ngày giao đơn nhập hàng")]
+        [DataType(DataType.Date), Display(Name = "Ngày giao đơn")]
         public DateTime NgayGiao { get; set; }
         public TrangThaiNhapHang TrangThaiNhapHang { get; set; }
+        [Display(Name = "Tổng tiền:")]
         public double TongTien { get; set; }
+        [Display(Name = "Tổng số lượng:")]
         public int TongSoLuong { get; set; }
-        public string GhiChu { get; set; }
+        [Display(Name = "Ghi chú (Nếu có):")]
+        public string? GhiChu { get; set; }
 
         [Required(ErrorMessage = "Phải nhập mã nhà cung cấp (NCC__)")]
-        [RegularExpression(@"^[nN][cC][cC][0-9]\S*$"), Display(Name = "Mã nhà cung cấp")]
+        [RegularExpression(@"^[nN][cC][cC][0-9]\S*$"), Display(Name = "Nhà cung cấp")]
         [ForeignKey("NhaCungCap")] public string Id_NhaCungCap { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> NhaCungCap { set; get; }
 
         public List<SelectListItem> Staffs { get; set; }
+        [Display(Name = "Nhân viên:")]
         public string id_staff { get; set; }
     }
 }

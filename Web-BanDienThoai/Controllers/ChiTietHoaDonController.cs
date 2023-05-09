@@ -22,7 +22,7 @@ namespace Web_BanDienThoai.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         private IHoaDonServices _hoadonService;
         public static string idtimkiem;
-        public static int soluongdamua=0;
+        public static int soluongdamua = 0;
         public ChiTietHoaDonController(IHoaDonServices hoadonService, ISanPhamServices sanphamService,
             IChiTietHoaDonServices cthdService,
         IWebHostEnvironment webHostEnvironment)
@@ -64,13 +64,14 @@ namespace Web_BanDienThoai.Controllers
             tongsoluong_tien.TongTien = 0;
             await _hoadonService.UpdateAsSyncs(tongsoluong_tien);
 
+            //tongsoluong_tien.TongTien = 0;
+
             foreach (var t in model)
             {
                 //tongsoluong_tien.TongSoLuong += t.SoLuong;
                 tongsoluong_tien.TongTien += t.ThanhTien;
                 await _hoadonService.UpdateAsSyncs(tongsoluong_tien);
             }
-
             return View(model.ToList());
         }
 
@@ -137,8 +138,8 @@ namespace Web_BanDienThoai.Controllers
 
                     var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
                     sanphamcapnhat.SoLuong -= model.SoLuong;                        // Cập nhật số lượng
-                   // soluongdamua = model.SoLuong;  
-                    
+                                                                                    // soluongdamua = model.SoLuong;  
+
                     cthd.SoLuongThayDoi = model.SoLuong;
                     await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
 
@@ -185,9 +186,9 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id, string id_sanpham)
         {
-            var cthd = _cthdService.GetById(id);
+            var cthd = _cthdService.GetbyID_sp(id, id_sanpham);
             if (cthd == null)
             {
                 return NotFound();
@@ -196,6 +197,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 Id_HoaDon = cthd.Id_HoaDon,
                 Id_SanPham = cthd.Id_SanPham,
+                SoLuong = cthd.SoLuong,
             };
 
             return View(model);
@@ -208,36 +210,44 @@ namespace Web_BanDienThoai.Controllers
             if (ModelState.IsValid)
             {
                 await _cthdService.DeleteById(model.Id_HoaDon);
-                return RedirectToAction("Index");
+
+                var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);
+                sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + model.SoLuong;
+                await _sanphamService.UpdateAsSyncs(sanphamcapnhat);
+                return RedirectToAction("Index", new { id = idtimkiem });
             }
             return View();
         }
 
         [HttpGet]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string id_sanpham)
         {
-            var cthd = _cthdService.GetById(id);
-            if (cthd == null)
-            {
-                return NotFound();
-            }
-            var model = new EditChiTietHoaDonViewModel
-            {
-                Id_HoaDon = cthd.Id_HoaDon,
-                Id_SanPham = cthd.Id_SanPham,
-                SoLuong = cthd.SoLuong,
-                DonGia = cthd.DonGia,
-                
-            };
-            List<SelectListItem> listSanPham = _sanphamService.GetAll().
-                Select(c => new SelectListItem
+            
+            var cthd = _cthdService.GetbyID_sp(id,id_sanpham);
+            
+                if (cthd == null)
                 {
-                    Value = c.Id_SanPham.ToString(),
-                    Text = c.Ten_SanPham
-                }).ToList();
-            model.SanPham = listSanPham;
+                    return NotFound();
+                }
+                var model = new EditChiTietHoaDonViewModel
+                {
+                    Id_HoaDon = cthd.Id_HoaDon,
+                    Id_SanPham = cthd.Id_SanPham,
+                    SoLuong = cthd.SoLuong,
+                    DonGia = cthd.DonGia,
 
-            return View(model);
+                };
+                List<SelectListItem> listSanPham = _sanphamService.GetAll().
+                    Select(c => new SelectListItem
+                    {
+                        Value = c.Id_SanPham.ToString(),
+                        Text = c.Ten_SanPham
+                    }).ToList();
+                model.SanPham = listSanPham;
+
+                return View(model);
+            //}
+            //return View();
         }
 
         [HttpPost]
@@ -253,7 +263,7 @@ namespace Web_BanDienThoai.Controllers
 
             cthd.Id_HoaDon = model.Id_HoaDon;
             cthd.Id_SanPham = model.Id_SanPham;
-            cthd.SoLuong = model.SoLuong;          
+            cthd.SoLuong = model.SoLuong;
             cthd.DonGia = model.DonGia;
             cthd.ThanhTien = model.ThanhTien;
             await _cthdService.UpdateAsSyncs(cthd);
@@ -262,14 +272,12 @@ namespace Web_BanDienThoai.Controllers
             sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong + cthd.SoLuongThayDoi; //+soluongdamua;    // Cập nhật số lượng sản phẩm
             sanphamcapnhat.SoLuong -= model.SoLuong;
             await _sanphamService.UpdateAsSyncs(sanphamcapnhat);
-            
+
             cthd.SoLuongThayDoi = model.SoLuong;
             //soluongdamua = model.SoLuong;
             await _cthdService.UpdateAsSyncs(cthd);
             return RedirectToAction("Index", new { id = idtimkiem });
 
-
-            return View();
         }
     }
 }

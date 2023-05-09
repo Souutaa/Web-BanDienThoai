@@ -74,15 +74,10 @@ namespace Web.Services.implementation
             throw new NotImplementedException();
         }
 
-        public SanPham GetbyIDListSanPham(string id)
+        public ChiTietHoaDon GetbyID_sp(string id, string id_sanpham)
         {
-            var ListSanPhamforDetail = _context.SanPham.Select(t => new SelectListItem
-            {
-                Value = t.Id_SanPham,
-                Text = t.Ten_SanPham
-            }).Where(x => x.Value == id);
-           
-            return (SanPham)ListSanPhamforDetail;
+            return _context.ChiTietHoaDon.Where(x => x.Id_HoaDon == id).Where(x => x.Id_SanPham == id_sanpham).FirstOrDefault();
+
         }
 
         public async Task UpdateById(string id)

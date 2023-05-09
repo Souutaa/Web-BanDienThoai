@@ -1,5 +1,6 @@
-﻿<div class="row">
-    <div class="col-8">
+﻿<div class="container-fluid">
+<div class="row">
+    <div class="col-xl-7 col-lg-7">
         <div class="row">
             <label><b>Kiểu Bảng Thống Kê</b></label>
         </div>
@@ -17,9 +18,13 @@
             <input id="ID" value="Hiển thị thống kê" type="button" />
             </>
         </div>
+
+        <div id="ChartView">
+            <canvas id="myChart" style="max-width:700px; max-height:600px;"></canvas>
+        </div>
     </div>
 
-    <div class="col-8">
+    <div class="col-xl-5 col-lg-5">
         <div class="row">
             <label><b>Kiểu Bảng Thống Kê</b></label>
         </div>
@@ -37,17 +42,43 @@
             <input id="ID_NH" value="Hiển thị thống kê" type="button" />
             </>
         </div>
+
+        <div id="ChartView_NH">
+            <canvas id="myChart_NH" style="max-width:500px; max-height:400px;"></canvas>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-xl-6 col-lg-5">
+            <div class="row">
+                <label><b>Kiểu Bảng Thống Kê</b></label>
+            </div>
+            <div class="row-4">
+                <select id="ChartType_SP" class="form-control" style="width:fit-content">
+                    <option selected>--Chọn Bảng Thống Kê--</option>
+                    <option>bar</option>
+                    <option>line</option>
+                    <option>pie</option>
+                    <option>doughnut</option>
+                </select>
+            </div>
+
+            <div class="row-4" style="margin-top:7px">
+                <input id="ID_SP" value="Hiển thị thống kê" type="button" />
+                </>
+            </div>
+
+            <div id="ChartView_SP">
+                <canvas id="myChart_SP" style="max-width:500px; max-height:400px;"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 <br />
 
-<div id="ChartView">
-    <canvas id="myChart"></canvas>
-</div>
 
-<div id="ChartView_NH">
-    <canvas id="myChart_NH"></canvas>
-</div>
+
+
 
 
 
@@ -56,13 +87,15 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#ID").click(function () {               
+            $("#ID").click(function () {
+                
                 var chartType = $("#ChartType").val();
                 var chartView = document.getElementById('myChart');
+                var ChartHD = new Chart();
                 
                 chartView.innerHTML = '&nbsp;';
                 
-                $('#ChartView').append('<canvas id="myChart" style="max-width:500px; max-height:400px;"></canvas>');
+                $('#ChartView');
 
                 $.ajax({
                     type: "POST",
@@ -74,7 +107,7 @@
                 });
 
                 function OnSuccessResult(data) {
-                    var ChartHD = null;
+                    
                     var _data = data;
 
                     var _chartLabels = _data[0];
@@ -118,8 +151,11 @@
                         }
 
                     }
-                    if (ChartHD) {ChartHD.empty();}
-                    ChartHD = new Chart(chartView,config);                  
+
+                    
+                    ChartHD = new Chart(chartView, config);
+                    console.log(ChartHD);
+
                 }
             });
         })
@@ -135,7 +171,7 @@
 
                 chartView.innerHTML = '&nbsp;';
 
-                $('#ChartView').append('<canvas id="myChart" style="max-width:500px; max-height:400px;"></canvas>');
+                $('#ChartView_NH');
 
                 $.ajax({
                     type: "POST",
@@ -193,6 +229,81 @@
                     }
 
                     var ChartNH = new Chart(chartView,config);
+
+                }
+
+            });
+        })
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#ID_SP").click(function () {
+                var chartType = $("#ChartType_SP").val();
+                var chartView = document.getElementById('myChart_SP');
+
+                chartView.innerHTML = '&nbsp;';
+
+                $('#ChartView_SP');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/DashBoard/GetDataSanPhamDashboard",
+                    data: "",
+                    contextType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccessResult,
+                });
+
+                function OnSuccessResult(data) {
+
+                    var _data = data;
+
+                    var _chartLabels = _data[0];
+                    var _chartData = _data[1];
+                    //var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+
+                    var barColor =
+                        [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ];
+
+                    var config = {
+                        options:
+                        {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Biểu đồ thống kê Số Lượng Sản Phẩm'
+                                }
+                            }
+                        },
+                        type: chartType,
+                        data: {
+                            labels: _chartLabels,
+                            datasets:
+                                [{
+                                    backgroundColor: barColor,
+                                    data: _chartData
+
+                                }]
+                        }
+
+                    }
+
+                    var ChartSP = new Chart(chartView, config);
 
                 }
 

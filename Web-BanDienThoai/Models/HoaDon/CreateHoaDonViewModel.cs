@@ -26,8 +26,9 @@ namespace Web_BanDienThoai.Models.HoaDon
         [Display(Name ="Tổng tiền")]        
         
         public double TongTien { get; set; }
-
+        [Display(Name = "Khách hàng:")]
         public string Id_khachhang { get; set; }  //Khách Hàng
+        [Display(Name = "Nhân viên:")]
         public string Id_NhanVien { get; set; }   //Nhân Viên
     }
 }
