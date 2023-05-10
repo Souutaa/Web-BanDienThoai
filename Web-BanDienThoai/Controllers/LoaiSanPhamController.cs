@@ -86,8 +86,8 @@ namespace Web_BanDienThoai.Controllers
                 {                    
                     var loaisanpham = new LoaiSanPham
                     {
-                        Id_loai = model.Id_loai,
-                        TenLoai = model.TenLoai+ tendanhmuc.TenDanhMuc +" "+ tenmausac.TenMauSac,
+                        Id_loai = model.Id_loai.ToUpper(),
+                        TenLoai = tendanhmuc.TenDanhMuc +" ("+ tenmausac.TenMauSac +")",
                         Id_DanhMucCon = model.Id_DanhMucCon,
                         Id_MauSac = model.Id_MauSac,
                     };
@@ -187,19 +187,22 @@ namespace Web_BanDienThoai.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditLoaiSanPhamViewModel model)
         {
-            var loaisanpham = _loaisanphamService.GetById(model.Id_DanhMucCon);
+            var loaisanpham = _loaisanphamService.GetById(model.Id_loai);
+            var tenmausac = _mausacService.GetById(model.Id_MauSac);
+            var tendanhmuc = _danhmucconService.GetById(model.Id_DanhMucCon);
             if (loaisanpham == null)
             {
                 return NotFound();
             }
             loaisanpham.Id_loai = model.Id_loai;
-            loaisanpham.TenLoai = model.TenLoai;
+            loaisanpham.TenLoai = tendanhmuc.TenDanhMuc + " (" + tenmausac.TenMauSac + ")";
             loaisanpham.Id_DanhMucCon = model.Id_DanhMucCon;
             loaisanpham.Id_MauSac = model.Id_MauSac;
             await _loaisanphamService.UpdateAsSyncs(loaisanpham);
-            //return RedirectToAction("Index");
 
-            return View();
+            return RedirectToAction("Index");
+
+            //return View(model);
         }
     }
 }

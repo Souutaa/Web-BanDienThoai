@@ -50,7 +50,7 @@ namespace Web_BanDienThoai.Controllers
                 Select(c => new SelectListItem
                 {
                     Value = c.Id_CauHinh.ToString(),
-                    Text = c.Ram,
+                    Text = c.Chipset,
                 }).ToList();
 
             model.CauHinh = listCauHinh;

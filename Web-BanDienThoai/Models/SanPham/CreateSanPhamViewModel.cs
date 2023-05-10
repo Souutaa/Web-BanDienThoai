@@ -10,7 +10,7 @@ namespace Web_BanDienThoai.Models.SanPham
     {
         [Key]
         [Required(ErrorMessage = "Phải nhập mã sản phẩm (ID_SanPham)")]
-        [RegularExpression(@"^[nS][pP][0-9]\S*$"), Display(Name = "Mã sản phẩm")]
+        [RegularExpression(@"^[sS][pP][0-9]\S*$"), Display(Name = "Mã sản phẩm")]
         public string Id_SanPham { get; set; }
 
         [Required(ErrorMessage = "Phải nhập tên sản phẩm")]

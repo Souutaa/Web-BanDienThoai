@@ -7,7 +7,7 @@ namespace Web.Entities
     {
         [Key]
         public string Id_loai { get; set; }
-        public string TenLoai { get; set; }
+        public string? TenLoai { get; set; }
         [ForeignKey("DanhMucCon")] public string Id_DanhMucCon { get; set; }  //Danh Mục Con
         public virtual DanhMucCon? DanhMucCon { get; set; }
         [ForeignKey("MauSac")] public string Id_MauSac { get; set; }  //Danh Mục Con

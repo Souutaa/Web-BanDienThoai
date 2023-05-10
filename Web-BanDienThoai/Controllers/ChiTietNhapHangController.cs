@@ -77,13 +77,15 @@ namespace Web_BanDienThoai.Controllers
         {
             var model = new CreateChiTietNhapHangViewModel();
 
-            List<SelectListItem> listNhapHang = _nhaphangService.GetAll().
-                Select(c => new SelectListItem
-                {
-                    Value = c.Id_NhapHang.ToString(),
-                    Text = c.Id_NhapHang,
-                }).ToList();
-            model.NhapHang = listNhapHang;
+            //List<SelectListItem> listNhapHang = _nhaphangService.GetAll().
+            //    Select(c => new SelectListItem
+            //    {
+            //        Value = c.Id_NhapHang.ToString(),
+            //        Text = c.Id_NhapHang,
+            //    }).ToList();
+            //model.NhapHang = listNhapHang;
+            var getidnhaphang = _nhaphangService.GetById(idtimkiem);
+            model.Id_NhapHang = getidnhaphang.Id_NhapHang;
 
             List<SelectListItem> listSanPham = _sanphamService.GetAll().
                 Select(c => new SelectListItem

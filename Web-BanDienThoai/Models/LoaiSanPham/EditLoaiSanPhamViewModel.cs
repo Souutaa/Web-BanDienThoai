@@ -11,7 +11,10 @@ namespace Web_BanDienThoai.Models.LoaiSanPham
         [Required(ErrorMessage = "Phải nhập mã loại sản phẩm (LSP__)")]
         [RegularExpression(@"^[lL][sS][pP][0-9]\S*$"), Display(Name = "Mã Loại Sản Phẩm")]
         public string Id_loai { get; set; }
-        public string TenLoai { get; set; }
+
+        [Display(Name = "Tên Loại Sản Phẩm")]
+        
+        public string? TenLoai { get; set; }
 
         [Required(ErrorMessage = "Phải nhập mã danh mục con (DMC__)")]
         [RegularExpression(@"^[dD][mM][cC][0-9]\S*$"), Display(Name = "Mã Danh Mục Con")]

@@ -32,7 +32,9 @@ namespace Web_BanDienThoai.Controllers
             });
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
-                model = model.Where(cauhinh => cauhinh.Ram.ToLower().Contains(valueOfSearch.ToLower()) || cauhinh.Chipset.ToLower().Contains(valueOfSearch.ToLower()));
+                model = model.Where(cauhinh => cauhinh.Ram.ToLower().Contains(valueOfSearch.ToLower()) || 
+                cauhinh.Chipset.ToLower().Contains(valueOfSearch.ToLower()) ||
+                cauhinh.Id_CauHinh.ToLower().Contains(valueOfSearch.ToLower()));
             }
             return View(model.ToList());
         }
@@ -55,12 +57,12 @@ namespace Web_BanDienThoai.Controllers
                 {
                     var cauhinh = new CauHinh
                     {
-                        Id_CauHinh = model.Id_CauHinh,
+                        Id_CauHinh = model.Id_CauHinh.ToUpper(),
                         DoPhanGiai = model.DoPhanGiai,
                         CameraTruoc = model.CameraTruoc,
                         CameraSau = model.CameraSau,
                         Ram = model.Ram,
-                        Chipset = model.Chipset,
+                        Chipset = model.Chipset + "-" + model.Ram,
                     };
                     await _cauhinhService.CreateAsSync(cauhinh);
                     return RedirectToAction("Index");
@@ -157,12 +159,12 @@ namespace Web_BanDienThoai.Controllers
             cauhinh.CameraTruoc = model.CameraTruoc;
             cauhinh.CameraSau = model.CameraSau;
             cauhinh.Ram = model.Ram;
-            cauhinh.Chipset = model.Chipset;
+            cauhinh.Chipset = model.Chipset +"-"+ model.Ram;
             
             await _cauhinhService.UpdateAsSyncs(cauhinh);
-            //return RedirectToAction("Index");
+            return RedirectToAction("Index");
             
-            return View();
+            //return View();
         }
     }
 }

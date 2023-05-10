@@ -29,7 +29,7 @@ namespace Web_BanDienThoai.Controllers
 
             if (!String.IsNullOrEmpty(valueOfSearch))
             {
-                model = model.Where(mausac => mausac.Id_MauSac.Contains(valueOfSearch)
+                model = model.Where(mausac => mausac.Id_MauSac.ToLower().Contains(valueOfSearch.ToLower())
                 || mausac.TenMauSac.ToLower().Contains(valueOfSearch.ToLower()));
             }
 
@@ -139,7 +139,8 @@ namespace Web_BanDienThoai.Controllers
             }
             mausac.Id_MauSac = model.Id_MauSac;
             mausac.TenMauSac = model.TenMauSac;
-            //return RedirectToAction("Index");
+            await _mausacService.UpdateAsSyncs(mausac);
+            return RedirectToAction("Index");
 
             return View();
         }

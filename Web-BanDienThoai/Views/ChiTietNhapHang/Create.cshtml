@@ -21,10 +21,14 @@
                 <div class="col-2 form-group">
                     <label asp-for="Id_NhapHang" class="form-label"></label>
                 </div>
-                <div class="col-3 form-group">
+                @*<div class="col-3 form-group">
                     <select asp-for="Id_NhapHang" class="form-control" asp-items="@Model.NhapHang">
                         <option value=""> Chọn Hóa Đơn </option>
                     </select>
+                    <span asp-validation-for="Id_NhapHang" class="text-danger"></span>
+                </div>*@
+                <div class="col-3 form-group">
+                    <input asp-for="Id_NhapHang" class="form-control" readonly />
                     <span asp-validation-for="Id_NhapHang" class="text-danger"></span>
                 </div>
                 <div class="col-2 form-group"></div>

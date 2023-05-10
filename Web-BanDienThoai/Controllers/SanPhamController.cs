@@ -15,16 +15,18 @@ namespace Web_BanDienThoai.Controllers
     {
         private ISanPhamServices _sanphamService;
         private ILoaiSanPhamServices _loaisanphamService;
+        private ICauHinhServices _cauhinhService;
         private IWebHostEnvironment _webHostEnvironment;
-        public SanPhamController(ISanPhamServices sanphamService, IWebHostEnvironment webHostEnvironment, ILoaiSanPhamServices loaisanphamService)
+        public SanPhamController(ISanPhamServices sanphamService, ICauHinhServices cauhinhService, IWebHostEnvironment webHostEnvironment, ILoaiSanPhamServices loaisanphamService)
         {
             _sanphamService = sanphamService;
             _loaisanphamService = loaisanphamService;
             _webHostEnvironment = webHostEnvironment;
+            _cauhinhService = cauhinhService;
         }
         public IActionResult Index(string valueOfSearch, int? page) //Sản Phẩm
         {           
-            int pageSize = 1;
+            int pageSize = 5;
 
             if(page == null)
             {
@@ -87,14 +89,16 @@ namespace Web_BanDienThoai.Controllers
             if (ModelState.IsValid)
             {
                 
-                    var check = _sanphamService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
+                var check = _sanphamService.GetAll().FirstOrDefault(s => s.Id_SanPham == model.Id_SanPham);
+                var tensanpham = _loaisanphamService.GetById(model.Id_loai);
+                
                 //var checkLoai = _sanphamService.GetAll().FirstOrDefault(s => s.Id_loai == model.Id_loai);
                 if (check == null /*&& (checkLoai == null || checkLoai != null)*/)
                 {
                     var sanpham = new SanPham
                     {
-                        Id_SanPham = model.Id_SanPham,
-                        Ten_SanPham = model.Ten_SanPham,
+                        Id_SanPham = model.Id_SanPham.ToUpper(),
+                        Ten_SanPham = /*model.Ten_SanPham +*/ tensanpham.TenLoai,
                         GiaTien = model.GiaTien,
                         SoLuong = model.SoLuong,
                         Id_loai = model.Id_loai,
@@ -210,13 +214,14 @@ namespace Web_BanDienThoai.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditSanPhamViewModel model)
         {
+            var tensanpham = _loaisanphamService.GetById(model.Id_loai);
             var sanpham = _sanphamService.GetById(model.Id_SanPham);
             if (sanpham == null)
             {
                 return NotFound();
             }
             sanpham.Id_SanPham = model.Id_SanPham;
-            sanpham.Ten_SanPham = model.Ten_SanPham;
+            sanpham.Ten_SanPham = /*model.Ten_SanPham*/ tensanpham.TenLoai;
             sanpham.GiaTien = model.GiaTien;
             sanpham.SoLuong = model.SoLuong;
             sanpham.Id_loai = model.Id_loai;
