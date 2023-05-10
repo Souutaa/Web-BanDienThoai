@@ -1,5 +1,86 @@
-﻿<div class="container-fluid">
-<div class="row">
+﻿@using Web_BanDienThoai.Models.DashBoard;
+@model DashboardViewModel;
+
+<div class="container-fluid">
+    <div class="row" style="margin-top:1cm">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
+                                <h3>@Model.ncc_count</h3>
+                            </div>
+                            <div class="h6 mb-0 font-weight- text-gray-800">Nhà cung cấp</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-folder-plus fa-2xl text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
+                                <h3>@Model.nguoidung_count</h3>
+                            </div>
+                            <div class="h6 mb-0 font-weight- text-gray-800">Người dùng (Nhân Viên và Khách Hàng)</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-users fa-2xl text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
+                                <h3>@Model.cauhinh_count</h3>
+                            </div>
+                            <div class="h6 mb-0 font-weight- text-gray-800">Cấu Hình</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-sharp fa-solid fa-gears fa-2xl text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-2">
+                                <h3>@Model.loai_count</h3>
+                            </div>
+                            <div class="h6 mb-0 font-weight- text-gray-800">Loại Sản Phẩm</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-table-cells fa-2xl text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
     <div class="col-xl-7 col-lg-7">
         <div class="row">
             <label><b>Kiểu Bảng Thống Kê</b></label>
@@ -15,7 +96,7 @@
         </div>
 
         <div class="row-4" style="margin-top:7px">
-            <input id="ID" value="Hiển thị thống kê" type="button" />
+            <input id="ID" value="Hiển Thị Thống Kê Hóa Đơn" type="button" />
             </>
         </div>
 
@@ -40,7 +121,7 @@
         </div>
 
         <div class="row-4" style="margin-top:7px">
-            <input id="ID_NH" value="Hiển thị thống kê" type="button" />
+            <input id="ID_NH" value="Hiển Thị Thống Kê Nhập Hàng" type="button" />
             </>
         </div>
 
@@ -65,39 +146,16 @@
             </div>
 
             <div class="row-4" style="margin-top:7px">
-                <input id="ID_SP" value="Hiển thị thống kê" type="button" />
+                <input id="ID_SP" value="Hiển Thị thống kê Sản Phẩm" type="button" />
                 </>
             </div>
 
             <div id="ChartView_SP">
-                <canvas id="myChart_SP" style="max-width:500px; max-height:400px;"></canvas>
+                <canvas id="myChart_SP" style="max-width:700px; max-height:600px;"></canvas>
             </div>
-        </div>
-
-        <div class="col-xl-7 col-lg-7">
-            <div class="row">
-                <label><b>Kiểu Bảng Thống Kê</b></label>
-            </div>
-            <div class="row-4">
-                <select id="ChartType_NCC" class="form-control" style="width:fit-content">
-                    <option selected>--Chọn Bảng Thống Kê--</option>
-                    <option>bar</option>
-                    <option>line</option>
-                    <option>pie</option>
-                    <option>doughnut</option>
-                </select>
-            </div>
-
-            <div class="row-4" style="margin-top:7px">
-                <input id="ID_NCC" value="Hiển thị thống kê" type="button" />
-                </>
-            </div>
-
-            <div id="ChartView_NCC">
-                <canvas id="myChart_NCC" style="max-width:500px; max-height:400px;"></canvas>
-            </div>
-        </div>
+        </div>        
     </div>
+    
 </div>
 <br />
 
@@ -338,83 +396,7 @@
         })
 
     </script>
-
-    <script type="text/javascript"> /*Nhà cung cấp*/
-
-        $(document).ready(function () {
-            $("#ID_NCC").click(function () {
-                $('#myChart_NCC').remove(); 
-                $('#ChartView_NCC').append('<canvas id="myChart_NCC" style="max-width:500px; max-height:400px;"></canvas>');
-                var chartType = $("#ChartType_NCC").val();
-                var chartView = document.getElementById('myChart_NCC');
-
-                chartView.innerHTML = '&nbsp;';
-
-                $('#ChartView_NCC');
-
-                $.ajax({
-                    type: "POST",
-                    url: "/DashBoard/GetDataNhaCungCapDashboard",
-                    data: "",
-                    contextType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: OnSuccessResult,
-                });
-
-                function OnSuccessResult(data) {
-
-                    var _data = data;
-
-                    var _chartLabels = _data[0];
-                    var _chartData = _data[1];
-                    //var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
-
-                    var barColor =
-                        [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 205, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(201, 203, 207, 0.2)'
-                        ];
-
-                    var config = {
-                        options:
-                        {
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Biểu đồ thống kê Số Lượng Sản Phẩm'
-                                }
-                            }
-                        },
-                        type: chartType,
-                        data: {
-                            labels: _chartLabels,
-                            datasets:
-                                [{
-                                    backgroundColor: barColor,
-                                    data: _chartData
-
-                                }]
-                        }
-
-                    }
-
-                    var ChartNCC = new Chart(chartView, config);
-
-                }
-
-            });
-        })
-
-    </script>
+    
 }
 
 

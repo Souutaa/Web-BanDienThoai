@@ -61,7 +61,7 @@ namespace Web_BanDienThoai.Controllers
                         DoPhanGiai = model.DoPhanGiai,
                         CameraTruoc = model.CameraTruoc,
                         CameraSau = model.CameraSau,
-                        Ram = model.Ram,
+                        Ram = model.Ram,                        
                         Chipset = model.Chipset + "-" + model.Ram,
                     };
                     await _cauhinhService.CreateAsSync(cauhinh);

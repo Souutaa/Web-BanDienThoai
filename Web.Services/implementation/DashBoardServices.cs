@@ -55,5 +55,25 @@ namespace Web.Services.implementation
         {
             return _context.SanPham.Where(x => x.Id_SanPham == id).FirstOrDefault();
         }
+
+        public int GetNhaCungCapCount()
+        {
+            return _context.NhaCungCap.Count();
+        }
+
+        public int GetNguoiDungCount()
+        {
+            return _context.TaiKhoans.Count();
+        }
+
+        public int GetLoaiCount()
+        {
+            return _context.LoaiSanPham.Count();
+        }
+
+        public int GetCauHinhCount()
+        {
+            return _context.CauHinh.Count();
+        }
     }
 }

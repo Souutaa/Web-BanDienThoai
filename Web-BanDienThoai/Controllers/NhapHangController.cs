@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Entities;
 using Web.Services;
+using Web_BanDienThoai.Models.ChiTietHoaDon;
 using Web_BanDienThoai.Models.HoaDon;
 using Web_BanDienThoai.Models.NhapHang;
 
@@ -14,10 +15,11 @@ namespace Web_BanDienThoai.Controllers
         private ISanPhamServices _sanphamService;        
         private IWebHostEnvironment _webHostEnvironment; 
         private INhapHangServices _nhaphangService;
+        private IChiTietNhapHangServices _ctnhService;
         private readonly UserManager<TaiKhoan> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public NhapHangController(ISanPhamServices sanphamService, 
+        public NhapHangController(ISanPhamServices sanphamService, IChiTietNhapHangServices ctnhService,
             INhaCungCapServices nhacungCapService, 
             IWebHostEnvironment webHostEnvironment, 
             INhapHangServices nhaphangService,
@@ -26,7 +28,8 @@ namespace Web_BanDienThoai.Controllers
         {
             _nhaphangService = nhaphangService;
             _nhacungcapService = nhacungCapService;
-            _sanphamService = sanphamService;      
+            _sanphamService = sanphamService;
+            _ctnhService = ctnhService;
             _webHostEnvironment = webHostEnvironment;
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -183,6 +186,22 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
+                var ctnh = _ctnhService.GetAll().Select(ctnh => new IndexChiTietHoaDonViewModel
+                {
+                    Id_HoaDon = ctnh.Id_NhapHang,
+                    Id_SanPham = ctnh.Id_SanPham,
+                    SoLuong = ctnh.SoLuong,
+                    DonGia = ctnh.DonGia,
+                    ThanhTien = ctnh.ThanhTien
+                }).Where(x => x.Id_HoaDon == model.Id_NhapHang).ToList();
+
+
+                foreach (var t in ctnh)
+                {
+                    var sanphamcapnhat = _sanphamService.GetById(t.Id_SanPham);
+                    sanphamcapnhat.SoLuong -= t.SoLuong;
+                }
+
                 await _nhaphangService.DeleteById(model.Id_NhapHang);
                 return RedirectToAction("Index");
             }

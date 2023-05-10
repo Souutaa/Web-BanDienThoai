@@ -124,30 +124,38 @@ namespace Web_BanDienThoai.Controllers
                 }
 
                 if (tao == true)
-                {
-                    var cthd = new ChiTietHoaDon
-                    {
-                        Id_HoaDon = model.Id_HoaDon,
-                        Id_SanPham = model.Id_SanPham,
-                        SoLuong = model.SoLuong,
-                        SoLuongThayDoi = model.SoLuong,
-                        DonGia = model.DonGia,
-                        ThanhTien = model.ThanhTien,
-                    };
-                    await _cthdService.CreateAsSync(cthd);
-
+                {                                       
                     var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);  //
-                    sanphamcapnhat.SoLuong -= model.SoLuong;                        // Cập nhật số lượng
-                                                                                    // soluongdamua = model.SoLuong;  
+                    if (model.SoLuong > sanphamcapnhat.SoLuong) 
+                    {
+                        ViewBag.error = "Số lượng trong kho không đủ!! vui lòng liên hệ SĐT của shop: 0929358925";
+                        return View(model);
+                    }
+                    else {
+                        var cthd = new ChiTietHoaDon
+                        {
+                            Id_HoaDon = model.Id_HoaDon,
+                            Id_SanPham = model.Id_SanPham,
+                            SoLuong = model.SoLuong,
+                            SoLuongThayDoi = model.SoLuong,
+                            DonGia = model.DonGia,
+                            ThanhTien = model.ThanhTien,
+                        };
+                        await _cthdService.CreateAsSync(cthd);
 
-                    cthd.SoLuongThayDoi = model.SoLuong;
-                    await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
+                        sanphamcapnhat.SoLuong -= model.SoLuong;                        // Cập nhật số lượng
+                                                                                        // soluongdamua = model.SoLuong;  
 
-                    return RedirectToAction("Index", new { id = idtimkiem });
+                        cthd.SoLuongThayDoi = model.SoLuong;
+                        await _sanphamService.UpdateAsSyncs(sanphamcapnhat);          //
+
+                        return RedirectToAction("Index", new { id = idtimkiem });
+                    }
+                    
                 }
                 else
                 {
-                    ViewBag.error = "Sản phẩm này đã được tồn tại trong giỏ hàng";
+                    ViewData["ErrorMessage"] = "Sản phẩm này đã được tồn tại trong giỏ hàng";
                     return View(model);
                 }
             }

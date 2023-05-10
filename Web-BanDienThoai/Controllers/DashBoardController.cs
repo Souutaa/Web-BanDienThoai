@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web.Services;
 using Web.Services.implementation;
+using Web_BanDienThoai.Models.DashBoard;
 
 namespace Web_BanDienThoai.Controllers
 {
@@ -16,7 +17,16 @@ namespace Web_BanDienThoai.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            DashboardViewModel dashboard = new DashboardViewModel();
+            var ncccount = _dashboardService.GetNhaCungCapCount();
+            var taikhoan = _dashboardService.GetNguoiDungCount();
+            var loai = _dashboardService.GetLoaiCount();
+            var cauhinh = _dashboardService.GetCauHinhCount();
+            dashboard.ncc_count = ncccount;
+            dashboard.nguoidung_count = taikhoan;
+            dashboard.loai_count = loai;
+            dashboard.cauhinh_count = cauhinh;
+            return View(dashboard);
         }
 
         [HttpPost]
@@ -62,22 +72,24 @@ namespace Web_BanDienThoai.Controllers
         }
 
         [HttpPost]
-        public List<object> GetDataNhaCungCapDashboard()
+        public /*List<object>*/ int GetDataNhaCungCapDashboard()
         {
-            List<object> data = new List<object>();
+            //List<object> data = new List<object>();
 
-            List<string> labels = _dashboardService.GetAllNhaCungCap().Select(x => x.Id_NhaCungCap).ToList();
-            data.Add(labels);
+            //List<string> labels = _dashboardService.GetAllNhaCungCap().Select(x => x.Id_NhaCungCap).ToList();
+            //data.Add(labels);
 
             //List<string> TongSoLuong = _dashboardService.GetAllNhaCungCap().Select(x => x.Id_NhaCungCap).ToList();
-            int TongSoLuong = 0;
-            foreach (var item in labels)
-            {
-                TongSoLuong++;
-            }
-            data.Add(TongSoLuong);
+            //int TongSoLuong = 0;
+            //foreach (var item in labels)
+            //{
+            //    TongSoLuong++;
+            //}
+            //data.Add(TongSoLuong);
 
-            return data;
+            //return data;
+            var ncc = _dashboardService.GetAllNhaCungCap().ToList().Count();
+            return ncc;
         }
     }
 }

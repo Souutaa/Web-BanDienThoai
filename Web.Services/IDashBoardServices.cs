@@ -20,5 +20,9 @@ namespace Web.Services
 
         IEnumerable<NhaCungCap> GetAllNhaCungCap();
         NhaCungCap GetByIdNhaCungCap(string id);
+        int GetNhaCungCapCount();
+        int GetNguoiDungCount();
+        int GetLoaiCount();
+        int GetCauHinhCount();
     }
 }

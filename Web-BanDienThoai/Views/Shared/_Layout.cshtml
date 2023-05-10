@@ -26,7 +26,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 flex-fill">
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="DashBoard" asp-action="Index"><i class="fa-solid fa-house"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" asp-controller="DashBoard" asp-action="Index"><i class="fa-solid fa-chart-line" style="color: #555e6d;"></i>Thống Kê</a></li>
 
                     }
                     <li class="nav-item dropdown">
@@ -105,7 +105,7 @@
                 </ul>
                 <form class="d-flex float-right">
                     <a @*asp-action="Index" asp-controller="Cart"*@ class="btn btn-outline-dark cart-btn" type="button">
-                        <i class="bi-cart-fill me-1 fa-solid fa-cart-shopping"></i>
+                        <i class="fa-solid fa-cart-shopping fa-beat"></i></i>
                         Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill cart-badge">0</span>
                     </a>
