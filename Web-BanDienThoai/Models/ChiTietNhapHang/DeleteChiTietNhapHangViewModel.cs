@@ -11,6 +11,6 @@ namespace Web_BanDienThoai.Models.ChiTietNhapHang
         public string Id_NhapHang { get; set; } //Nhập Hàng
 
         [Display(Name = "Số lượng")]
-        public double SoLuong { get; set; }                                        //
+        public int SoLuong { get; set; }                                        //
     }
 }

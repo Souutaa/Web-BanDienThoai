@@ -49,7 +49,7 @@
     </div>
 </div>
     <div class="row">
-        <div class="col-xl-6 col-lg-5">
+        <div class="col-xl-5 col-lg-5">
             <div class="row">
                 <label><b>Kiểu Bảng Thống Kê</b></label>
             </div>
@@ -72,19 +72,39 @@
                 <canvas id="myChart_SP" style="max-width:500px; max-height:400px;"></canvas>
             </div>
         </div>
+
+        <div class="col-xl-7 col-lg-7">
+            <div class="row">
+                <label><b>Kiểu Bảng Thống Kê</b></label>
+            </div>
+            <div class="row-4">
+                <select id="ChartType_NCC" class="form-control" style="width:fit-content">
+                    <option selected>--Chọn Bảng Thống Kê--</option>
+                    <option>bar</option>
+                    <option>line</option>
+                    <option>pie</option>
+                    <option>doughnut</option>
+                </select>
+            </div>
+
+            <div class="row-4" style="margin-top:7px">
+                <input id="ID_NCC" value="Hiển thị thống kê" type="button" />
+                </>
+            </div>
+
+            <div id="ChartView_NCC">
+                <canvas id="myChart_NCC" style="max-width:500px; max-height:400px;"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 <br />
 
 
 
-
-
-
-
 @section Scripts
     {
-    <script type="text/javascript">
+    <script type="text/javascript"> // Hóa đơn
 
         $(document).ready(function () {
             $("#ID").click(function () {
@@ -162,7 +182,7 @@
         
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript"> //Nhập Hàng
 
         $(document).ready(function () {
             $("#ID_NH").click(function () {
@@ -237,7 +257,7 @@
 
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript"> //Sản Phẩm
 
         $(document).ready(function () {
             $("#ID_SP").click(function () {
@@ -304,6 +324,81 @@
                     }
 
                     var ChartSP = new Chart(chartView, config);
+
+                }
+
+            });
+        })
+
+    </script>
+
+    <script type="text/javascript"> /*Nhà cung cấp*/
+
+        $(document).ready(function () {
+            $("#ID_NCC").click(function () {
+                var chartType = $("#ChartType_NCC").val();
+                var chartView = document.getElementById('myChart_NCC');
+
+                chartView.innerHTML = '&nbsp;';
+
+                $('#ChartView_NCC');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/DashBoard/GetDataNhaCungCapDashboard",
+                    data: "",
+                    contextType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccessResult,
+                });
+
+                function OnSuccessResult(data) {
+
+                    var _data = data;
+
+                    var _chartLabels = _data[0];
+                    var _chartData = _data[1];
+                    //var barColor = ["red", "green", "blue", "orange", "brown", "purple"];
+
+                    var barColor =
+                        [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ];
+
+                    var config = {
+                        options:
+                        {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Biểu đồ thống kê Số Lượng Sản Phẩm'
+                                }
+                            }
+                        },
+                        type: chartType,
+                        data: {
+                            labels: _chartLabels,
+                            datasets:
+                                [{
+                                    backgroundColor: barColor,
+                                    data: _chartData
+
+                                }]
+                        }
+
+                    }
+
+                    var ChartNCC = new Chart(chartView, config);
 
                 }
 

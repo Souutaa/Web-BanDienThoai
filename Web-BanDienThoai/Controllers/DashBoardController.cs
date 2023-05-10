@@ -60,5 +60,24 @@ namespace Web_BanDienThoai.Controllers
 
             return data;
         }
+
+        [HttpPost]
+        public List<object> GetDataNhaCungCapDashboard()
+        {
+            List<object> data = new List<object>();
+
+            List<string> labels = _dashboardService.GetAllNhaCungCap().Select(x => x.Id_NhaCungCap).ToList();
+            data.Add(labels);
+
+            //List<string> TongSoLuong = _dashboardService.GetAllNhaCungCap().Select(x => x.Id_NhaCungCap).ToList();
+            int TongSoLuong = 0;
+            foreach (var item in labels)
+            {
+                TongSoLuong++;
+            }
+            data.Add(TongSoLuong);
+
+            return data;
+        }
     }
 }

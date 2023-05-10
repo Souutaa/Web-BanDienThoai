@@ -18,6 +18,7 @@ namespace Web.Services
         IEnumerable<SanPham> GetAllSanPham();
         SanPham GetByIdSanPham(string id);
 
-        
+        IEnumerable<NhaCungCap> GetAllNhaCungCap();
+        NhaCungCap GetByIdNhaCungCap(string id);
     }
 }

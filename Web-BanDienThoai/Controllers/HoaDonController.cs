@@ -170,6 +170,23 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                //var cthd = _cthdServices.GetAll().Select(cthd => new IndexChiTietHoaDonViewModel
+                //{
+                //    Id_HoaDon = cthd.Id_HoaDon,
+                //    Id_SanPham = cthd.Id_SanPham,
+                //    SoLuong = cthd.SoLuong,
+                //    DonGia = cthd.DonGia,
+                //    ThanhTien = cthd.ThanhTien
+                //}).Where(x => x.Id_HoaDon == model.Id_HoaDon).ToList();
+
+                //var sanphamcapnhat = _sanphamService.GetById(cthd);
+                //foreach (var t in cthd)
+                //{
+                //    sanphamcapnhat.SoLuong -= t.SoLuong;
+                //}
+
+
                 await _hoadonService.DeleteById(model.Id_HoaDon);
                 return RedirectToAction("Index");
             }

@@ -196,7 +196,10 @@ namespace Web_BanDienThoai.Controllers
         {
             if (ModelState.IsValid)
             {
+                var sanphamcapnhat = _sanphamService.GetById(model.Id_SanPham);
+                sanphamcapnhat.SoLuong = sanphamcapnhat.SoLuong - model.SoLuong;
                 await _ctnhService.DeleteById(model.Id_NhapHang);
+               
                 return RedirectToAction("Index", new { id = idtimkiem });
             }
             return View();
