@@ -20,7 +20,8 @@
         </div>
 
         <div id="ChartView">
-            <canvas id="myChart" style="max-width:700px; max-height:600px;"></canvas>
+                <canvas id="myChart" style="max-width:700px; max-height:600px;"></canvas>
+            
         </div>
     </div>
 
@@ -108,7 +109,9 @@
 
         $(document).ready(function () {
             $("#ID").click(function () {
-                
+                $('#myChart').remove();
+                $('#ChartView').append('<canvas id="myChart" style="max-width:700px; max-height:600px;"></canvas>');
+
                 var chartType = $("#ChartType").val();
                 var chartView = document.getElementById('myChart');
                 var ChartHD = new Chart();
@@ -186,6 +189,8 @@
 
         $(document).ready(function () {
             $("#ID_NH").click(function () {
+                $('#myChart_NH').remove(); 
+                $('#ChartView_NH').append('<canvas id="myChart_NH" style="max-width:500px; max-height:400px;"></canvas>');
                 var chartType = $("#ChartType_NH").val();
                 var chartView = document.getElementById('myChart_NH');
 
@@ -261,6 +266,8 @@
 
         $(document).ready(function () {
             $("#ID_SP").click(function () {
+                $('#myChart_SP').remove(); 
+                $('#ChartView_SP').append('<canvas id="myChart_SP" style="max-width:500px; max-height:400px;"></canvas>');
                 var chartType = $("#ChartType_SP").val();
                 var chartView = document.getElementById('myChart_SP');
 
@@ -336,6 +343,8 @@
 
         $(document).ready(function () {
             $("#ID_NCC").click(function () {
+                $('#myChart_NCC').remove(); 
+                $('#ChartView_NCC').append('<canvas id="myChart_NCC" style="max-width:500px; max-height:400px;"></canvas>');
                 var chartType = $("#ChartType_NCC").val();
                 var chartView = document.getElementById('myChart_NCC');
 
