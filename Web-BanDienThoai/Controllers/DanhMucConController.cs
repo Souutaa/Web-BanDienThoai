@@ -71,7 +71,7 @@ namespace Web_BanDienThoai.Controllers
                     var cauHinhIds = _cauhinhService.GetAll().Select(ch => ch.Id_CauHinh).ToList();
                     var danhMucCon = new DanhMucCon
                     {
-                        Id_DanhMucCon = model.Id_DanhMucCon,
+                        Id_DanhMucCon = model.Id_DanhMucCon.ToUpper(),
                         TenDanhMuc = model.TenDanhMuc,
                         Id_CauHinh = model.Id_CauHinh, /*cauHinhIds*/
                     };

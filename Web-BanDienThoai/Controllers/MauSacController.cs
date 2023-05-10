@@ -54,7 +54,7 @@ namespace Web_BanDienThoai.Controllers
                 {
                     var mausac = new MauSac
                     {
-                        Id_MauSac = model.Id_MauSac,
+                        Id_MauSac = model.Id_MauSac.ToUpper(),
                         TenMauSac = model.TenMauSac,
                     };
                     await _mausacService.CreateAsSync(mausac);

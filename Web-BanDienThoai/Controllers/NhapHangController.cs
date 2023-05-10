@@ -104,7 +104,7 @@ namespace Web_BanDienThoai.Controllers
                 {
                     var nhaphang = new NhapHang
                     {
-                        Id_NhapHang = model.Id_NhapHang,
+                        Id_NhapHang = model.Id_NhapHang.ToUpper(),
                         NgayLap = model.NgayLap,
                         NgayGiao = model.NgayGiao,
                         TrangThaiNhapHang = model.TrangThaiNhapHang,

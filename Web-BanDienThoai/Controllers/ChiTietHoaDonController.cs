@@ -134,7 +134,7 @@ namespace Web_BanDienThoai.Controllers
                     else {
                         var cthd = new ChiTietHoaDon
                         {
-                            Id_HoaDon = model.Id_HoaDon,
+                            Id_HoaDon = model.Id_HoaDon.ToUpper(),
                             Id_SanPham = model.Id_SanPham,
                             SoLuong = model.SoLuong,
                             SoLuongThayDoi = model.SoLuong,

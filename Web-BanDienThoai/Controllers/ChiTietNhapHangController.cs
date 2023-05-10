@@ -121,7 +121,7 @@ namespace Web_BanDienThoai.Controllers
                 {
                     var ctnh = new ChiTietNhapHang
                 {
-                    Id_NhapHang = model.Id_NhapHang,
+                    Id_NhapHang = model.Id_NhapHang.ToUpper(),
                     Id_SanPham = model.Id_SanPham,
                     SoLuong = model.SoLuong,
                     DonGia = model.DonGia,

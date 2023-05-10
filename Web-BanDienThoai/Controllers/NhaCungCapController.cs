@@ -56,7 +56,7 @@ namespace Web_BanDienThoai.Controllers
                 {
                     var nhacungcap = new NhaCungCap
                     {
-                        Id_NhaCungCap = model.Id_NhaCungCap,
+                        Id_NhaCungCap = model.Id_NhaCungCap.ToUpper(),
                         Name = model.Name,
                         Email = model.Email,
                         Address = model.Address,

@@ -13,7 +13,7 @@ namespace Web.Entities
         public TrangThaiNhapHang TrangThaiNhapHang { get; set; }
         public double TongTien { get; set; }
         public int TongSoLuong { get; set; }
-        public string GhiChu { get; set; }
+        public string? GhiChu { get; set; }
         //[ForeignKey("SanPham")] public string Id_SanPham { get; set; }
         //public SanPham? SanPham { get; set; }
         [ForeignKey("NhaCungCap")] 

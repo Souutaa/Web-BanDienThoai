@@ -102,7 +102,7 @@ namespace Web_BanDienThoai.Controllers
             {
                 var hoadon = new HoaDon
                 {
-                    Id_HoaDon = model.Id_HoaDon,
+                    Id_HoaDon = model.Id_HoaDon.ToUpper(),
                     NgayLapHoaDon = model.NgayLapHoaDon,
                     Id_khachhang = model.Id_khachhang,
                     Id_NhanVien = model.Id_NhanVien,
